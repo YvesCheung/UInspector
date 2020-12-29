@@ -32,17 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
-            val rootView =
-                requireNotNull(findViewById<ViewGroup>(android.R.id.content))
-            val view = addedView
-            if (view == null) {
-                Snackbar.make(it, "Add Mask!", Snackbar.LENGTH_SHORT).show()
-                addedView = UInspectorMask(this).also { rootView.addView(it) }
-            } else {
-                Snackbar.make(it, "Remove Mask!", Snackbar.LENGTH_SHORT).show()
-                addedView = null
-                rootView.removeView(view)
-            }
+            Snackbar.make(it, "Ha Ha!", Snackbar.LENGTH_SHORT).show()
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)

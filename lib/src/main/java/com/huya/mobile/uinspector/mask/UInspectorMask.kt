@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.RestrictTo
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
 import com.huya.mobile.uinspector.util.log
 import com.huya.mobile.uinspector.util.tryGetActivity
@@ -13,7 +14,8 @@ import com.huya.mobile.uinspector.util.tryGetActivity
  * @author YvesCheung
  * 2020/12/29
  */
-class UInspectorMask @JvmOverloads constructor(
+@RestrictTo(RestrictTo.Scope.LIBRARY)
+class UInspectorMask internal constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

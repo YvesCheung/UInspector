@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/notification_title"
+        style="@style/TextAppearance.Compat.Notification.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/notification_btn"
+        android:gravity="center_vertical"
+        android:text="@string/uinspector_notification_channel_title" />
+
+    <TextView
+        android:id="@+id/notification_info"
+        style="@style/TextAppearance.Compat.Notification.Info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/notification_title"
+        android:layout_alignBottom="@+id/notification_btn"
+        android:gravity="center_vertical"
+        android:text="@string/uinspector_notification_channel_start_message" />
+
+    <ImageView
+        android:id="@+id/notification_btn"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/uinspector_notification_channel_name"
+        android:src="@drawable/notification_start" />
+</RelativeLayout>

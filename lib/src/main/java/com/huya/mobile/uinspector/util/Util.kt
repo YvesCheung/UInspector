@@ -19,7 +19,7 @@ internal fun tryGetActivity(context: Context?): Activity? {
 }
 
 internal fun log(value: String) {
-    Log.d(TAG, value)
+    Log.d(LibName, value)
 }
 
-private const val TAG = "UInspector"
+internal const val LibName = "UInspector"

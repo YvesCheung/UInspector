@@ -15,7 +15,7 @@ import com.huya.mobile.uinspector.UInspector
 class UInspectorInstaller : ContentProvider() {
 
     override fun onCreate(): Boolean {
-        UInspector.init(requireNotNull(context))
+        UInspector.create(requireNotNull(context))
         return true
     }
 
