@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="uinspector_notification_channel_name">UInspector</string>
-    <string name="uinspector_notification_channel_title">%s UI Inspector</string>
+    <string name="uinspector_notification_channel_start_title">Start \"%s\" UI Inspector</string>
+    <string name="uinspector_notification_channel_stop_title">Stop \"%s\" UI Inspector</string>
     <string name="uinspector_notification_channel_start_message">Click here to start inspecting ui</string>
     <string name="uinspector_notification_channel_stop_message">Click here to stop inspecting ui</string>
 </resources>
