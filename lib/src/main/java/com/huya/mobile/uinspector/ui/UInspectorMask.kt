@@ -34,12 +34,12 @@ internal class UInspectorMask(
     private val currentDecorView by lazy(LazyThreadSafetyMode.NONE) { findRootParent() }
 
     /**
-     * [currentDecorView]'s location
+     * [UInspectorMask]'s location
      */
     @get:Size(2)
     private val windowOffset by lazy(LazyThreadSafetyMode.NONE) {
         IntArray(2).also {
-            currentDecorView.getLocationOnScreen(it)
+            this.getLocationOnScreen(it)
         }
     }
 
