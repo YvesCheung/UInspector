@@ -131,11 +131,7 @@ internal object TouchTargets {
 
         val dispatchTouchOrder = ArrayList<View>(parent.childCount)
         for (drawIndex in 0 until parent.childCount) {
-
-            //todo: check isChildrenDrawingOrderEnabled
-            var childIndex = parent.getChildDrawingOrder(drawIndex)
-            if (childIndex !in 0 until parent.childCount) childIndex = drawIndex
-
+            val childIndex = getChildDrawingOrder(parent, drawIndex)
             val child = parent.getChildAt(childIndex)
 
             var insertIndex: Int = drawIndex
@@ -156,5 +152,23 @@ internal object TouchTargets {
         }
 
         return null
+    }
+
+    private var getChildDrawingOrderNotFound = false
+
+    /**
+     * Some device can't found method [ViewGroup.getChildDrawingOrder]?
+     */
+    private fun getChildDrawingOrder(parent: ViewGroup, idx: Int): Int {
+        if (!getChildDrawingOrderNotFound) {
+            try {
+                //todo: check isChildrenDrawingOrderEnabled
+                val childIndex = parent.getChildDrawingOrder(idx)
+                if (childIndex in 0 until parent.childCount) return childIndex
+            } catch (e: Throwable) {
+                getChildDrawingOrderNotFound = true
+            }
+        }
+        return idx
     }
 }
