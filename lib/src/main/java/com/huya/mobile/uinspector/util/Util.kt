@@ -7,6 +7,7 @@ import android.graphics.Rect
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewParent
 
 /**
  * @author YvesCheung
@@ -21,16 +22,20 @@ internal fun tryGetActivity(context: Context?): Activity? {
     return null
 }
 
-internal fun reviseToView(v: View, event: MotionEvent) {
-    val location = IntArray(2)
-    v.getLocationOnScreen(location)
-    event.offsetLocation((-location[0]).toFloat(), (-location[1]).toFloat())
-}
-
 internal fun isOnView(e: MotionEvent, v: View): Boolean {
     val r = Rect()
     v.getGlobalVisibleRect(r)
-    return r.left <= e.rawX && e.rawX <= r.right && r.top <= e.rawY && e.rawY <= r.bottom
+    return r.left <= e.x && e.x <= r.right && r.top <= e.y && e.y <= r.bottom
+}
+
+internal fun View.findRootParent(): View {
+    var current: View = this
+    var next: ViewParent? = current.parent
+    while (next is View) {
+        current = next
+        next = current.parent
+    }
+    return current
 }
 
 internal fun log(value: String) {

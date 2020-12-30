@@ -2,7 +2,7 @@ package com.huya.mobile.uinspector.state
 
 import android.app.Activity
 import android.view.View
-import com.huya.mobile.uinspector.ui.UInspectorMask
+import com.huya.mobile.uinspector.ui.panel.UInspectorPanel
 import com.yy.mobile.whisper.NotThreadSafe
 
 /**
@@ -14,7 +14,7 @@ import com.yy.mobile.whisper.NotThreadSafe
 @NotThreadSafe
 internal class UInspectorLifecycleState(val activity: Activity) {
 
-    var view: UInspectorMask? = null
+    var panel: UInspectorPanel? = null
 
     var lastTouchTarget: View? = null
 }

@@ -3,15 +3,17 @@ package com.huya.mobile.uinspector
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.view.ViewGroup
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.huya.mobile.uinspector.lifecycle.UInspectorLifecycle
 import com.huya.mobile.uinspector.notification.UInspectorNotificationService
 import com.huya.mobile.uinspector.notification.UInspectorNotificationService.Companion.PENDING_RUNNING
 import com.huya.mobile.uinspector.state.UInspectorState
-import com.huya.mobile.uinspector.ui.UInspectorMask
+import com.huya.mobile.uinspector.ui.panel.UInspectorDialogFragment
+import com.huya.mobile.uinspector.ui.panel.UInspectorLegacyDialogFragment
+import com.huya.mobile.uinspector.ui.panel.UInspectorPanel
 import com.huya.mobile.uinspector.util.log
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -75,29 +77,41 @@ object UInspector {
     internal fun changeStateInner(running: Boolean) {
         val currentLifecycle = currentState.withLifecycle
         if (currentLifecycle != null) { //some activity at the front end
-            val oldView = currentLifecycle.view
+//            val oldView = currentLifecycle.view
+//            val activity = currentLifecycle.activity
+//
+//            if (running) { //Add a [UInspectorMask] into rootView
+//                val rootView =
+//                    requireNotNull(activity.findViewById<ViewGroup>(android.R.id.content))
+//
+//                if (oldView != null) {
+//                    if (oldView.parent !== rootView) { //State not right!! remove the old view
+//                        (oldView.parent as? ViewGroup)?.removeView(oldView)
+//                    } else {
+//                        return //Already added.
+//                    }
+//                }
+//
+//                currentLifecycle.view = UInspectorMask(currentLifecycle, activity).also { newView ->
+//                    rootView.addView(newView)
+//                }
+//            } else { //Remove the old [UInspectorMask]
+//                if (oldView != null) {
+//                    (oldView.parent as? ViewGroup)?.removeView(oldView)
+//                }
+//                currentLifecycle.view = null
+//            }
             val activity = currentLifecycle.activity
-
-            if (running) { //Add a [UInspectorMask] into rootView
-                val rootView =
-                    requireNotNull(activity.findViewById<ViewGroup>(android.R.id.content))
-
-                if (oldView != null) {
-                    if (oldView.parent !== rootView) { //State not right!! remove the old view
-                        (oldView.parent as? ViewGroup)?.removeView(oldView)
+            currentLifecycle.panel?.close()
+            if (running) {
+                val mask: UInspectorPanel =
+                    if (activity is FragmentActivity) {
+                        UInspectorDialogFragment()
                     } else {
-                        return //Already added.
+                        UInspectorLegacyDialogFragment()
                     }
-                }
-
-                currentLifecycle.view = UInspectorMask(currentLifecycle, activity).also { newView ->
-                    rootView.addView(newView)
-                }
-            } else { //Remove the old [UInspectorMask]
-                if (oldView != null) {
-                    (oldView.parent as? ViewGroup)?.removeView(oldView)
-                }
-                currentLifecycle.view = null
+                currentLifecycle.panel = mask
+                mask.show(activity)
             }
         }
 

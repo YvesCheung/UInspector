@@ -12,8 +12,13 @@ import android.view.ViewGroup
 open class ViewDecoration(val view: View) : UInspectorDecoration {
 
     override fun draw(canvas: Canvas) {
-        val viewBounds = Rect()
-        view.getGlobalVisibleRect(viewBounds)
+        val location = IntArray(2).also { view.getLocationOnScreen(it) }
+        val viewBounds = Rect(
+            location[0],
+            location[1],
+            location[0] + view.measuredWidth,
+            location[1] + view.measuredHeight
+        )
 
         (view.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
             val marginBounds = Rect(

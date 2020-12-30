@@ -7,36 +7,23 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.RestrictTo
+import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
-import com.huya.mobile.uinspector.state.UInspectorLifecycleState
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
 import com.huya.mobile.uinspector.util.log
 import com.huya.mobile.uinspector.util.tryGetActivity
-import com.yy.mobile.whisper.NeedError
 
 /**
  * @author YvesCheung
  * 2020/12/29
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-class UInspectorMask internal constructor(
-    private val state: UInspectorLifecycleState,
+internal class UInspectorMask(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
-
-    @NeedError("Don't use this constructor directly!!")
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
-    ) : this(UInspectorLifecycleState(tryGetActivity(context)!!), context, attrs, defStyleAttr) {
-        if (!isInEditMode) {
-            throw IllegalAccessException("Can't initialize a [UInspectorMask] without UInspectorLifecycleState")
-        }
-    }
 
     private val decorations: MutableList<UInspectorDecoration> = mutableListOf()
 
@@ -45,36 +32,19 @@ class UInspectorMask internal constructor(
 
             private var downEvent: MotionEvent? = null
 
-            private var handle = true
-
             override fun onDown(e: MotionEvent): Boolean {
                 downEvent?.recycle()
                 downEvent = MotionEvent.obtain(e)
-                return handle
+                return true
             }
 
             override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
                 val de = downEvent
                 val activity = tryGetActivity(context)
                 if (de != null && activity != null) {
-                    handle = false
-                    activity.dispatchTouchEvent(de)
-
                     val touchTargets =
-                        TouchTargets.findFirstTouchTargets(activity.window.decorView, de)
+                        TouchTargets.findTouchTargets(activity, de, this@UInspectorMask)
                     updateDecoration(touchTargets)
-
-                    val cancel = MotionEvent.obtain(
-                        de.downTime,
-                        System.currentTimeMillis(),
-                        MotionEvent.ACTION_CANCEL,
-                        0f,
-                        0f,
-                        0
-                    )
-                    activity.dispatchTouchEvent(cancel)
-                    cancel.recycle()
-                    handle = true
                     return true
                 }
                 return false
@@ -89,6 +59,8 @@ class UInspectorMask internal constructor(
         val dumpViews =
             touchViews.joinToString(" -> ") { view -> view::class.java.simpleName }
         log("Touch targets = $dumpViews")
+
+        val state = UInspector.currentState.withLifecycle ?: return
 
         val lastTarget = state.lastTouchTarget
         if (lastTarget != null) {
