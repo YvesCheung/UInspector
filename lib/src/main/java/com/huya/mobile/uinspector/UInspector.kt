@@ -77,30 +77,6 @@ object UInspector {
     internal fun changeStateInner(running: Boolean) {
         val currentLifecycle = currentState.withLifecycle
         if (currentLifecycle != null) { //some activity at the front end
-//            val oldView = currentLifecycle.view
-//            val activity = currentLifecycle.activity
-//
-//            if (running) { //Add a [UInspectorMask] into rootView
-//                val rootView =
-//                    requireNotNull(activity.findViewById<ViewGroup>(android.R.id.content))
-//
-//                if (oldView != null) {
-//                    if (oldView.parent !== rootView) { //State not right!! remove the old view
-//                        (oldView.parent as? ViewGroup)?.removeView(oldView)
-//                    } else {
-//                        return //Already added.
-//                    }
-//                }
-//
-//                currentLifecycle.view = UInspectorMask(currentLifecycle, activity).also { newView ->
-//                    rootView.addView(newView)
-//                }
-//            } else { //Remove the old [UInspectorMask]
-//                if (oldView != null) {
-//                    (oldView.parent as? ViewGroup)?.removeView(oldView)
-//                }
-//                currentLifecycle.view = null
-//            }
             val activity = currentLifecycle.activity
             currentLifecycle.panel?.close()
             if (running) {

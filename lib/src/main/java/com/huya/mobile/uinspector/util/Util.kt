@@ -34,8 +34,9 @@ internal fun View.findRootParent(): View {
 
 /**
  * Offset coordinate of the [MotionEvent] by [offset]
+ * @see toLocation
  */
-internal inline fun <T> MotionEvent.offsetLocation(
+internal inline fun <T> MotionEvent.fromLocation(
     @Size(2) offset: IntArray,
     action: (MotionEvent) -> T
 ): T {
@@ -46,6 +47,24 @@ internal inline fun <T> MotionEvent.offsetLocation(
         action(this)
     } finally {
         this.offsetLocation(-x, -y)
+    }
+}
+
+/**
+ * Offset coordinate of the [MotionEvent] by [offset]
+ * @see fromLocation
+ */
+internal inline fun <T> MotionEvent.toLocation(
+    @Size(2) offset: IntArray,
+    action: (MotionEvent) -> T
+): T {
+    val x = offset[0].toFloat()
+    val y = offset[1].toFloat()
+    this.offsetLocation(-x, -y)
+    return try {
+        action(this)
+    } finally {
+        this.offsetLocation(x, y)
     }
 }
 

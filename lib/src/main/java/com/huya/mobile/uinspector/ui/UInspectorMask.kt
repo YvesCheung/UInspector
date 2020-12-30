@@ -12,9 +12,9 @@ import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
+import com.huya.mobile.uinspector.util.*
 import com.huya.mobile.uinspector.util.findRootParent
 import com.huya.mobile.uinspector.util.log
-import com.huya.mobile.uinspector.util.offsetLocation
 import com.huya.mobile.uinspector.util.tryGetActivity
 
 /**
@@ -64,7 +64,7 @@ internal class UInspectorMask(
                 val activity = tryGetActivity(context)
                 if (event != null && activity != null) {
                     val touchTargets =
-                        event.offsetLocation(windowOffset) {
+                        event.fromLocation(windowOffset) {
                             TouchTargets.findTouchTargets(activity, event, currentDecorView)
                         }
                     updateDecoration(touchTargets)

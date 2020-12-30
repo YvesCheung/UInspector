@@ -9,7 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.huya.mobile.uinspector.util.LibName
-import com.huya.mobile.uinspector.util.offsetLocation
+import com.huya.mobile.uinspector.util.toLocation
 import java.lang.reflect.Field
 import java.util.*
 import kotlin.collections.ArrayList
@@ -64,14 +64,14 @@ internal object TouchTargets {
                 decor.getLocationOnScreen(windowOffset)
 
                 var touchTargets = emptyList<View>()
-                downEvent.offsetLocation(windowOffset) {
+                downEvent.toLocation(windowOffset) {
                     if (isOnView(downEvent, decor)) {
                         decor.dispatchTouchEvent(downEvent)
                         touchTargets = findFirstTouchTargets(decor, downEvent)
                     }
                 }
 
-                cancel.offsetLocation(windowOffset) {
+                cancel.toLocation(windowOffset) {
                     decor.dispatchTouchEvent(cancel)
                 }
 
