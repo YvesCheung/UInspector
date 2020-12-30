@@ -41,14 +41,17 @@ class HomeFragment : Fragment() {
     private inner class HomeAdapter(val data: List<HomeItem>) : RecyclerView.Adapter<HomeVH>() {
 
         @SuppressLint("InflateParams")
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeVH =
-            HomeVH(LayoutInflater.from(parent.context).inflate(
-                R.layout.item_recycler_view, parent, false))
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = HomeVH(
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.item_recycler_view, parent, false
+            )
+        )
 
         override fun getItemCount(): Int = data.size
 
+        @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: HomeVH, position: Int) {
-            holder.textView.text = data[position].title
+            holder.textView.text = "${position + 1}: ${data[position].title}"
             holder.itemView.setOnClickListener { view ->
                 data[position].action(requireActivity(), view)
             }
