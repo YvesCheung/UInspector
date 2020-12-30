@@ -3,11 +3,11 @@ package com.huya.mobile.uinspector.util
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
-import android.graphics.Rect
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewParent
+import androidx.annotation.Size
 
 /**
  * @author YvesCheung
@@ -22,12 +22,6 @@ internal fun tryGetActivity(context: Context?): Activity? {
     return null
 }
 
-internal fun isOnView(e: MotionEvent, v: View): Boolean {
-    val r = Rect()
-    v.getGlobalVisibleRect(r)
-    return r.left <= e.x && e.x <= r.right && r.top <= e.y && e.y <= r.bottom
-}
-
 internal fun View.findRootParent(): View {
     var current: View = this
     var next: ViewParent? = current.parent
@@ -36,6 +30,23 @@ internal fun View.findRootParent(): View {
         next = current.parent
     }
     return current
+}
+
+/**
+ * Offset coordinate of the [MotionEvent] by [offset]
+ */
+internal inline fun <T> MotionEvent.offsetLocation(
+    @Size(2) offset: IntArray,
+    action: (MotionEvent) -> T
+): T {
+    val x = offset[0].toFloat()
+    val y = offset[1].toFloat()
+    this.offsetLocation(x, y)
+    return try {
+        action(this)
+    } finally {
+        this.offsetLocation(-x, -y)
+    }
 }
 
 internal fun log(value: String) {

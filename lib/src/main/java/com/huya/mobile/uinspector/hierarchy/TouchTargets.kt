@@ -2,14 +2,14 @@ package com.huya.mobile.uinspector.hierarchy
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.graphics.Rect
 import android.os.Build
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.huya.mobile.uinspector.util.LibName
-import com.huya.mobile.uinspector.util.findRootParent
-import com.huya.mobile.uinspector.util.isOnView
+import com.huya.mobile.uinspector.util.offsetLocation
 import java.lang.reflect.Field
 import java.util.*
 import kotlin.collections.ArrayList
@@ -35,34 +35,45 @@ internal object TouchTargets {
         f
     }
 
+    private val windowOffset = IntArray(2)
+
     /**
      * 1. find all decorView of current activity
      * 2. dispatch [downEvent] to the decorView and then find the touch targets by [findFirstTouchTargets]
      * 3. dispatch a cancel event to against the effect by 2.
      */
-    fun findTouchTargets(activity: Activity, downEvent: MotionEvent, exclude: View): List<View> {
+    fun findTouchTargets(
+        activity: Activity,
+        downEvent: MotionEvent,
+        excludeDecorView: View
+    ): List<View> {
         val cancel = MotionEvent.obtain(
             downEvent.downTime,
             System.currentTimeMillis(),
             MotionEvent.ACTION_CANCEL,
-            0f,
-            0f,
-            0
+            0f, 0f, 0
         )
         try {
             val decorViews = WindowManager.findDecorViews(activity)
-            val excludeRoot = exclude.findRootParent()
-
             for (decor in decorViews.asReversed()) {
                 //todo: filter the decorView who outside the current [activity]
-                if (excludeRoot === decor.findRootParent()) {
+                if (excludeDecorView === decor) {
                     continue
                 }
 
                 decor.getLocationOnScreen(windowOffset)
-                offsetEventToWindow(downEvent) { decor.dispatchTouchEvent(downEvent) }
-                val touchTargets = findFirstTouchTargets(decor, downEvent)
-                offsetEventToWindow(cancel) { decor.dispatchTouchEvent(cancel) }
+
+                var touchTargets = emptyList<View>()
+                downEvent.offsetLocation(windowOffset) {
+                    if (isOnView(downEvent, decor)) {
+                        decor.dispatchTouchEvent(downEvent)
+                        touchTargets = findFirstTouchTargets(decor, downEvent)
+                    }
+                }
+
+                cancel.offsetLocation(windowOffset) {
+                    decor.dispatchTouchEvent(cancel)
+                }
 
                 if (touchTargets.isNotEmpty()) {
                     return touchTargets
@@ -72,22 +83,6 @@ internal object TouchTargets {
             cancel.recycle()
         }
         return emptyList()
-    }
-
-    private val windowOffset = IntArray(2)
-
-    /**
-     * Offset coordinate of the [event] by [windowOffset]
-     */
-    private inline fun offsetEventToWindow(
-        event: MotionEvent,
-        action: () -> Unit
-    ) {
-        val x = windowOffset[0].toFloat()
-        val y = windowOffset[1].toFloat()
-        event.offsetLocation(-x, -y)
-        action()
-        event.offsetLocation(x, y)
     }
 
     private fun findFirstTouchTargets(parent: View, touchEvent: MotionEvent): List<View> {
@@ -170,5 +165,17 @@ internal object TouchTargets {
             }
         }
         return idx
+    }
+
+    /**
+     * @param e Already offset to the current window!!
+     * @param v View in the current window
+     *
+     * @return whether the [e] can be dispatched to [v]
+     */
+    private fun isOnView(e: MotionEvent, v: View): Boolean {
+        val r = Rect()
+        v.getGlobalVisibleRect(r)
+        return r.left <= e.x && e.x <= r.right && r.top <= e.y && e.y <= r.bottom
     }
 }

@@ -7,11 +7,14 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.RestrictTo
+import androidx.annotation.Size
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
+import com.huya.mobile.uinspector.util.findRootParent
 import com.huya.mobile.uinspector.util.log
+import com.huya.mobile.uinspector.util.offsetLocation
 import com.huya.mobile.uinspector.util.tryGetActivity
 
 /**
@@ -25,6 +28,24 @@ internal class UInspectorMask(
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
 
+    /**
+     * The DecorView that [UInspectorMask] is attached to.
+     */
+    private val currentDecorView by lazy(LazyThreadSafetyMode.NONE) { findRootParent() }
+
+    /**
+     * [currentDecorView]'s location
+     */
+    @get:Size(2)
+    private val windowOffset by lazy(LazyThreadSafetyMode.NONE) {
+        IntArray(2).also {
+            currentDecorView.getLocationOnScreen(it)
+        }
+    }
+
+    /**
+     * The elements drawn on our [UInspectorMask]
+     */
     private val decorations: MutableList<UInspectorDecoration> = mutableListOf()
 
     private val gesture = GestureDetector(context,
@@ -39,11 +60,13 @@ internal class UInspectorMask(
             }
 
             override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
-                val de = downEvent
+                val event = downEvent
                 val activity = tryGetActivity(context)
-                if (de != null && activity != null) {
+                if (event != null && activity != null) {
                     val touchTargets =
-                        TouchTargets.findTouchTargets(activity, de, this@UInspectorMask)
+                        event.offsetLocation(windowOffset) {
+                            TouchTargets.findTouchTargets(activity, event, currentDecorView)
+                        }
                     updateDecoration(touchTargets)
                     return true
                 }
@@ -80,6 +103,12 @@ internal class UInspectorMask(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         canvas ?: return
-        decorations.forEach { it.draw(canvas) }
+        val c = canvas.save()
+        canvas.translate(-windowOffset[0].toFloat(), -windowOffset[1].toFloat())
+        try {
+            decorations.forEach { it.draw(canvas) }
+        } finally {
+            canvas.restoreToCount(c)
+        }
     }
 }

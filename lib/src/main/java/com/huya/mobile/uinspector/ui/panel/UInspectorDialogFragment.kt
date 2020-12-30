@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
-import com.gyf.immersionbar.ImmersionBar
 import com.huya.mobile.uinspector.ui.UInspectorMask
 
 /**
@@ -40,11 +39,6 @@ internal class UInspectorDialogFragment : DialogFragment(), UInspectorPanel {
         savedInstanceState: Bundle?
     ): View? {
         return UInspectorMask(inflater.context)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        ImmersionBar.with(this).init()
     }
 
     override fun onStart() {
