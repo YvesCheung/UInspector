@@ -8,10 +8,10 @@ import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.core.content.ContextCompat
 import com.huya.mobile.uinspector.lifecycle.UInspectorLifecycle
-import com.huya.mobile.uinspector.mask.UInspectorMask
 import com.huya.mobile.uinspector.notification.UInspectorNotificationService
 import com.huya.mobile.uinspector.notification.UInspectorNotificationService.Companion.PENDING_RUNNING
 import com.huya.mobile.uinspector.state.UInspectorState
+import com.huya.mobile.uinspector.ui.UInspectorMask
 import com.huya.mobile.uinspector.util.log
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -72,29 +72,33 @@ object UInspector {
     }
 
     @MainThread
-    internal fun changeStateByService(running: Boolean) {
-        val oldView = currentState.view
-        if (running) { //Add a [UInspectorMask] into rootView
-            lifecycle.runInActivity { activity ->
+    internal fun changeStateInner(running: Boolean) {
+        val currentLifecycle = currentState.withLifecycle
+        if (currentLifecycle != null) { //some activity at the front end
+            val oldView = currentLifecycle.view
+            val activity = currentLifecycle.activity
+
+            if (running) { //Add a [UInspectorMask] into rootView
                 val rootView =
                     requireNotNull(activity.findViewById<ViewGroup>(android.R.id.content))
+
                 if (oldView != null) {
                     if (oldView.parent !== rootView) { //State not right!! remove the old view
                         (oldView.parent as? ViewGroup)?.removeView(oldView)
                     } else {
-                        return@runInActivity //Already added.
+                        return //Already added.
                     }
                 }
 
-                currentState.view = UInspectorMask(activity).also { newView ->
+                currentLifecycle.view = UInspectorMask(currentLifecycle, activity).also { newView ->
                     rootView.addView(newView)
                 }
+            } else { //Remove the old [UInspectorMask]
+                if (oldView != null) {
+                    (oldView.parent as? ViewGroup)?.removeView(oldView)
+                }
+                currentLifecycle.view = null
             }
-        } else { //Remove the old [UInspectorMask]
-            if (oldView != null) {
-                (oldView.parent as? ViewGroup)?.removeView(oldView)
-            }
-            currentState.view = null
         }
 
         currentState.isRunning = running

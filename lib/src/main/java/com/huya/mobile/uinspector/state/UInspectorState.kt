@@ -1,10 +1,12 @@
 package com.huya.mobile.uinspector.state
 
 import androidx.annotation.MainThread
-import com.huya.mobile.uinspector.mask.UInspectorMask
-import com.yy.mobile.whisper.NotThreadSafe
+import com.huya.mobile.uinspector.UInspector
 
 /**
+ *
+ * @see UInspector.currentState
+ *
  * @author YvesCheung
  * 2020/12/29
  */
@@ -20,6 +22,8 @@ class UInspectorState {
     var isRunning: Boolean = false
         @MainThread internal set
 
-    @NotThreadSafe
-    internal var view: UInspectorMask? = null
+    /**
+     * state bound to activity lifecycle
+     */
+    internal var withLifecycle: UInspectorLifecycleState? = null
 }

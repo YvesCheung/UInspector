@@ -36,7 +36,7 @@ class UInspectorNotificationService : Service() {
 
         startForeground(notificationId, createNotification(pendingState))
 
-        if (pendingState != currentState) UInspector.changeStateByService(pendingState)
+        if (pendingState != currentState) UInspector.changeStateInner(pendingState)
 
         return super.onStartCommand(intent, flags, startId)
     }

@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Application.ActivityLifecycleCallbacks
 import android.os.Bundle
 import androidx.annotation.MainThread
+import com.huya.mobile.uinspector.UInspector
+import com.huya.mobile.uinspector.state.UInspectorLifecycleState
 import com.yy.mobile.whisper.NotThreadSafe
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -14,15 +16,17 @@ internal class UInspectorLifecycle : ActivityLifecycleCallbacks {
         private set
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        setActivity(activity)
+        onActivityChanged(activity)
     }
 
     override fun onActivityResumed(activity: Activity) {
-        setActivity(activity)
+        onActivityChanged(activity)
     }
 
     override fun onActivityDestroyed(activity: Activity) {
-        if (currentActivity === activity) currentActivity = null
+        if (currentActivity === activity) {
+            onActivityChanged(null)
+        }
     }
 
     override fun onActivityStarted(activity: Activity) {}
@@ -30,24 +34,17 @@ internal class UInspectorLifecycle : ActivityLifecycleCallbacks {
     override fun onActivityStopped(activity: Activity) {}
     override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 
-    private var pendingAction: ((Activity) -> Unit)? = null
-
     @MainThread
-    fun runInActivity(action: (Activity) -> Unit) {
-        pendingAction = null
-
-        val activity = currentActivity
-        if (activity != null) {
-            action(activity)
-        } else {
-            pendingAction = action
+    private fun onActivityChanged(newActivity: Activity?) {
+        currentActivity = newActivity
+        val lastActivity = UInspector.currentState.withLifecycle?.activity
+        if (lastActivity !== newActivity) {
+            if (newActivity != null) {
+                UInspector.currentState.withLifecycle = UInspectorLifecycleState(newActivity)
+            } else {
+                UInspector.currentState.withLifecycle = null
+            }
         }
-    }
-
-    @MainThread
-    private fun setActivity(activity: Activity) {
-        currentActivity = activity
-        pendingAction?.invoke(activity)
-        pendingAction = null
+        UInspector.changeStateInner(UInspector.currentState.isRunning)
     }
 }
