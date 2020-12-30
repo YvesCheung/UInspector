@@ -1,10 +1,9 @@
 package com.huya.mobile.uinspector.ui.decoration
 
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
+import android.graphics.*
+import android.os.Build
 import android.view.View
+import android.view.ViewGroup
 
 /**
  * @author YvesCheung
@@ -13,9 +12,58 @@ import android.view.View
 open class ViewDecoration(val view: View) : UInspectorDecoration {
 
     override fun draw(canvas: Canvas) {
-        val rect = Rect()
-        view.getGlobalVisibleRect(rect)
-        canvas.drawRect(rect, boundPaint)
+        val viewBounds = Rect()
+        view.getGlobalVisibleRect(viewBounds)
+
+        (view.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+            val marginBounds = Rect(
+                viewBounds.left - lp.leftMargin,
+                viewBounds.top - lp.topMargin,
+                viewBounds.right + lp.rightMargin,
+                viewBounds.bottom + lp.bottomMargin
+            )
+            if (viewBounds != marginBounds) {
+                canvas.difference(marginBounds, viewBounds) {
+                    drawRect(marginBounds, marginPaint)
+                }
+            }
+        }
+
+        val paddingBound = Rect(
+            viewBounds.left + view.paddingLeft,
+            viewBounds.top + view.paddingTop,
+            viewBounds.right - view.paddingRight,
+            viewBounds.bottom - view.paddingBottom
+        )
+        if (viewBounds != paddingBound) {
+            canvas.difference(viewBounds, paddingBound) {
+                drawRect(viewBounds, paddingPaint)
+            }
+            canvas.drawRect(paddingBound, boundPaint)
+        } else {
+            canvas.drawRect(viewBounds, boundPaint)
+        }
+    }
+
+    private inline fun Canvas.difference(
+        outRect: Rect,
+        inRect: Rect,
+        operation: Canvas.() -> Unit
+    ) {
+        val c = save()
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                clipRect(outRect)
+                clipOutRect(inRect)
+                operation()
+            } else {
+                clipRect(outRect)
+                clipRect(inRect, Region.Op.DIFFERENCE)
+                operation()
+            }
+        } finally {
+            restoreToCount(c)
+        }
     }
 
     override fun hashCode(): Int = view.hashCode()
@@ -26,7 +74,17 @@ open class ViewDecoration(val view: View) : UInspectorDecoration {
 
         private val boundPaint = Paint().apply {
             style = Paint.Style.FILL
-            color = Color.parseColor("#80ffdd00")
+            color = Color.parseColor("#80FFDD00")
+        }
+
+        private val paddingPaint = Paint().apply {
+            style = Paint.Style.FILL
+            color = Color.parseColor("#800000FF")
+        }
+
+        private val marginPaint = Paint().apply {
+            style = Paint.Style.FILL
+            color = Color.parseColor("#8000FF00")
         }
     }
 }

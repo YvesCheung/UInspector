@@ -61,7 +61,7 @@ class UInspectorMask internal constructor(
                     activity.dispatchTouchEvent(de)
 
                     val touchTargets =
-                        TouchTargets.findFirstTouchTargets(activity.window.decorView)
+                        TouchTargets.findFirstTouchTargets(activity.window.decorView, de)
                     updateDecoration(touchTargets)
 
                     val cancel = MotionEvent.obtain(
