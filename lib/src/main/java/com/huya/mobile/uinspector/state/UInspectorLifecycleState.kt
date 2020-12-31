@@ -12,9 +12,9 @@ import com.yy.mobile.whisper.NotThreadSafe
  * 2020/12/30
  */
 @NotThreadSafe
-internal class UInspectorLifecycleState(val activity: Activity) {
+class UInspectorLifecycleState(val activity: Activity) {
 
-    var panel: UInspectorPanel? = null
+    internal var panel: UInspectorPanel? = null
 
-    var lastTouchTarget: View? = null
+    var lastTouchTargets: List<View>? = null
 }

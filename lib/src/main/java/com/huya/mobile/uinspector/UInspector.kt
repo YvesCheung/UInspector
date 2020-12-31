@@ -14,6 +14,7 @@ import com.huya.mobile.uinspector.state.UInspectorState
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorDialogFragment
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFragment
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
+import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.huya.mobile.uinspector.util.log
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -55,6 +56,12 @@ object UInspector {
     @JvmStatic
     @AnyThread
     fun stop() = startService(false)
+
+    @JvmStatic
+    @MainThread
+    fun getChildPanels(): List<UInspectorChildPanel> {
+        return emptyList()
+    }
 
     //private impl ---------------------------------------------------------------------------------
 

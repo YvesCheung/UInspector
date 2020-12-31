@@ -25,5 +25,5 @@ class UInspectorState {
     /**
      * state bound to activity lifecycle
      */
-    internal var withLifecycle: UInspectorLifecycleState? = null
+    var withLifecycle: UInspectorLifecycleState? = null
 }

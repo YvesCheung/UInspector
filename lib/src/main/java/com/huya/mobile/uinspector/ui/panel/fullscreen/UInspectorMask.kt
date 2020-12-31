@@ -13,8 +13,9 @@ import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
-import com.huya.mobile.uinspector.util.*
+import com.huya.mobile.uinspector.ui.panel.popup.UInspectorPopupPanelContainer
 import com.huya.mobile.uinspector.util.findRootParent
+import com.huya.mobile.uinspector.util.fromLocation
 import com.huya.mobile.uinspector.util.log
 import com.huya.mobile.uinspector.util.tryGetActivity
 
@@ -48,6 +49,8 @@ internal class UInspectorMask(
      * The elements drawn on our [UInspectorMask]
      */
     private val decorations: MutableList<UInspectorDecoration> = mutableListOf()
+
+    private val popupPanelContainer = UInspectorPopupPanelContainer()
 
     private val gesture = GestureDetector(context,
         object : GestureDetector.SimpleOnGestureListener() {
@@ -86,24 +89,24 @@ internal class UInspectorMask(
 
         val state = UInspector.currentState.withLifecycle ?: return
 
-        val lastTarget = state.lastTouchTarget
+        val lastTarget = state.lastTouchTargets?.lastOrNull()
         if (lastTarget != null) {
             decorations.remove(ViewDecoration(lastTarget))
-            state.lastTouchTarget = null
+            state.lastTouchTargets = null
+            popupPanelContainer.dismiss()
         }
 
         val touchTarget = touchViews.lastOrNull()
         if (touchTarget != lastTarget && touchTarget != null) {
             decorations.add(ViewDecoration(touchTarget))
-            state.lastTouchTarget = touchTarget
+            state.lastTouchTargets = touchViews
+            popupPanelContainer.show(touchTarget, this)
         }
 
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-        canvas ?: return
+    override fun dispatchDraw(canvas: Canvas) {
         val c = canvas.save()
         canvas.translate(-windowOffset[0].toFloat(), -windowOffset[1].toFloat())
         try {
@@ -111,5 +114,6 @@ internal class UInspectorMask(
         } finally {
             canvas.restoreToCount(c)
         }
+        super.dispatchDraw(canvas)
     }
 }
