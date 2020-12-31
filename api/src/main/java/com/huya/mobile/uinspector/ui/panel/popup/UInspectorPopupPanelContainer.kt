@@ -23,7 +23,7 @@ internal class UInspectorPopupPanelContainer {
 
     fun show(anchorView: View, parent: ViewGroup) {
         dismiss()
-        val childrenPanel = UInspector.getChildPanels().toList()
+        val childrenPanel = UInspector.childPanels.toList()
         if (childrenPanel.isNotEmpty()) {
             popupPanel = UInspectorPopupPanel(
                 LayoutInflater.from(parent.context)
@@ -91,7 +91,11 @@ internal class UInspectorPopupPanelContainer {
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val panel = children[position]
-            return cacheView.getOrPut(panel) { panel.onCreateView(container) }
+            return cacheView.getOrPut(panel) {
+                val child = panel.onCreateView(container.context)
+                container.addView(child)
+                child
+            }
         }
 
         override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {

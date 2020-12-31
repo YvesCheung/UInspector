@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    tools:background="@android:color/black"
+    tools:layout_height="@dimen/popup_panel_container_height">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/view_props_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/uinspector_view_middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@android:color/background_light" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/uinspector_view_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <include
+        android:id="@+id/uinspector_view_margin"
+        layout="@layout/uinspector_view_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/uinspector_view_middle"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/uinspector_view_padding"
+        layout="@layout/uinspector_view_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/uinspector_view_margin"
+        app:layout_constraintEnd_toEndOf="@+id/uinspector_view_margin"
+        app:layout_constraintStart_toStartOf="@+id/uinspector_view_margin"
+        app:layout_constraintTop_toTopOf="@+id/uinspector_view_margin" />
+
+    <include
+        android:id="@+id/uinspector_view_bound"
+        layout="@layout/uinspector_view_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/uinspector_view_padding"
+        app:layout_constraintEnd_toEndOf="@+id/uinspector_view_padding"
+        app:layout_constraintStart_toStartOf="@+id/uinspector_view_padding"
+        app:layout_constraintTop_toTopOf="@+id/uinspector_view_padding" />
+</androidx.constraintlayout.widget.ConstraintLayout>

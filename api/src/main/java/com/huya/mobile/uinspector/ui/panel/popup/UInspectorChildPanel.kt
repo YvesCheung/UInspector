@@ -1,7 +1,7 @@
 package com.huya.mobile.uinspector.ui.panel.popup
 
+import android.content.Context
 import android.view.View
-import android.view.ViewGroup
 
 /**
  * @author YvesCheung
@@ -11,7 +11,7 @@ interface UInspectorChildPanel {
 
     val title: CharSequence
 
-    fun onCreateView(container: ViewGroup): View
+    fun onCreateView(context: Context): View
 
-    fun onUserVisibleHint(visible: Boolean)
+    fun onUserVisibleHint(visible: Boolean) {}
 }

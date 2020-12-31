@@ -14,6 +14,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.huya.mobile.uinspector.demo.R
+import com.huya.mobile.uinspector.impl.properties.UInspectorPropertiesPanel
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        UInspector.childPanels = listOf(UInspectorPropertiesPanel())
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
             Snackbar.make(it, "You can inspect the SnackBar!", Snackbar.LENGTH_LONG).show()

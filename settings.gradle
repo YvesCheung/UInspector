@@ -1,3 +1,4 @@
+include ':impl'
 include ':api'
 include ':app'
 rootProject.name = "UInspector"

@@ -16,6 +16,7 @@ import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFrag
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.huya.mobile.uinspector.util.log
+import com.yy.mobile.whisper.NotThreadSafe
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -57,11 +58,9 @@ object UInspector {
     @AnyThread
     fun stop() = startService(false)
 
-    @JvmStatic
-    @MainThread
-    fun getChildPanels(): List<UInspectorChildPanel> {
-        return emptyList()
-    }
+    @JvmField
+    @NotThreadSafe
+    var childPanels: List<UInspectorChildPanel> = emptyList()
 
     //private impl ---------------------------------------------------------------------------------
 
