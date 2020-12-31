@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.ui.panel
+package com.huya.mobile.uinspector.ui.panel.fullscreen
 
 import android.app.Activity
 import android.app.Dialog

@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.ui.panel
+package com.huya.mobile.uinspector.ui.panel.fullscreen
 
 import android.app.Dialog
 import android.graphics.Color
@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.huya.mobile.uinspector.ui.UInspectorMask
 import com.huya.mobile.uinspector.util.tryGetActivity
 
 /**

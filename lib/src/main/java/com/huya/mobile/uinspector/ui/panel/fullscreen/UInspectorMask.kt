@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.ui
+package com.huya.mobile.uinspector.ui.panel.fullscreen
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.widget.FrameLayout
 import androidx.annotation.RestrictTo
 import androidx.annotation.Size
 import com.huya.mobile.uinspector.UInspector
@@ -26,7 +27,7 @@ internal class UInspectorMask(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : View(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     /**
      * The DecorView that [UInspectorMask] is attached to.

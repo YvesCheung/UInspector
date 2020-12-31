@@ -2,7 +2,7 @@ package com.huya.mobile.uinspector.state
 
 import android.app.Activity
 import android.view.View
-import com.huya.mobile.uinspector.ui.panel.UInspectorPanel
+import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
 import com.yy.mobile.whisper.NotThreadSafe
 
 /**

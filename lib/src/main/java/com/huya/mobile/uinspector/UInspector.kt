@@ -11,9 +11,9 @@ import com.huya.mobile.uinspector.lifecycle.UInspectorLifecycle
 import com.huya.mobile.uinspector.notification.UInspectorNotificationService
 import com.huya.mobile.uinspector.notification.UInspectorNotificationService.Companion.PENDING_RUNNING
 import com.huya.mobile.uinspector.state.UInspectorState
-import com.huya.mobile.uinspector.ui.panel.UInspectorDialogFragment
-import com.huya.mobile.uinspector.ui.panel.UInspectorLegacyDialogFragment
-import com.huya.mobile.uinspector.ui.panel.UInspectorPanel
+import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorDialogFragment
+import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFragment
+import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
 import com.huya.mobile.uinspector.util.log
 import java.util.concurrent.atomic.AtomicBoolean
 
