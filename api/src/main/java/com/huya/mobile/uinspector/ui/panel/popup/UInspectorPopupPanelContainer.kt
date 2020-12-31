@@ -23,20 +23,24 @@ internal class UInspectorPopupPanelContainer {
 
     fun show(anchorView: View, parent: ViewGroup) {
         dismiss()
-        popupPanel = UInspectorPopupPanel(
-            LayoutInflater.from(parent.context)
-                .inflate(R.layout.uinspector_popup_panel_container, parent)
-        ).apply {
-            val anchorLocation =
-                IntArray(2).also { anchorView.getLocationOnScreen(it) }
-            val panelHeight = anchorView.context.resources
-                .getDimension(R.dimen.popup_panel_container_height)
-            //Note: parent.measuredHeight is close to the screen height.
-            //  It's not 100% accurate
-            if (anchorLocation[1] > parent.measuredHeight - panelHeight) {
-                showAt(TOP)
-            } else {
-                showAt(BOTTOM)
+        val childrenPanel = UInspector.getChildPanels().toList()
+        if (childrenPanel.isNotEmpty()) {
+            popupPanel = UInspectorPopupPanel(
+                LayoutInflater.from(parent.context)
+                    .inflate(R.layout.uinspector_popup_panel_container, parent),
+                childrenPanel
+            ).apply {
+                val anchorLocation =
+                    IntArray(2).also { anchorView.getLocationOnScreen(it) }
+                val panelHeight = anchorView.context.resources
+                    .getDimension(R.dimen.popup_panel_container_height)
+                //Note: parent.measuredHeight is close to the screen height.
+                //  It's not 100% accurate
+                if (anchorLocation[1] > parent.measuredHeight - panelHeight) {
+                    showAt(TOP)
+                } else {
+                    showAt(BOTTOM)
+                }
             }
         }
     }
@@ -48,8 +52,12 @@ internal class UInspectorPopupPanelContainer {
 
     private class UInspectorPopupPanel(
         val inspectorMask: View,
-        val popupPanel: ViewGroup = inspectorMask.popup_panel
+        val children: List<UInspectorChildPanel>
     ) {
+
+        private val popupPanel = inspectorMask.popup_panel
+        private val viewPager = popupPanel.popup_panel_viewpager
+        private val tabLayout = popupPanel.popup_panel_tab
 
         fun dismiss() {
             if (popupPanel.parent === inspectorMask) {
@@ -70,10 +78,8 @@ internal class UInspectorPopupPanelContainer {
         }
 
         private fun initView() {
-            val childrenPanel =
-                UInspector.getChildPanels().toList()
-            popupPanel.popup_panel_viewpager.adapter = PanelAdapter(childrenPanel)
-            popupPanel.popup_panel_tab.setupWithViewPager(popupPanel.popup_panel_viewpager)
+            viewPager.adapter = PanelAdapter(children)
+            tabLayout.setupWithViewPager(viewPager)
         }
     }
 
