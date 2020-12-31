@@ -56,7 +56,6 @@ internal object TouchTargets {
         try {
             val decorViews = WindowManager.findDecorViews(activity)
             for (decor in decorViews.asReversed()) {
-                //todo: filter the decorView who outside the current [activity]
                 if (excludeDecorView === decor) {
                     continue
                 }
