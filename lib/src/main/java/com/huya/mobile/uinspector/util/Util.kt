@@ -22,6 +22,9 @@ internal fun tryGetActivity(context: Context?): Activity? {
     return null
 }
 
+/**
+ * @return Find the DecorView of this [View]
+ */
 internal fun View.findRootParent(): View {
     var current: View = this
     var next: ViewParent? = current.parent

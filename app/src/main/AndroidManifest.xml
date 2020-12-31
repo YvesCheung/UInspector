@@ -19,6 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.huya.mobile.uinspector.ui.activity.DemoActivity" />
     </application>
 
 </manifest>
