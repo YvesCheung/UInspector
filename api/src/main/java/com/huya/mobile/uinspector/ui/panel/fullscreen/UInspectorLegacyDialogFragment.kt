@@ -22,6 +22,7 @@ internal class UInspectorLegacyDialogFragment : DialogFragment(), UInspectorPane
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         setStyle(STYLE_NO_FRAME, 0)
+        isCancelable = false
         return delegate.onCreateDialog(super.onCreateDialog(savedInstanceState))
     }
 
