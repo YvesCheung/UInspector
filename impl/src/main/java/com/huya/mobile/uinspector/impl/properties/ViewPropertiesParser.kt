@@ -21,6 +21,10 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
 
         props["rect"] = Rect(view.left, view.top, view.right, view.bottom)
 
+        if (view.visibility != View.VISIBLE) {
+            props["visibility"] = if (view.visibility == View.INVISIBLE) "INVISIBLE" else "GONE"
+        }
+
         if (view.background != null) {
             props["background"] = drawableToString(view.background)
         }
@@ -58,6 +62,10 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
 
         if (view.scaleY != 1f) {
             props["scaleY"] = view.scaleY
+        }
+
+        if (view.isSelected) {
+            props["isSelected"] = view.isSelected
         }
     }
 }

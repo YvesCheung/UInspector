@@ -17,6 +17,10 @@ class ImageViewPropertiesParser(view: ImageView) : ViewPropertiesParser<ImageVie
 
         props["imageMatrix"] = view.imageMatrix.toShortString()
 
+        if (view.contentDescription != null) {
+            props["contentDescription"] = view.contentDescription
+        }
+
         if (view.drawable != null) {
             props["drawable"] = drawableToString(view.drawable)
         }
