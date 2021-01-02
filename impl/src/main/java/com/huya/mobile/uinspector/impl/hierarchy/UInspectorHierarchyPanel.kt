@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.uinspector_panel_hierarchy.view.*
  */
 class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPanel {
 
-    override val title = "hierarchy"
+    override val title = "Hierarchy"
 
     @SuppressLint("InflateParams")
     override fun onCreateView(context: Context): View {

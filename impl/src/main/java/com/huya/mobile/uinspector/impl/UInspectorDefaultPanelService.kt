@@ -1,5 +1,6 @@
 package com.huya.mobile.uinspector.impl
 
+import com.huya.mobile.uinspector.impl.accessibility.UInspectorAccessibilityPanel
 import com.huya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel
 import com.huya.mobile.uinspector.impl.properties.UInspectorPropertiesPanel
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
@@ -14,7 +15,8 @@ class UInspectorDefaultPanelService : UInspectorChildPanelService {
     override fun createPanels(): Set<UInspectorChildPanel> {
         return setOf(
             UInspectorPropertiesPanel(PROPERTIES_PRIORITY),
-            UInspectorHierarchyPanel(HIERARCHY_PRIORITY)
+            UInspectorHierarchyPanel(HIERARCHY_PRIORITY),
+            UInspectorAccessibilityPanel(ACCESSIBILITY_PRIORITY)
         )
     }
 
@@ -23,5 +25,7 @@ class UInspectorDefaultPanelService : UInspectorChildPanelService {
         const val PROPERTIES_PRIORITY = 100
 
         const val HIERARCHY_PRIORITY = 200
+
+        const val ACCESSIBILITY_PRIORITY = 300
     }
 }

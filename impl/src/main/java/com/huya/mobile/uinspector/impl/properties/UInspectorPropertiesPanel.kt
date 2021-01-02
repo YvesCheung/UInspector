@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.uinspector_view_layout.view.*
  */
 class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPanel {
 
-    override val title = "properties"
+    override val title = "Properties"
 
     @SuppressLint("SetTextI18n", "InflateParams")
     override fun onCreateView(context: Context): View {
