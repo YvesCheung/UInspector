@@ -37,7 +37,7 @@ internal class UInspectorPopupPanelContainer {
                     .getDimension(R.dimen.popup_panel_container_height)
                 //Note: parent.measuredHeight is close to the screen height.
                 //  It's not 100% accurate
-                if (anchorLocation[1] > parent.measuredHeight - panelHeight) {
+                if (anchorLocation[1] + anchorView.measuredHeight > parent.measuredHeight - panelHeight) {
                     showAt(TOP)
                 } else {
                     showAt(BOTTOM)

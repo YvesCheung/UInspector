@@ -3,6 +3,7 @@ package com.huya.mobile.uinspector.ui.panel.fullscreen
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
+import android.os.Build
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -79,14 +80,9 @@ internal class UInspectorMask(
             }
         })
 
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        gesture.onTouchEvent(ev)
-        return super.dispatchTouchEvent(ev)
-    }
-
     @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return true
+    override fun onTouchEvent(ev: MotionEvent): Boolean {
+        return gesture.onTouchEvent(ev)
     }
 
     private fun updateDecoration(touchViews: List<View>) {
