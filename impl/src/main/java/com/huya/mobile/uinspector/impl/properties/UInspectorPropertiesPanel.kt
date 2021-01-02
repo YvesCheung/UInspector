@@ -2,7 +2,6 @@ package com.huya.mobile.uinspector.impl.properties
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
+import com.huya.mobile.uinspector.impl.utils.dpStr
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import kotlinx.android.synthetic.main.uinspector_panel_properties.view.*
 import kotlinx.android.synthetic.main.uinspector_view_layout.view.*
@@ -85,10 +85,4 @@ class UInspectorPropertiesPanel : UInspectorChildPanel {
     }
 
     private class ViewPropsHolder(val text: TextView) : RecyclerView.ViewHolder(text)
-
-    private val Int.pxToDp: Int
-        get() = (this.toFloat() / Resources.getSystem().displayMetrics.density).toInt()
-
-    private val Int.dpStr: String
-        get() = "${pxToDp}dp"
 }

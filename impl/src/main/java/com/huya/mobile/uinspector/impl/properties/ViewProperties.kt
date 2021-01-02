@@ -1,6 +1,7 @@
 package com.huya.mobile.uinspector.impl.properties
 
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 
 /**
@@ -20,8 +21,11 @@ class ViewProperties(
 
         fun of(view: View): ViewPropertiesParser<out View> {
             //todo: Add more situation
-            if (view is TextView) return TextViewPropertiesParser(view)
-            return ViewPropertiesParser(view)
+            return when (view) {
+                is ImageView -> ImageViewPropertiesParser(view)
+                is TextView -> TextViewPropertiesParser(view)
+                else -> ViewPropertiesParser(view)
+            }
         }
     }
 }
