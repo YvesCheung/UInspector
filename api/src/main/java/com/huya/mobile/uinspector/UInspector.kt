@@ -59,12 +59,6 @@ object UInspector {
     @AnyThread
     fun stop() = startService(false)
 
-    val childPanels: List<UInspectorChildPanel> by lazy {
-        ServiceLoader.load(UInspectorChildPanelService::class.java)
-            .flatMap { it.panels }
-            .sortedBy { it.priority }
-    }
-
     //private impl ---------------------------------------------------------------------------------
 
     private lateinit var application: Application
@@ -102,5 +96,15 @@ object UInspector {
 
         currentState.isRunning = running
         log("change state to ${if (running) "RUNNING" else "IDLE"}")
+    }
+
+    private val panelService by lazy(LazyThreadSafetyMode.NONE) {
+        ServiceLoader.load(UInspectorChildPanelService::class.java)
+    }
+
+    internal fun createChildPanels(): List<UInspectorChildPanel> {
+        return panelService
+            .flatMap { it.createPanels() }
+            .sortedBy { it.priority }
     }
 }

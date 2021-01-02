@@ -119,4 +119,9 @@ internal class UInspectorMask(
         }
         super.dispatchDraw(canvas)
     }
+
+    override fun onDetachedFromWindow() {
+        popupPanelContainer.dismiss()
+        super.onDetachedFromWindow()
+    }
 }

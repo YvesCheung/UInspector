@@ -6,5 +6,5 @@ package com.huya.mobile.uinspector.ui.panel.popup
  */
 interface UInspectorChildPanelService {
 
-    val panels: Set<UInspectorChildPanel>
+    fun createPanels(): Set<UInspectorChildPanel>
 }

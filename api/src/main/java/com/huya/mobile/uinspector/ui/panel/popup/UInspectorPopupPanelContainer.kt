@@ -11,6 +11,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.huya.mobile.uinspector.R
 import com.huya.mobile.uinspector.UInspector
+import com.huya.mobile.uinspector.util.log
 import com.yy.mobile.whisper.IntDef
 import kotlinx.android.synthetic.main.uinspector_popup_panel_container.view.*
 
@@ -24,7 +25,7 @@ internal class UInspectorPopupPanelContainer {
 
     fun show(anchorView: View, parent: ViewGroup) {
         dismiss()
-        val childrenPanel = UInspector.childPanels
+        val childrenPanel = UInspector.createChildPanels()
         if (childrenPanel.isNotEmpty()) {
             popupPanel = UInspectorPopupPanel(
                 LayoutInflater.from(parent.context)
@@ -60,13 +61,20 @@ internal class UInspectorPopupPanelContainer {
         private val viewPager = popupPanel.popup_panel_viewpager
         private val tabLayout = popupPanel.popup_panel_tab
 
+        private val adapter = PanelAdapter(children)
+
         fun dismiss() {
             if (popupPanel.parent === inspectorMask) {
+                log("dismiss UInspectorPopupPanel")
+                adapter.createdPanel.keys.forEach {
+                    it.onDestroyView()
+                }
                 (inspectorMask as ViewGroup).removeView(popupPanel)
             }
         }
 
         fun showAt(@IntDef(TOP, BOTTOM) gravity: Int) {
+            log("show UInspectorPopupPanel at ${if (gravity == TOP) "TOP" else "BOTTOM"}")
             initView()
 
             val lp = popupPanel.layoutParams
@@ -79,7 +87,7 @@ internal class UInspectorPopupPanelContainer {
         }
 
         private fun initView() {
-            viewPager.adapter = PanelAdapter(children)
+            viewPager.adapter = adapter
             viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageSelected(position: Int) {
                     lastSelectedPanelPosition = position
@@ -92,13 +100,13 @@ internal class UInspectorPopupPanelContainer {
 
     private class PanelAdapter(val children: List<UInspectorChildPanel>) : PagerAdapter() {
 
-        private var currentPrimary: UInspectorChildPanel? = null
+        val createdPanel = mutableMapOf<UInspectorChildPanel, View>()
 
-        private val cacheView = mutableMapOf<UInspectorChildPanel, View>()
+        private var currentPrimary: UInspectorChildPanel? = null
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val panel = children[position]
-            return cacheView.getOrPut(panel) {
+            return createdPanel.getOrPut(panel) {
                 val child = panel.onCreateView(container.context)
                 container.addView(child)
                 child

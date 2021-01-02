@@ -11,10 +11,12 @@ import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelService
  */
 class UInspectorDefaultPanelService : UInspectorChildPanelService {
 
-    override val panels: Set<UInspectorChildPanel> = setOf(
-        UInspectorPropertiesPanel(PROPERTIES_PRIORITY),
-        UInspectorHierarchyPanel(HIERARCHY_PRIORITY)
-    )
+    override fun createPanels(): Set<UInspectorChildPanel> {
+        return setOf(
+            UInspectorPropertiesPanel(PROPERTIES_PRIORITY),
+            UInspectorHierarchyPanel(HIERARCHY_PRIORITY)
+        )
+    }
 
     companion object {
 
