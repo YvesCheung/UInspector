@@ -54,9 +54,8 @@ internal class UInspectorPopupPanelContainer {
 
     private class UInspectorPopupPanel(
         val inspectorMask: View,
-        val children: List<UInspectorChildPanel>
+        children: List<UInspectorChildPanel>
     ) {
-
         private val popupPanel = inspectorMask.popup_panel
         private val viewPager = popupPanel.popup_panel_viewpager
         private val tabLayout = popupPanel.popup_panel_tab
