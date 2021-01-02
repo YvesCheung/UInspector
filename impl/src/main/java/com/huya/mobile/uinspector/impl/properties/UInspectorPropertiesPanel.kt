@@ -72,6 +72,8 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPropsHolder {
             val textView = TextView(parent.context)
+            textView.textSize = 11f
+            textView.setTextColor(Color.WHITE)
             return ViewPropsHolder(textView)
         }
 
@@ -80,7 +82,7 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
         @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: ViewPropsHolder, position: Int) {
             val (name, value) = displayProp[position]
-            holder.text.text = "$name: $value"
+            holder.text.text = "$name:   $value"
         }
     }
 
