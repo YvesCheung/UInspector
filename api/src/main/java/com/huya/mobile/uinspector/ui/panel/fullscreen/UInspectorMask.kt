@@ -79,9 +79,14 @@ internal class UInspectorMask(
             }
         })
 
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        gesture.onTouchEvent(ev)
+        return super.dispatchTouchEvent(ev)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return gesture.onTouchEvent(event)
+        return true
     }
 
     private fun updateDecoration(touchViews: List<View>) {
