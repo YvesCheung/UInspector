@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.uinspector_view_layout.view.*
  * @author YvesCheung
  * 2020/12/31
  */
-class UInspectorPropertiesPanel : UInspectorChildPanel {
+class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPanel {
 
     override val title = "properties"
 

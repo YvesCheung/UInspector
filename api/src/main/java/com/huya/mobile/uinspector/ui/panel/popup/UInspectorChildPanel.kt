@@ -9,6 +9,8 @@ import android.view.View
  */
 interface UInspectorChildPanel {
 
+    val priority: Int
+
     val title: CharSequence
 
     fun onCreateView(context: Context): View

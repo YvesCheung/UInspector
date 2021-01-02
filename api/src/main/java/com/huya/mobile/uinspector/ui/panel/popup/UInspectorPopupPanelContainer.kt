@@ -23,7 +23,7 @@ internal class UInspectorPopupPanelContainer {
 
     fun show(anchorView: View, parent: ViewGroup) {
         dismiss()
-        val childrenPanel = UInspector.childPanels.toList()
+        val childrenPanel = UInspector.childPanels
         if (childrenPanel.isNotEmpty()) {
             popupPanel = UInspectorPopupPanel(
                 LayoutInflater.from(parent.context)

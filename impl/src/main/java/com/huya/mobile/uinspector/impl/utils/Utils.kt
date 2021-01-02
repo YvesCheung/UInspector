@@ -1,11 +1,13 @@
 package com.huya.mobile.uinspector.impl.utils
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.Gravity
 import androidx.annotation.ColorInt
+import androidx.annotation.IdRes
 
 /**
  * @author YvesCheung
@@ -39,17 +41,25 @@ internal val Number.spStr: String
  * todo: parse the state
  */
 internal fun colorToString(color: ColorStateList): String {
-    return colorToString(color.defaultColor)
+    return hexToString(color.defaultColor)
 }
 
-internal fun colorToString(@ColorInt color: Int): String {
+internal fun hexToString(@ColorInt color: Int): String {
     return "0x${Integer.toHexString(color)}"
 }
 
 internal fun drawableToString(drawable: Drawable): String {
     return when (drawable) {
-        is ColorDrawable -> colorToString(drawable.color)
+        is ColorDrawable -> hexToString(drawable.color)
         else -> drawable::class.java.simpleName
+    }
+}
+
+internal fun idToString(context: Context, @IdRes id: Int): String {
+    return try {
+        "@+id/${context.resources.getResourceEntryName(id)}"
+    } catch (e: Resources.NotFoundException) {
+        hexToString(id)
     }
 }
 
