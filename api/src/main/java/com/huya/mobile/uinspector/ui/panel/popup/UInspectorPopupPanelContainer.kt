@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.huya.mobile.uinspector.R
 import com.huya.mobile.uinspector.UInspector
 import com.yy.mobile.whisper.IntDef
@@ -79,6 +80,12 @@ internal class UInspectorPopupPanelContainer {
 
         private fun initView() {
             viewPager.adapter = PanelAdapter(children)
+            viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+                override fun onPageSelected(position: Int) {
+                    lastSelectedPanelPosition = position
+                }
+            })
+            viewPager.setCurrentItem(lastSelectedPanelPosition, false)
             tabLayout.setupWithViewPager(viewPager)
         }
     }
@@ -117,5 +124,10 @@ internal class UInspectorPopupPanelContainer {
         }
 
         override fun getCount(): Int = children.size
+    }
+
+    companion object {
+
+        private var lastSelectedPanelPosition = 0
     }
 }
