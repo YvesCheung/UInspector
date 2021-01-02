@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.huya.mobile.uinspector.util.tryGetActivity
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 
 /**
  * @author YvesCheung
@@ -24,20 +24,10 @@ internal class UInspectorPanelDelegate {
         return dialog
     }
 
-    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saveInstance: Bundle?): View? {
-        return UInspectorMask(inflater.context)
-    }
+    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saveIns: Bundle?): View? =
+        UInspectorMask(inflater.context)
 
     fun onStart(dialog: Dialog?) {
-        val activity = tryGetActivity(dialog?.context)
-        val rootView = activity?.findViewById<View>(android.R.id.content)
-        if (rootView != null) {
-            dialog?.window?.setLayout(rootView.width, rootView.height)
-        } else {
-            dialog?.window?.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-        }
+        dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
     }
 }
