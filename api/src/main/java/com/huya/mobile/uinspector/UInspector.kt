@@ -37,7 +37,7 @@ object UInspector {
     fun create(context: Context) {
         if (init.compareAndSet(false, true)) {
             application = context.applicationContext as Application
-            application.registerActivityLifecycleCallbacks(lifecycle)
+            lifecycle.register(application)
             stop()
         }
     }
@@ -46,7 +46,7 @@ object UInspector {
     @AnyThread
     fun destroy() {
         if (init.compareAndSet(true, false)) {
-            application.unregisterActivityLifecycleCallbacks(lifecycle)
+            lifecycle.unRegister(application)
             application.stopService(Intent(application, UInspectorNotificationService::class.java))
         }
     }
@@ -74,6 +74,15 @@ object UInspector {
             Intent(application, UInspectorNotificationService::class.java)
                 .putExtra(PENDING_RUNNING, running)
         )
+    }
+
+    /**
+     * Check the [UInspectorPanel] state to make sure the ui is correct.
+     * If [UInspectorState.isRunning] is true, bring [UInspectorPanel] to front.
+     */
+    @MainThread
+    internal fun makeSureState() {
+        changeStateInner(currentState.isRunning)
     }
 
     @MainThread
