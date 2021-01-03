@@ -46,10 +46,6 @@ open class TextViewPropertiesParser(view: TextView) : ViewPropertiesParser<TextV
             props["gravity"] = gravityToString(view.gravity)
         }
 
-        if (view.isSingleLine) {
-            props["isSingleLine"] = view.isSingleLine
-        }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
             if (view.maxLines != Int.MAX_VALUE) {

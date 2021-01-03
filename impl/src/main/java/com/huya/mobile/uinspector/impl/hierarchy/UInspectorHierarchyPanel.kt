@@ -3,13 +3,13 @@ package com.huya.mobile.uinspector.impl.hierarchy
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.huya.mobile.uinspector.UInspector
@@ -39,7 +39,7 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
 
             val ssb = SpannableStringBuilder()
 
-            ssb.withColor {
+            ssb.withColor(context) {
                 ssb.newLine(0) {
                     append(activity::class.java.canonicalName)
                 }
@@ -48,7 +48,7 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
             for ((index, view) in hierarchy.withIndex()) {
                 val fragment = records[view]
                 if (fragment != null) {
-                    ssb.withColor {
+                    ssb.withColor(context) {
                         newLine(index) {
                             append(fragment::class.java.canonicalName)
                         }
@@ -56,7 +56,7 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
                 }
 
                 if (index == hierarchy.lastIndex) {
-                    ssb.withColor {
+                    ssb.withColor(context) {
                         ssb.newLine(index) {
                             append(view::class.java.simpleName)
                             if (view.id > 0) {
@@ -122,12 +122,15 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
         append("\n")
     }
 
-    private inline fun SpannableStringBuilder.withColor(write: SpannableStringBuilder.() -> Unit) {
+    private inline fun SpannableStringBuilder.withColor(
+        context: Context,
+        write: SpannableStringBuilder.() -> Unit
+    ) {
         val start = length
         write()
         val end = length
         setSpan(
-            ForegroundColorSpan(Color.parseColor("#66B3FF")),
+            ForegroundColorSpan(ContextCompat.getColor(context, R.color.uinspector_primary_color)),
             start,
             end,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

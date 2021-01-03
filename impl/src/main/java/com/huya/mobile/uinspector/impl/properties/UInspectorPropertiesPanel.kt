@@ -3,10 +3,14 @@ package com.huya.mobile.uinspector.impl.properties
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
@@ -82,7 +86,19 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
         @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: ViewPropsHolder, position: Int) {
             val (name, value) = displayProp[position]
-            holder.text.text = "$name:   $value"
+            val s = SpannableString("$name: $value")
+            s.setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(
+                        holder.itemView.context,
+                        R.color.uinspector_primary_color
+                    )
+                ),
+                0,
+                name.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            holder.text.text = s
         }
     }
 

@@ -19,6 +19,7 @@
         android:id="@+id/popup_panel_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabIndicatorColor="#FFFF37"
+        app:tabIndicatorHeight="4dp"
+        app:tabIndicatorColor="@color/uinspector_primary_color"
         app:tabMode="scrollable" />
 </LinearLayout>
