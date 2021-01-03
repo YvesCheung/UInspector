@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
-import kotlinx.android.synthetic.main.uinspector_panel_accessibility.view.*
+import kotlinx.android.synthetic.main.uinspector_view_accessibility.view.*
 
 /**
  * @author YvesCheung
@@ -61,7 +61,7 @@ class UInspectorAccessibilityPanel(override val priority: Int) : UInspectorChild
         @SuppressLint("InflateParams")
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
             val root = LayoutInflater.from(parent.context)
-                .inflate(R.layout.uinspector_panel_accessibility, parent, false)
+                .inflate(R.layout.uinspector_view_accessibility, parent, false)
             return VH(root.uinspector_view_access_btn)
         }
 
