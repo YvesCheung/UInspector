@@ -22,3 +22,24 @@ dependencies {
     implementation "com.google.android.material:material:1.2.1"
     api 'com.yy.mobile:whisper:1.0.2'
 }
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'UInspector'
+
+    libraryGroupId = 'com.huya.mobile'
+    libraryName = 'Uinspector-api'
+
+    libraryDescription = 'A UI inspector to traverse a view hierarchy on Android'
+
+    siteUrl = 'https://github.com/YvesCheung/UInspector'
+    gitUrl = 'https://github.com/YvesCheung/UInspector.git'
+
+    libraryVersion = version
+
+    developerId = 'YvesCheung'
+    developerName = 'YvesCheung'
+    developerEmail = '975135274@qq.com'
+}
+
+apply from: "../gradle/publish.gradle"

@@ -1,4 +1,6 @@
-include ':impl'
-include ':api'
+include ':Uinspector'
+project(":Uinspector").projectDir = file("./impl")
+include ':Uinspector-api'
+project(":Uinspector-api").projectDir = file("./api")
 include ':app'
 rootProject.name = "UInspector"
