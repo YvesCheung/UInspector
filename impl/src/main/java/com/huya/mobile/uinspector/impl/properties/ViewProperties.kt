@@ -3,6 +3,8 @@ package com.huya.mobile.uinspector.impl.properties
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import java.util.*
+import kotlin.collections.LinkedHashMap
 
 /**
  * @author YvesCheung
@@ -19,8 +21,16 @@ class ViewProperties(
 
     object ViewPropertiesParserFactory {
 
+        private val parserFactory =
+            ServiceLoader.load(ViewPropertiesParserService::class.java)
+
         fun of(view: View): ViewPropertiesParser<out View> {
-            //todo: Add more situation
+            for (service in parserFactory) {
+                val parser = service.tryCreate(view)
+                if (parser != null) {
+                    return parser
+                }
+            }
             return when (view) {
                 is ImageView -> ImageViewPropertiesParser(view)
                 is TextView -> TextViewPropertiesParser(view)
