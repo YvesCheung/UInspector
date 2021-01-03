@@ -6,7 +6,7 @@
     <application>
         <provider
             android:name=".lifecycle.UInspectorInstaller"
-            android:authorities="com.huya.mobile.uinspector.installer"
+            android:authorities="${applicationId}.uinspector.lifecycle.installer"
             android:exported="false" />
 
         <service
