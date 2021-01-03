@@ -79,17 +79,17 @@ open class ViewDecoration(val view: View) : UInspectorDecoration {
 
         private val boundPaint = Paint().apply {
             style = Paint.Style.FILL
-            color = Color.parseColor("#80FFDD00")
+            color = Color.parseColor("#80FFED97")
         }
 
         private val paddingPaint = Paint().apply {
             style = Paint.Style.FILL
-            color = Color.parseColor("#800000FF")
+            color = Color.parseColor("#8066B3FF")
         }
 
         private val marginPaint = Paint().apply {
             style = Paint.Style.FILL
-            color = Color.parseColor("#8000FF00")
+            color = Color.parseColor("#8093FF93")
         }
     }
 }
