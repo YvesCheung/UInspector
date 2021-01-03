@@ -3,7 +3,6 @@ package com.huya.mobile.uinspector.ui.panel.fullscreen
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.os.Build
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
@@ -35,7 +34,7 @@ internal class UInspectorMask(
     /**
      * The DecorView that [UInspectorMask] is attached to.
      */
-    private val currentDecorView by lazy(LazyThreadSafetyMode.NONE) { findRootParent() }
+    internal val currentDecorView by lazy(LazyThreadSafetyMode.NONE) { findRootParent() }
 
     /**
      * [UInspectorMask]'s location
