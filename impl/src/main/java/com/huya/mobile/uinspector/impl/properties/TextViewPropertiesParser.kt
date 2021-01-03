@@ -24,12 +24,14 @@ open class TextViewPropertiesParser(view: TextView) : ViewPropertiesParser<TextV
 
         props["textColor"] = colorToString(view.textColors)
 
-        if (view.typeface.isBold) {
-            props["isBold"] = "true"
-        }
+        if (view.typeface != null) {
+            if (view.typeface.isBold) {
+                props["isBold"] = "true"
+            }
 
-        if (view.typeface.isItalic) {
-            props["isItalic"] = "true"
+            if (view.typeface.isItalic) {
+                props["isItalic"] = "true"
+            }
         }
 
         if (view.hint != null) {
@@ -42,6 +44,10 @@ open class TextViewPropertiesParser(view: TextView) : ViewPropertiesParser<TextV
 
         if (view.gravity != Gravity.TOP or Gravity.START) {
             props["gravity"] = gravityToString(view.gravity)
+        }
+
+        if (view.isSingleLine) {
+            props["isSingleLine"] = view.isSingleLine
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
