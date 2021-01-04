@@ -10,6 +10,10 @@ import android.os.Bundle
 import androidx.annotation.MainThread
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.ProcessLifecycleOwner
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.state.UInspectorLifecycleState
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorDialogFragment
@@ -17,6 +21,7 @@ import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFrag
 import com.huya.mobile.uinspector.util.log
 import com.yy.mobile.whisper.NotThreadSafe
 import com.yy.mobile.whisper.UseWith
+
 
 @Suppress("MemberVisibilityCanBePrivate")
 @NotThreadSafe
@@ -27,14 +32,33 @@ internal class UInspectorLifecycle {
 
     @UseWith("unRegister")
     fun register(application: Application) {
+        ProcessLifecycleOwner.get().lifecycle.addObserver(appLifecycle)
         application.registerActivityLifecycleCallbacks(activityLifecycle)
     }
 
     fun unRegister(application: Application) {
-        application.registerActivityLifecycleCallbacks(activityLifecycle)
+        application.unregisterActivityLifecycleCallbacks(activityLifecycle)
+        ProcessLifecycleOwner.get().lifecycle.removeObserver(appLifecycle)
+    }
+
+    private val appLifecycle = object : LifecycleObserver {
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_START)
+        fun onForeground() {
+            val running = UInspector.currentState.isRunning
+            log("onForeground: restart service, isRunning = $running")
+            UInspector.startService(running)
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+        fun onBackground() {
+            log("onBackground: stop service")
+            UInspector.stopService()
+        }
     }
 
     private val activityLifecycle = object : ActivityLifecycleCallbacks {
+
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             onActivityChanged(activity)
         }

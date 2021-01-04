@@ -67,13 +67,18 @@ object UInspector {
 
     private val lifecycle = UInspectorLifecycle()
 
-    private fun startService(running: Boolean) {
+    internal fun startService(running: Boolean) {
         if (!init.get()) throw IllegalStateException("UInspector has not been init")
         ContextCompat.startForegroundService(
             application,
             Intent(application, UInspectorNotificationService::class.java)
                 .putExtra(PENDING_RUNNING, running)
         )
+    }
+
+    internal fun stopService() {
+        if (!init.get()) throw IllegalStateException("UInspector has not been init")
+        application.stopService(Intent(application, UInspectorNotificationService::class.java))
     }
 
     /**
