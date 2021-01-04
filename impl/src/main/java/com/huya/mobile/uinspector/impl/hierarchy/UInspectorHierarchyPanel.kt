@@ -32,7 +32,7 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
         val root = LayoutInflater.from(context)
             .inflate(R.layout.uinspector_panel_hierarchy, null)
         val lifecycleState = UInspector.currentState.withLifecycle
-        val hierarchy = lifecycleState?.lastTouchTargets
+        val hierarchy = lifecycleState?.lastTargetViews
         val activity = lifecycleState?.activity
         if (hierarchy != null && activity != null) {
             val records = findFragments(activity)

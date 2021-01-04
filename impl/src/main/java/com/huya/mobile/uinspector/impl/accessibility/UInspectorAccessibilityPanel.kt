@@ -43,7 +43,7 @@ class UInspectorAccessibilityPanel(override val priority: Int) : UInspectorChild
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             val recyclerView = RecyclerView(context)
             val targetView =
-                UInspector.currentState.withLifecycle?.lastTouchTargets?.lastOrNull()
+                UInspector.currentState.withLifecycle?.lastTargetViews?.lastOrNull()
             if (targetView != null) {
                 recyclerView.layoutManager = LinearLayoutManager(context, VERTICAL, false)
                 recyclerView.adapter = Adapter(targetView)

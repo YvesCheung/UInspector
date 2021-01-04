@@ -5,7 +5,9 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelContainer
 
 
 /**
@@ -15,6 +17,9 @@ import android.view.ViewGroup
 internal class UInspectorLegacyDialogFragment : DialogFragment(), UInspectorPanel {
 
     private val delegate = UInspectorPanelDelegate()
+
+    override val childPanelContainer: UInspectorChildPanelContainer?
+        get() = delegate.childPanelContainer
 
     override fun show(activity: Activity) {
         show(activity.fragmentManager, "UInspectorLegacyDialogFragment")
@@ -43,4 +48,8 @@ internal class UInspectorLegacyDialogFragment : DialogFragment(), UInspectorPane
         } catch (ignore: Throwable) {
         }
     }
+
+    override fun updateTargetView(view: View) = delegate.updateTargetView(view)
+
+    override fun updateTargetViews(views: List<View>) = delegate.updateTargetViews(views)
 }

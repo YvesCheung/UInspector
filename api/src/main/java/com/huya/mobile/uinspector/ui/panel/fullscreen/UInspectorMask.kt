@@ -72,7 +72,7 @@ internal class UInspectorMask(
                         event.fromLocation(windowOffset) {
                             TouchTargets.findTouchTargets(activity, event, currentDecorView)
                         }
-                    updateDecoration(touchTargets)
+                    updateTargetViews(touchTargets)
                     return true
                 }
                 return false
@@ -84,25 +84,25 @@ internal class UInspectorMask(
         return gesture.onTouchEvent(ev)
     }
 
-    private fun updateDecoration(touchViews: List<View>) {
+    fun updateTargetViews(views: List<View>) {
         val dumpViews =
-            touchViews.joinToString(" -> ") { view -> view::class.java.simpleName }
-        log("Touch targets = $dumpViews")
+            views.joinToString(" -> ") { view -> view::class.java.simpleName }
+        log("Targets = $dumpViews")
 
         val state = UInspector.currentState.withLifecycle ?: return
 
-        val lastTarget = state.lastTouchTargets?.lastOrNull()
-        if (lastTarget != null) {
-            decorations.remove(ViewDecoration(lastTarget))
-            state.lastTouchTargets = null
+        val oldTarget = state.lastTargetViews?.lastOrNull()
+        if (oldTarget != null) {
+            decorations.remove(ViewDecoration(oldTarget))
+            state.lastTargetViews = null
             popupPanelContainer.dismiss()
         }
 
-        val touchTarget = touchViews.lastOrNull()
-        if (touchTarget != lastTarget && touchTarget != null) {
-            decorations.add(ViewDecoration(touchTarget))
-            state.lastTouchTargets = touchViews
-            popupPanelContainer.show(touchTarget)
+        val newTarget = views.lastOrNull()
+        if (newTarget != oldTarget && newTarget != null) {
+            decorations.add(ViewDecoration(newTarget))
+            state.lastTargetViews = views
+            popupPanelContainer.show(newTarget)
         }
 
         invalidate()

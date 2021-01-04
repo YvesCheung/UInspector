@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import com.huya.mobile.uinspector.hierarchy.ViewHierarchy
 import com.huya.mobile.uinspector.hierarchy.WindowManager
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorPopupPanelContainerImpl
 import com.huya.mobile.uinspector.util.tryGetActivity
@@ -24,6 +25,14 @@ internal class UInspectorPanelDelegate {
 
     val childPanelContainer: UInspectorPopupPanelContainerImpl?
         get() = mask?.popupPanelContainer
+
+    fun updateTargetViews(views: List<View>) {
+        mask?.updateTargetViews(views)
+    }
+
+    fun updateTargetView(view: View) {
+        mask?.updateTargetViews(ViewHierarchy.get(view))
+    }
 
     fun onCreateDialog(context: Context, theme: Int): Dialog {
         val dialog = UInspectorKeyEventDispatcher(context, theme)

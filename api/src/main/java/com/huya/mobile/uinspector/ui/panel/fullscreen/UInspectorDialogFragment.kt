@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
@@ -47,4 +48,8 @@ internal class UInspectorDialogFragment : DialogFragment(), UInspectorPanel {
         } catch (ignore: Throwable) {
         }
     }
+
+    override fun updateTargetView(view: View) = delegate.updateTargetView(view)
+
+    override fun updateTargetViews(views: List<View>) = delegate.updateTargetViews(views)
 }

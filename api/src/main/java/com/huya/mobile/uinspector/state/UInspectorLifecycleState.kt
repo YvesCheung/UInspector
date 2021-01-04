@@ -16,5 +16,5 @@ class UInspectorLifecycleState(val activity: Activity) {
 
     internal var panel: UInspectorPanel? = null
 
-    var lastTouchTargets: List<View>? = null
+    var lastTargetViews: List<View>? = null
 }

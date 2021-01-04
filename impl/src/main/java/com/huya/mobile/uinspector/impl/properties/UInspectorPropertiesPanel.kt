@@ -33,7 +33,7 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
             .inflate(R.layout.uinspector_panel_properties, null)
 
         val targetView =
-            UInspector.currentState.withLifecycle?.lastTouchTargets?.lastOrNull()
+            UInspector.currentState.withLifecycle?.lastTargetViews?.lastOrNull()
         if (targetView != null) {
 
             root.view_props_list.adapter = ViewPropsAdapter(ViewProperties(targetView))
