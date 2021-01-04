@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.impl.properties
+package com.huya.mobile.uinspector.impl.properties.view
 
 import android.graphics.Rect
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.impl.properties
+package com.huya.mobile.uinspector.impl.properties.view
 
 import android.os.Build
 import android.widget.ImageView
@@ -9,7 +9,7 @@ import com.huya.mobile.uinspector.impl.utils.drawableToString
  * @author YvesCheung
  * 2021/1/2
  */
-class ImageViewPropertiesParser(view: ImageView) : ViewPropertiesParser<ImageView>(view) {
+open class ImageViewPropertiesParser(view: ImageView) : ViewPropertiesParser<ImageView>(view) {
 
     override fun parse(props: MutableMap<String, Any?>) {
         super.parse(props)

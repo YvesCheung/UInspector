@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.impl.properties
+package com.huya.mobile.uinspector.impl.properties.view
 
 import android.os.Build
 import android.view.Gravity
@@ -10,7 +10,7 @@ import com.huya.mobile.uinspector.impl.utils.gravityToString
  * @author YvesCheung
  * 2021/1/4
  */
-class LinearLayoutPropertiesParser(view: LinearLayout) : ViewPropertiesParser<LinearLayout>(view) {
+open class LinearLayoutPropertiesParser(view: LinearLayout) : ViewPropertiesParser<LinearLayout>(view) {
 
     override fun parse(props: MutableMap<String, Any?>) {
         super.parse(props)

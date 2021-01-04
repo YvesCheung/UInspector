@@ -22,40 +22,40 @@ internal val Number.pxToDp: Float
 internal val Int.dpStr: String
     get() = "${pxToDp}dp"
 
-internal val Number.dpStr: String
+val Number.dpStr: String
     get() = "${pxToDp}dp"
 
-internal val Int.pxToSp: Int
+val Int.pxToSp: Int
     get() = (this.toFloat() / Resources.getSystem().displayMetrics.scaledDensity).toInt()
 
 internal val Number.pxToSp: Float
     get() = this.toFloat() / Resources.getSystem().displayMetrics.scaledDensity
 
-internal val Int.spStr: String
+val Int.spStr: String
     get() = "${pxToSp}sp"
 
-internal val Number.spStr: String
+val Number.spStr: String
     get() = "${pxToSp}sp"
 
 /**
  * todo: parse the state
  */
-internal fun colorToString(color: ColorStateList): String {
+fun colorToString(color: ColorStateList): String {
     return hexToString(color.defaultColor)
 }
 
-internal fun hexToString(@ColorInt color: Int): String {
+fun hexToString(@ColorInt color: Int): String {
     return "0x${Integer.toHexString(color)}"
 }
 
-internal fun drawableToString(drawable: Drawable): String {
+fun drawableToString(drawable: Drawable): String {
     return when (drawable) {
         is ColorDrawable -> hexToString(drawable.color)
         else -> drawable::class.java.simpleName
     }
 }
 
-internal fun idToString(context: Context, @IdRes id: Int): String {
+fun idToString(context: Context, @IdRes id: Int): String {
     return try {
         "@+id/${context.resources.getResourceEntryName(id)}"
     } catch (e: Resources.NotFoundException) {
@@ -63,7 +63,7 @@ internal fun idToString(context: Context, @IdRes id: Int): String {
     }
 }
 
-internal fun gravityToString(gravity: Int): String {
+fun gravityToString(gravity: Int): String {
     val result = StringBuilder()
     if (gravity and Gravity.FILL == Gravity.FILL) {
         result.append("FILL").append(' ')
@@ -116,6 +116,6 @@ internal fun gravityToString(gravity: Int): String {
     return result.toString()
 }
 
-internal fun CharSequence?.quote(): CharSequence? {
+fun CharSequence?.quote(): CharSequence? {
     return if (this != null) "\"$this\"" else this
 }

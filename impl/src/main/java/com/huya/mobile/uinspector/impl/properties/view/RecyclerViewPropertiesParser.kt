@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.impl.properties
+package com.huya.mobile.uinspector.impl.properties.view
 
 import androidx.recyclerview.widget.RecyclerView
 
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
  * @author YvesCheung
  * 2021/1/4
  */
-class RecyclerViewPropertiesParser(view: RecyclerView) : ViewPropertiesParser<RecyclerView>(view) {
+open class RecyclerViewPropertiesParser(view: RecyclerView) : ViewPropertiesParser<RecyclerView>(view) {
 
     override fun parse(props: MutableMap<String, Any?>) {
         super.parse(props)
