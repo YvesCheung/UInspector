@@ -11,7 +11,7 @@ import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelContainer
  * @author YvesCheung
  * 2020/12/30
  */
-internal interface UInspectorPanel {
+interface UInspectorPanel {
 
     val childPanelContainer: UInspectorChildPanelContainer?
 

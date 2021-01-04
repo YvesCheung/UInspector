@@ -14,7 +14,9 @@ import com.yy.mobile.whisper.NotThreadSafe
 @NotThreadSafe
 class UInspectorLifecycleState(val activity: Activity) {
 
-    internal var panel: UInspectorPanel? = null
+    var panel: UInspectorPanel? = null
+        internal set
 
     var lastTargetViews: List<View>? = null
+        internal set
 }

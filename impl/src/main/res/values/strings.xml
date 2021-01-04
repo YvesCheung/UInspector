@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_targets_title">Select another view as target:</string>
+    <string name="parent">Parent:</string>
+    <string name="children">Children:</string>
+    <string name="brother">Brother:</string>
+</resources>

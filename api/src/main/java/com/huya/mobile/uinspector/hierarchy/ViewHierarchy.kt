@@ -14,8 +14,9 @@ object ViewHierarchy {
         var parent: ViewParent? = target.parent
         while (parent is View) {
             result.add(parent)
-            parent = target.parent
+            parent = (parent as View).parent
         }
+        result.reverse()
         return result
     }
 }
