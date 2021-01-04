@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import com.huya.mobile.uinspector.hierarchy.WindowManager
+import com.huya.mobile.uinspector.ui.panel.popup.UInspectorPopupPanelContainerImpl
 import com.huya.mobile.uinspector.util.tryGetActivity
 
 /**
@@ -20,6 +21,9 @@ import com.huya.mobile.uinspector.util.tryGetActivity
 internal class UInspectorPanelDelegate {
 
     private var mask: UInspectorMask? = null
+
+    val childPanelContainer: UInspectorPopupPanelContainerImpl?
+        get() = mask?.popupPanelContainer
 
     fun onCreateDialog(context: Context, theme: Int): Dialog {
         val dialog = UInspectorKeyEventDispatcher(context, theme)

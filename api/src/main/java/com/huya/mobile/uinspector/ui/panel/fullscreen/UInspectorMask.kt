@@ -14,7 +14,7 @@ import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
-import com.huya.mobile.uinspector.ui.panel.popup.UInspectorPopupPanelContainer
+import com.huya.mobile.uinspector.ui.panel.popup.UInspectorPopupPanelContainerImpl
 import com.huya.mobile.uinspector.util.findRootParent
 import com.huya.mobile.uinspector.util.fromLocation
 import com.huya.mobile.uinspector.util.log
@@ -51,7 +51,7 @@ internal class UInspectorMask(
      */
     private val decorations: MutableList<UInspectorDecoration> = mutableListOf()
 
-    private val popupPanelContainer = UInspectorPopupPanelContainer()
+    internal val popupPanelContainer = UInspectorPopupPanelContainerImpl(this)
 
     private val gesture = GestureDetector(context,
         object : GestureDetector.SimpleOnGestureListener() {
@@ -102,7 +102,7 @@ internal class UInspectorMask(
         if (touchTarget != lastTarget && touchTarget != null) {
             decorations.add(ViewDecoration(touchTarget))
             state.lastTouchTargets = touchViews
-            popupPanelContainer.show(touchTarget, this)
+            popupPanelContainer.show(touchTarget)
         }
 
         invalidate()

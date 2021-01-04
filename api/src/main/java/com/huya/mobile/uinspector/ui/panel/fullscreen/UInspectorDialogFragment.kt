@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelContainer
 
 /**
  * @author YvesCheung
@@ -15,6 +16,9 @@ import androidx.fragment.app.FragmentActivity
 internal class UInspectorDialogFragment : DialogFragment(), UInspectorPanel {
 
     private val delegate = UInspectorPanelDelegate()
+
+    override val childPanelContainer: UInspectorChildPanelContainer?
+        get() = delegate.childPanelContainer
 
     override fun show(activity: Activity) {
         show((activity as FragmentActivity).supportFragmentManager, "UInspectorDialogFragment")

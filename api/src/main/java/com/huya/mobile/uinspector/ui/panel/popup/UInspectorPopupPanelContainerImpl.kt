@@ -19,11 +19,11 @@ import kotlinx.android.synthetic.main.uinspector_popup_panel_container.view.*
  * @author YvesCheung
  * 2020/12/31
  */
-internal class UInspectorPopupPanelContainer {
+internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) : UInspectorChildPanelContainer {
 
     private var popupPanel: UInspectorPopupPanel? = null
 
-    fun show(anchorView: View, parent: ViewGroup) {
+    override fun show(anchorView: View) {
         dismiss()
         val childrenPanel = UInspector.createChildPanels()
         if (childrenPanel.isNotEmpty()) {
@@ -47,7 +47,7 @@ internal class UInspectorPopupPanelContainer {
         }
     }
 
-    fun dismiss() {
+    override fun dismiss() {
         popupPanel?.dismiss()
         popupPanel = null
     }
