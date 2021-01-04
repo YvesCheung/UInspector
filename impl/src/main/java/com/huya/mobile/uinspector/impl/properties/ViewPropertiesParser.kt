@@ -3,18 +3,22 @@ package com.huya.mobile.uinspector.impl.properties
 import android.graphics.Rect
 import android.os.Build
 import android.view.View
+import com.huya.mobile.uinspector.impl.utils.colorToString
 import com.huya.mobile.uinspector.impl.utils.dpStr
 import com.huya.mobile.uinspector.impl.utils.drawableToString
 import com.huya.mobile.uinspector.impl.utils.idToString
 import com.yy.mobile.whisper.Output
 
 /**
+ * Extract all properties we concerned from [view]
+ *
  * @author YvesCheung
  * 2020/12/31
  */
 open class ViewPropertiesParser<T : View>(protected val view: T) {
 
     open fun parse(@Output props: MutableMap<String, Any?>) {
+        //todo: Should I just analyze the @InspectableProperty annotation by reflection?
         props["id"] =
             if (view.id <= 0) "NO_ID"
             else idToString(view.context, view.id)
@@ -25,8 +29,31 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
             props["visibility"] = if (view.visibility == View.INVISIBLE) "INVISIBLE" else "GONE"
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val drawable = view.foreground
+            if (drawable != null) {
+                props["foreground"] = drawableToString(drawable)
+            }
+
+            val tint = view.foregroundTintList
+            if (tint != null) {
+                props["foregroundTint"] = view.foregroundTintList
+            }
+        }
+
         if (view.background != null) {
             props["background"] = drawableToString(view.background)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val tint = view.backgroundTintList
+            if (tint != null) {
+                props["backgroundTint"] = colorToString(tint)
+            }
+
+            if (view.backgroundTintMode != null) {
+                props["backgroundTintMode"] = view.backgroundTintMode
+            }
         }
 
         if (view.scrollX != 0) {
@@ -64,8 +91,58 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
             props["scaleY"] = view.scaleY
         }
 
+        if (view.rotation != 0f) {
+            props["rotation"] = view.rotation
+        }
+
+        if (view.rotationX != 0f) {
+            props["rotationX"] = view.rotationX
+        }
+
+        if (view.rotationY != 0f) {
+            props["rotationY"] = view.rotationY
+        }
+
+        if (view.pivotX != 0f) {
+            props["pivotX"] = view.pivotX.dpStr
+        }
+
+        if (view.pivotY != 0f) {
+            props["pivotY"] = view.pivotY.dpStr
+        }
+
         if (view.isSelected) {
             props["isSelected"] = view.isSelected
+        }
+
+        if (view.isFocusable) {
+            props["isFocusable"] = view.isFocusable
+        }
+
+        if (view.isFocused) {
+            props["isFocused"] = view.isFocused
+        }
+
+        if (view.isClickable) {
+            props["isClickable"] = view.isClickable
+        }
+
+        if (view.isLongClickable) {
+            props["isLongClickable"] = view.isLongClickable
+        }
+
+        if (view.contentDescription != null) {
+            props["contentDescription"] = view.contentDescription
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (view.accessibilityPaneTitle != null) {
+                props["accessibilityPaneTitle"] = view.accessibilityPaneTitle
+            }
+        }
+
+        if (view.keepScreenOn) {
+            props["keepScreenOn"] = view.keepScreenOn
         }
     }
 }

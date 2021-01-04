@@ -1,8 +1,8 @@
 package com.huya.mobile.uinspector.impl.properties
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 import kotlin.collections.LinkedHashMap
 
@@ -34,6 +34,10 @@ class ViewProperties(
             return when (view) {
                 is ImageView -> ImageViewPropertiesParser(view)
                 is TextView -> TextViewPropertiesParser(view)
+                is RecyclerView -> RecyclerViewPropertiesParser(view)
+                is LinearLayout -> LinearLayoutPropertiesParser(view)
+                is RelativeLayout -> RelativeLayoutPropertiesParser(view)
+                is FrameLayout -> FrameLayoutPropertiesParser(view)
                 else -> ViewPropertiesParser(view)
             }
         }

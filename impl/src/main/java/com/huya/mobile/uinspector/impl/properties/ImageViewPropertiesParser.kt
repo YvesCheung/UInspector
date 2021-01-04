@@ -18,10 +18,6 @@ class ImageViewPropertiesParser(view: ImageView) : ViewPropertiesParser<ImageVie
 
         props["imageMatrix"] = view.imageMatrix.toShortString()
 
-        if (view.contentDescription != null) {
-            props["contentDescription"] = view.contentDescription
-        }
-
         if (view.drawable != null) {
             props["drawable"] = drawableToString(view.drawable)
         }
@@ -35,12 +31,20 @@ class ImageViewPropertiesParser(view: ImageView) : ViewPropertiesParser<ImageVie
             if (view.cropToPadding) {
                 props["cropToPadding"] = view.cropToPadding
             }
+
+            if (view.adjustViewBounds) {
+                props["adjustViewBounds"] = view.adjustViewBounds
+            }
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val tint = view.imageTintList
             if (tint != null) {
-                props["tint"] = colorToString(tint)
+                props["imageTint"] = colorToString(tint)
+            }
+
+            if (view.imageTintMode != null) {
+                props["imageTintMode"] = view.imageTintMode
             }
         }
 
