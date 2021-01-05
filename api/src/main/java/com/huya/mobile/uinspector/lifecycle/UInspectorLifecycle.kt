@@ -3,11 +3,12 @@ package com.huya.mobile.uinspector.lifecycle
 import android.app.Activity
 import android.app.Application
 import android.app.Application.ActivityLifecycleCallbacks
-import android.app.Fragment
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.MainThread
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -97,11 +98,11 @@ internal class UInspectorLifecycle {
 
                             override fun onFragmentAttached(
                                 fm: FragmentManager,
-                                f: androidx.fragment.app.Fragment,
+                                f: Fragment,
                                 context: Context
                             ) {
                                 log("onFragmentAttached $f")
-                                if (f !is UInspectorDialogFragment) {
+                                if (f is DialogFragment && f !is UInspectorDialogFragment) {
                                     UInspector.makeSureState()
                                 }
                             }
@@ -115,11 +116,11 @@ internal class UInspectorLifecycle {
 
                                 override fun onFragmentAttached(
                                     fm: android.app.FragmentManager?,
-                                    f: Fragment?,
+                                    f: android.app.Fragment?,
                                     context: Context?
                                 ) {
                                     log("onFragmentAttached $f")
-                                    if (f !is UInspectorLegacyDialogFragment) {
+                                    if (f is android.app.DialogFragment && f !is UInspectorLegacyDialogFragment) {
                                         UInspector.makeSureState()
                                     }
                                 }
