@@ -3,10 +3,10 @@ package com.huya.mobile.uinspector.impl.properties.view
 import android.os.Build
 import android.view.Gravity
 import android.widget.TextView
-import com.huya.mobile.uinspector.impl.utils.colorToString
-import com.huya.mobile.uinspector.impl.utils.gravityToString
-import com.huya.mobile.uinspector.impl.utils.quote
-import com.huya.mobile.uinspector.impl.utils.spStr
+import com.huya.mobile.uinspector.util.colorToString
+import com.huya.mobile.uinspector.util.gravityToString
+import com.huya.mobile.uinspector.util.quote
+import com.huya.mobile.uinspector.util.spStr
 
 /**
  * @author YvesCheung

@@ -3,7 +3,7 @@ package com.huya.mobile.uinspector.impl.properties.layoutParam
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import com.huya.mobile.uinspector.impl.utils.dpStr
+import com.huya.mobile.uinspector.util.dpStr
 import com.yy.mobile.whisper.Output
 
 /**

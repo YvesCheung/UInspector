@@ -2,8 +2,8 @@ package com.huya.mobile.uinspector.impl.properties.view
 
 import android.os.Build
 import android.widget.ImageView
-import com.huya.mobile.uinspector.impl.utils.colorToString
-import com.huya.mobile.uinspector.impl.utils.drawableToString
+import com.huya.mobile.uinspector.util.colorToString
+import com.huya.mobile.uinspector.util.drawableToString
 
 /**
  * @author YvesCheung

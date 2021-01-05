@@ -3,10 +3,7 @@ package com.huya.mobile.uinspector.impl.properties.view
 import android.graphics.Rect
 import android.os.Build
 import android.view.View
-import com.huya.mobile.uinspector.impl.utils.colorToString
-import com.huya.mobile.uinspector.impl.utils.dpStr
-import com.huya.mobile.uinspector.impl.utils.drawableToString
-import com.huya.mobile.uinspector.impl.utils.idToString
+import com.huya.mobile.uinspector.util.*
 import com.yy.mobile.whisper.Output
 
 /**
@@ -26,7 +23,7 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
         props["rect"] = Rect(view.left, view.top, view.right, view.bottom)
 
         if (view.visibility != View.VISIBLE) {
-            props["visibility"] = if (view.visibility == View.INVISIBLE) "INVISIBLE" else "GONE"
+            props["visibility"] = visibilityToString(view.visibility)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

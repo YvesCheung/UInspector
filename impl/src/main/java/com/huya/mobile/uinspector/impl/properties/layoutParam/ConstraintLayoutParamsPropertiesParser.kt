@@ -3,8 +3,8 @@ package com.huya.mobile.uinspector.impl.properties.layoutParam
 import android.content.Context
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
-import com.huya.mobile.uinspector.impl.utils.dpStr
-import com.huya.mobile.uinspector.impl.utils.idToString
+import com.huya.mobile.uinspector.util.dpStr
+import com.huya.mobile.uinspector.util.idToString
 
 /**
  * @author YvesCheung

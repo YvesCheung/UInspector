@@ -1,7 +1,7 @@
 package com.huya.mobile.uinspector.impl.properties.layoutParam
 
 import android.widget.LinearLayout
-import com.huya.mobile.uinspector.impl.utils.gravityToString
+import com.huya.mobile.uinspector.util.gravityToString
 
 /**
  * @author YvesCheung

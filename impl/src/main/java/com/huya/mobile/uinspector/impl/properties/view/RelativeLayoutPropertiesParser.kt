@@ -3,7 +3,7 @@ package com.huya.mobile.uinspector.impl.properties.view
 import android.os.Build
 import android.view.Gravity
 import android.widget.RelativeLayout
-import com.huya.mobile.uinspector.impl.utils.gravityToString
+import com.huya.mobile.uinspector.util.gravityToString
 
 /**
  * @author YvesCheung

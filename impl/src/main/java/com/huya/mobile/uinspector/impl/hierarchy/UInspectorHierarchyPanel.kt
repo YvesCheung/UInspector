@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
-import com.huya.mobile.uinspector.impl.utils.idToString
+import com.huya.mobile.uinspector.util.idToString
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.yy.mobile.whisper.Output
 import kotlinx.android.synthetic.main.uinspector_panel_hierarchy.view.*

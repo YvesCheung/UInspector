@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Build
 import android.widget.RelativeLayout.*
 import androidx.annotation.RequiresApi
-import com.huya.mobile.uinspector.impl.utils.idToString
+import com.huya.mobile.uinspector.util.idToString
 
 /**
  * @author YvesCheung

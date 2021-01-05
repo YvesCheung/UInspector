@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
-import com.huya.mobile.uinspector.impl.utils.dpStr
+import com.huya.mobile.uinspector.util.dpStr
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import kotlinx.android.synthetic.main.uinspector_panel_properties.view.*
 import kotlinx.android.synthetic.main.uinspector_view_layout.view.*

@@ -2,7 +2,7 @@ package com.huya.mobile.uinspector.impl.properties.layoutParam
 
 import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams.UNSPECIFIED_GRAVITY
-import com.huya.mobile.uinspector.impl.utils.gravityToString
+import com.huya.mobile.uinspector.util.gravityToString
 
 /**
  * @author YvesCheung

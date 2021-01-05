@@ -4,7 +4,7 @@ import android.os.Build
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.LinearLayout.HORIZONTAL
-import com.huya.mobile.uinspector.impl.utils.gravityToString
+import com.huya.mobile.uinspector.util.gravityToString
 
 /**
  * @author YvesCheung
