@@ -90,7 +90,7 @@ internal val Int.dpStr: String
     get() = "${pxToDp}dp"
 
 val Number.dpStr: String
-    get() = "${pxToDp}dp"
+    get() = "%.2fdp".format(pxToDp)
 
 val Int.pxToSp: Int
     get() = (this.toFloat() / Resources.getSystem().displayMetrics.scaledDensity).toInt()
@@ -102,7 +102,7 @@ val Int.spStr: String
     get() = "${pxToSp}sp"
 
 val Number.spStr: String
-    get() = "${pxToSp}sp"
+    get() = "%.2fsp".format(pxToSp)
 
 /**
  * todo: parse the state
