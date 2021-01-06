@@ -91,6 +91,10 @@ dependencies {
 
 See the sample in [src/main/resources/META-INF/services](https://github.com/YvesCheung/UInspector/blob/master/impl/src/main/resources/META-INF/services/com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelService)
 
+## Inspiration
+
+- [FELX](https://github.com/FLEXTool/FLEX)
+
 ## License
 
 	Copyright 2020 Yves Cheung
