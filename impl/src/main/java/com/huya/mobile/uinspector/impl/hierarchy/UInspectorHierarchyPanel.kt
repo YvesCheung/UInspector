@@ -1,23 +1,22 @@
 package com.huya.mobile.uinspector.impl.hierarchy
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
-import android.os.Build
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
-import com.huya.mobile.uinspector.util.idToString
+import com.huya.mobile.uinspector.impl.hierarchy.extra.DefaultHierarchyExtraInfoService
+import com.huya.mobile.uinspector.impl.hierarchy.extra.HierarchyExtraInfoService
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
-import com.yy.mobile.whisper.Output
+import com.huya.mobile.uinspector.util.idToString
 import kotlinx.android.synthetic.main.uinspector_panel_hierarchy.view.*
+import java.util.*
 
 /**
  * @author YvesCheung
@@ -34,25 +33,17 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
         val lifecycleState = UInspector.currentState.withLifecycle
         val hierarchy = lifecycleState?.lastTargetViews
         val activity = lifecycleState?.activity
-        if (hierarchy != null && activity != null) {
-            val records = findFragments(activity)
+        val targetView = hierarchy?.lastOrNull()
+        if (activity != null && targetView != null) {
+
+            val extraInfo =
+                extraInfoService.flatMap { it.create(activity, targetView) }
 
             val ssb = SpannableStringBuilder()
 
-            ssb.withColor(context) {
-                ssb.newLine(0) {
-                    append(activity::class.java.canonicalName)
-                }
-            }
-
             for ((index, view) in hierarchy.withIndex()) {
-                val fragment = records[view]
-                if (fragment != null) {
-                    ssb.withColor(context) {
-                        newLine(index) {
-                            append(fragment::class.java.canonicalName)
-                        }
-                    }
+                extraInfo.forEach {
+                    it.beforeHierarchy(index, view, ssb)
                 }
 
                 if (index == hierarchy.lastIndex) {
@@ -72,68 +63,52 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
                         }
                     }
                 }
+
+                extraInfo.forEach {
+                    it.afterHierarchy(index, view, ssb)
+                }
             }
             root.view_hierarchy.text = ssb
         }
         return root
     }
 
-    private fun findFragments(activity: Activity): Map<View, Any> {
-        val records = mutableMapOf<View, Any>()
-        if (activity is FragmentActivity) {
-            record(activity.supportFragmentManager, records)
-        }
-        record(activity.fragmentManager, records)
-        return records
-    }
+    companion object {
 
-    private fun record(fm: FragmentManager, @Output records: MutableMap<View, Any>) {
-        for (fragment in fm.fragments) {
-            val v = fragment.view
-            if (v != null) {
-                records[v] = fragment
+        private val extraInfoService: List<HierarchyExtraInfoService> by lazy(LazyThreadSafetyMode.NONE) {
+            val services =
+                ServiceLoader.load(HierarchyExtraInfoService::class.java).toMutableList()
+            services.add(DefaultHierarchyExtraInfoService())
+            services
+        }
+
+        inline fun SpannableStringBuilder.newLine(
+            indentSize: Int,
+            write: SpannableStringBuilder.() -> Unit
+        ) {
+            var size = indentSize
+            while (size-- > 0) {
+                append(" ")
             }
-            record(fragment.childFragmentManager, records)
+            append("- ")
+            write()
+            append("\n")
         }
-    }
 
-    private fun record(fm: android.app.FragmentManager, @Output records: MutableMap<View, Any>) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            for (fragment in fm.fragments) {
-                val v = fragment.view
-                if (v != null) {
-                    records[v] = fragment
-                }
-                record(fragment.childFragmentManager, records)
-            }
+        inline fun SpannableStringBuilder.withColor(
+            context: Context,
+            @ColorRes color: Int = R.color.uinspector_primary_color,
+            write: SpannableStringBuilder.() -> Unit
+        ) {
+            val start = length
+            write()
+            val end = length
+            setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(context, color)),
+                start,
+                end,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
         }
-    }
-
-    private inline fun SpannableStringBuilder.newLine(
-        indentSize: Int,
-        write: SpannableStringBuilder.() -> Unit
-    ) {
-        var size = indentSize
-        while (size-- > 0) {
-            append(" ")
-        }
-        append("- ")
-        write()
-        append("\n")
-    }
-
-    private inline fun SpannableStringBuilder.withColor(
-        context: Context,
-        write: SpannableStringBuilder.() -> Unit
-    ) {
-        val start = length
-        write()
-        val end = length
-        setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(context, R.color.uinspector_primary_color)),
-            start,
-            end,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
     }
 }
