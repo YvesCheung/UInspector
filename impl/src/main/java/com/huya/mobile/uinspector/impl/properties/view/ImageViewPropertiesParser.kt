@@ -19,7 +19,7 @@ open class ImageViewPropertiesParser(view: ImageView) : ViewPropertiesParser<Ima
         props["imageMatrix"] = view.imageMatrix.toShortString()
 
         if (view.drawable != null) {
-            props["drawable"] = drawableToString(view.drawable)
+            props["src"] = drawableToString(view.drawable)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
