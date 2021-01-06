@@ -17,6 +17,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import androidx.annotation.Size
 import com.yy.mobile.whisper.IntDef
+import kotlin.math.roundToInt
 
 /**
  * @author YvesCheung
@@ -90,7 +91,7 @@ internal val Int.dpStr: String
     get() = "${pxToDp}dp"
 
 val Number.dpStr: String
-    get() = "%.2fdp".format(pxToDp)
+    get() = "${pxToDp.roundToInt()}dp"
 
 val Int.pxToSp: Int
     get() = (this.toFloat() / Resources.getSystem().displayMetrics.scaledDensity).toInt()
@@ -102,7 +103,7 @@ val Int.spStr: String
     get() = "${pxToSp}sp"
 
 val Number.spStr: String
-    get() = "%.2fsp".format(pxToSp)
+    get() = "${pxToSp.roundToInt()}sp"
 
 /**
  * todo: parse the state
