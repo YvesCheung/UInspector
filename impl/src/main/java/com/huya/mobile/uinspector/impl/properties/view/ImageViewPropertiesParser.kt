@@ -4,6 +4,7 @@ import android.os.Build
 import android.widget.ImageView
 import com.huya.mobile.uinspector.util.colorToString
 import com.huya.mobile.uinspector.util.drawableToString
+import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
@@ -11,7 +12,7 @@ import com.huya.mobile.uinspector.util.drawableToString
  */
 open class ImageViewPropertiesParser(view: ImageView) : ViewPropertiesParser<ImageView>(view) {
 
-    override fun parse(props: MutableMap<String, Any?>) {
+    override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
 
         props["scaleType"] = view.scaleType

@@ -45,7 +45,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.1'
     implementation "com.github.bumptech.glide:glide:4.11.0"
+    implementation "com.facebook.fresco:fresco:2.1.0"
 
     debugImplementation project(':Uinspector')
     debugImplementation project(':Uinspector-optional-glide')
+    debugImplementation project(':Uinspector-optional-fresco')
 }

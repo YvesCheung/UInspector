@@ -47,7 +47,7 @@ class HomeViewModel : ViewModel() {
                 //toast window is on the top
                 Toast.makeText(ctx, "Toast's window is hard to inspect!", Toast.LENGTH_LONG).show()
             },
-            HomeItem("Start Activity") { ctx, _ ->
+            HomeItem("Inspect Glide/Fresco properties") { ctx, _ ->
                 ctx.startActivity(Intent(ctx, DemoActivity::class.java))
             }
         )

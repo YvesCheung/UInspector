@@ -1,6 +1,7 @@
 package com.huya.mobile.uinspector.impl.properties.view
 
 import androidx.recyclerview.widget.RecyclerView
+import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
@@ -8,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 open class RecyclerViewPropertiesParser(view: RecyclerView) : ViewPropertiesParser<RecyclerView>(view) {
 
-    override fun parse(props: MutableMap<String, Any?>) {
+    override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
 
         val lm = view.layoutManager

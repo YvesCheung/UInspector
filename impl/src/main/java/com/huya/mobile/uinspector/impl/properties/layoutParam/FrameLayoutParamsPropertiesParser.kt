@@ -3,6 +3,7 @@ package com.huya.mobile.uinspector.impl.properties.layoutParam
 import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams.UNSPECIFIED_GRAVITY
 import com.huya.mobile.uinspector.util.gravityToString
+import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
@@ -11,7 +12,7 @@ import com.huya.mobile.uinspector.util.gravityToString
 open class FrameLayoutParamsPropertiesParser(lp: FrameLayout.LayoutParams) :
     LayoutParamsPropertiesParser<FrameLayout.LayoutParams>(lp) {
 
-    override fun parse(props: MutableMap<String, Any?>) {
+    override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
 
         if (lp.gravity != UNSPECIFIED_GRAVITY) {

@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import com.huya.mobile.uinspector.util.dpStr
 import com.huya.mobile.uinspector.util.idToString
+import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
@@ -13,7 +14,7 @@ import com.huya.mobile.uinspector.util.idToString
 open class ConstraintLayoutParamsPropertiesParser(val context: Context, lp: LayoutParams) :
     LayoutParamsPropertiesParser<LayoutParams>(lp) {
 
-    override fun parse(props: MutableMap<String, Any?>) {
+    override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
 
         //todo: resolved start/end to left/right

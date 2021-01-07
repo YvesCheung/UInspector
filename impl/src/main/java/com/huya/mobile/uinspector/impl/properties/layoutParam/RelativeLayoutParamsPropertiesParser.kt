@@ -5,6 +5,7 @@ import android.os.Build
 import android.widget.RelativeLayout.*
 import androidx.annotation.RequiresApi
 import com.huya.mobile.uinspector.util.idToString
+import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
@@ -13,7 +14,7 @@ import com.huya.mobile.uinspector.util.idToString
 open class RelativeLayoutParamsPropertiesParser(val context: Context, lp: LayoutParams) :
     LayoutParamsPropertiesParser<LayoutParams>(lp) {
 
-    override fun parse(props: MutableMap<String, Any?>) {
+    override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

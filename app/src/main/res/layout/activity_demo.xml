@@ -9,12 +9,12 @@
         android:id="@+id/glide_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="Using Glide to load the image below.\nYou can inspect the 'glide model' property!"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,6 +30,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/glide_title"
-        tools:background="@android:color/holo_blue_bright"
+        app:layout_constraintBottom_toTopOf="@+id/fresco_title"
+        tools:background="@android:color/holo_blue_dark"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/fresco_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:gravity="center"
+        android:text="Using Fresco to load the image below.\nYou can inspect the 'glide model' property!"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/glide_imageview"
+        tools:ignore="HardcodedText" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/fresco_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Has 'glide model' property"
+        app:placeholderImage="@android:color/holo_blue_dark"
+        app:actualImageScaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fresco_title"
         tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

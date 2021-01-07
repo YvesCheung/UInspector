@@ -1,6 +1,7 @@
 package com.huya.mobile.uinspector.impl.properties.view
 
 import android.widget.FrameLayout
+import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
@@ -8,7 +9,7 @@ import android.widget.FrameLayout
  */
 open class FrameLayoutPropertiesParser(view: FrameLayout) : ViewPropertiesParser<FrameLayout>(view) {
 
-    override fun parse(props: MutableMap<String, Any?>) {
+    override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
 
         if (view.measureAllChildren) {

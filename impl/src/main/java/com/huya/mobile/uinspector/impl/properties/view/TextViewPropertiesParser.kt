@@ -7,6 +7,7 @@ import com.huya.mobile.uinspector.util.colorToString
 import com.huya.mobile.uinspector.util.gravityToString
 import com.huya.mobile.uinspector.util.quote
 import com.huya.mobile.uinspector.util.spStr
+import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
@@ -14,7 +15,7 @@ import com.huya.mobile.uinspector.util.spStr
  */
 open class TextViewPropertiesParser(view: TextView) : ViewPropertiesParser<TextView>(view) {
 
-    override fun parse(props: MutableMap<String, Any?>) {
+    override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
         if (view.text != null) {
             props["text"] = view.text.quote()

@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.LinearLayout.HORIZONTAL
 import com.huya.mobile.uinspector.util.gravityToString
+import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
@@ -12,7 +13,7 @@ import com.huya.mobile.uinspector.util.gravityToString
  */
 open class LinearLayoutPropertiesParser(view: LinearLayout) : ViewPropertiesParser<LinearLayout>(view) {
 
-    override fun parse(props: MutableMap<String, Any?>) {
+    override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
 
         props["orientation"] =
