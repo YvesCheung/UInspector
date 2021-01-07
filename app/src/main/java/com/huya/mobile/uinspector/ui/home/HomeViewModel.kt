@@ -53,11 +53,10 @@ class HomeViewModel : ViewModel() {
                 //toast window is on the top
                 Toast.makeText(ctx, "Toast's window is hard to inspect!", Toast.LENGTH_LONG).show()
             },
-            HomeItem("Show view in windowManager") { ctx, _ ->
+            HomeItem("Add view to WINDOW_SERVICE") { ctx, _ ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (Settings.canDrawOverlays(ctx)) {
                         val wm = ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-
                         @SuppressLint("InflateParams")
                         val view =
                             LayoutInflater.from(ctx).inflate(R.layout.content_popupwindow, null)
