@@ -3,6 +3,8 @@ package com.huya.mobile.uinspector
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.os.Build
+import android.provider.Settings
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.core.content.ContextCompat
@@ -14,6 +16,7 @@ import com.huya.mobile.uinspector.state.UInspectorState
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorDialogFragment
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFragment
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
+import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorWindow
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelService
 import com.huya.mobile.uinspector.util.log
@@ -98,10 +101,11 @@ object UInspector {
             currentLifecycle.panel?.close()
             if (running) {
                 val mask: UInspectorPanel =
-                    if (activity is FragmentActivity) {
-                        UInspectorDialogFragment()
-                    } else {
-                        UInspectorLegacyDialogFragment()
+                    when {
+                        Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                            Settings.canDrawOverlays(activity) -> UInspectorWindow()
+                        activity is FragmentActivity -> UInspectorDialogFragment()
+                        else -> UInspectorLegacyDialogFragment()
                     }
                 currentLifecycle.panel = mask
                 mask.show(activity)

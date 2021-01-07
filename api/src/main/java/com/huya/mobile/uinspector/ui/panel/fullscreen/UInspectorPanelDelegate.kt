@@ -4,10 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import com.huya.mobile.uinspector.hierarchy.ViewHierarchy
 import com.huya.mobile.uinspector.hierarchy.WindowManager
@@ -21,7 +18,7 @@ import com.huya.mobile.uinspector.util.tryGetActivity
 @Suppress("UNUSED_PARAMETER")
 internal class UInspectorPanelDelegate {
 
-    private var mask: UInspectorMask? = null
+    var mask: UInspectorMask? = null
 
     val childPanelContainer: UInspectorPopupPanelContainerImpl?
         get() = mask?.popupPanelContainer
@@ -60,8 +57,8 @@ internal class UInspectorPanelDelegate {
         return dialog
     }
 
-    fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saveIns: Bundle?): View? {
-        return UInspectorMask(inflater.context).also { mask = it }
+    fun onCreateView(context: Context): View {
+        return UInspectorMask(context).also { mask = it }
     }
 
     fun onStart(dialog: Dialog?) {

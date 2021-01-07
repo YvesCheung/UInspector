@@ -37,9 +37,13 @@ internal object WindowManager {
         val allViews = findAllDecorViews()
         if (allViews != null) {
             return allViews.filter { decorView ->
-                val anyChild = (decorView as? ViewGroup)?.getChildAt(0)
-                anyChild != null &&
-                    tryGetActivity(anyChild.context) === activity
+                if (decorView.context === activity) { //the special view add directly to windowManager
+                    return@filter true
+                } else { //normal DecorView
+                    val anyChild = (decorView as? ViewGroup)?.getChildAt(0)
+                    anyChild != null &&
+                        tryGetActivity(anyChild.context) === activity
+                }
             }
         }
         //solution when fail

@@ -35,7 +35,7 @@ internal class UInspectorLegacyDialogFragment : DialogFragment(), UInspectorPane
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = delegate.onCreateView(inflater, container, savedInstanceState)
+    ) = delegate.onCreateView(inflater.context)
 
     override fun onStart() {
         super.onStart()
