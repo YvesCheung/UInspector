@@ -6,34 +6,30 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/demo_title"
+        android:id="@+id/glide_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="It's a DemoActivity"
-        android:textColor="@android:color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:padding="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/demo_desc"
+        android:gravity="center"
+        android:text="Using Glide to load the image below.\nYou can inspect the 'glide model' property!"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
         tools:ignore="HardcodedText" />
 
-    <TextView
-        android:id="@+id/demo_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="To show how UInspector handle multi-windows"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ImageView
+        android:id="@+id/glide_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="Has 'glide model' property"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/demo_title"
+        app:layout_constraintTop_toBottomOf="@+id/glide_title"
+        tools:background="@android:color/holo_blue_bright"
         tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

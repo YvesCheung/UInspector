@@ -102,14 +102,6 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
             props["rotationY"] = view.rotationY
         }
 
-        if (view.pivotX != 0f) {
-            props["pivotX"] = view.pivotX.dpStr
-        }
-
-        if (view.pivotY != 0f) {
-            props["pivotY"] = view.pivotY.dpStr
-        }
-
         if (view.isSelected) {
             props["isSelected"] = view.isSelected
         }
@@ -142,6 +134,14 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
 
         if (view.keepScreenOn) {
             props["keepScreenOn"] = view.keepScreenOn
+        }
+
+        if (view.pivotX != 0f) {
+            props["pivotX"] = view.pivotX.dpStr
+        }
+
+        if (view.pivotY != 0f) {
+            props["pivotY"] = view.pivotY.dpStr
         }
     }
 }

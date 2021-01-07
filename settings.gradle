@@ -2,5 +2,7 @@ include ':Uinspector'
 project(":Uinspector").projectDir = file("./impl")
 include ':Uinspector-api'
 project(":Uinspector-api").projectDir = file("./api")
+include ':Uinspector-optional-glide'
+project(":Uinspector-optional-glide").projectDir = file("./optional/glide")
 include ':app'
 rootProject.name = "UInspector"

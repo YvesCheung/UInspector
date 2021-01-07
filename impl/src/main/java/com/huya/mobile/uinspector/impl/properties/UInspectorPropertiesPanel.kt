@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
@@ -101,6 +102,7 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             holder.text.text = s
+            holder.text.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 
