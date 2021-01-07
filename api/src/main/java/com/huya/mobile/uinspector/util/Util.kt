@@ -7,6 +7,9 @@ import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.BackgroundColorSpan
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
@@ -108,17 +111,26 @@ val Number.spStr: String
 /**
  * todo: parse the state
  */
-fun colorToString(color: ColorStateList): String {
-    return hexToString(color.defaultColor)
+fun colorToString(color: ColorStateList): CharSequence {
+    return colorToString(color.defaultColor)
 }
 
-fun hexToString(@ColorInt color: Int): String {
-    return "0x${Integer.toHexString(color)}"
+fun colorToString(@ColorInt color: Int): CharSequence {
+    val str = SpannableStringBuilder(hexToString(color)).append(" ")
+    val start = str.length
+    str.append("    ")
+    val end = str.length
+    str.setSpan(BackgroundColorSpan(color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    return str
 }
 
-fun drawableToString(drawable: Drawable): String {
+fun hexToString(hex: Int): String {
+    return "0x${Integer.toHexString(hex)}"
+}
+
+fun drawableToString(drawable: Drawable): CharSequence {
     return when (drawable) {
-        is ColorDrawable -> hexToString(drawable.color)
+        is ColorDrawable -> colorToString(drawable.color)
         else -> drawable::class.java.simpleName
     }
 }

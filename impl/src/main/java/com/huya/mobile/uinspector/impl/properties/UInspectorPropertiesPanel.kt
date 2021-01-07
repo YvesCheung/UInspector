@@ -3,7 +3,7 @@ package com.huya.mobile.uinspector.impl.properties
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
@@ -14,8 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
-import com.huya.mobile.uinspector.util.dpStr
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
+import com.huya.mobile.uinspector.util.dpStr
 import kotlinx.android.synthetic.main.uinspector_panel_properties.view.*
 import kotlinx.android.synthetic.main.uinspector_view_layout.view.*
 
@@ -86,7 +86,9 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
         @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: ViewPropsHolder, position: Int) {
             val (name, value) = displayProp[position]
-            val s = SpannableString("$name: $value")
+            val s = SpannableStringBuilder(name)
+                .append(": ")
+                .append(if (value is CharSequence) value else value.toString())
             s.setSpan(
                 ForegroundColorSpan(
                     ContextCompat.getColor(
