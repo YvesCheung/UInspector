@@ -19,9 +19,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.huya.mobile.uinspector.demo.R
-import com.huya.mobile.uinspector.ui.activity.DemoActivity
 import com.huya.mobile.uinspector.ui.dialog.DemoDialog
 import com.huya.mobile.uinspector.ui.dialog.DemoDialogFragment
+import com.huya.mobile.uinspector.ui.optional.ImageLoaderActivity
+import com.huya.mobile.uinspector.ui.optional.LottieActivity
 
 class HomeViewModel : ViewModel() {
 
@@ -53,10 +54,11 @@ class HomeViewModel : ViewModel() {
                 //toast window is on the top
                 Toast.makeText(ctx, "Toast's window is hard to inspect!", Toast.LENGTH_LONG).show()
             },
-            HomeItem("Add view to WINDOW_SERVICE") { ctx, _ ->
+            HomeItem("Add to WindowManager") { ctx, _ ->
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (Settings.canDrawOverlays(ctx)) {
                         val wm = ctx.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+
                         @SuppressLint("InflateParams")
                         val view =
                             LayoutInflater.from(ctx).inflate(R.layout.content_popupwindow, null)
@@ -83,7 +85,10 @@ class HomeViewModel : ViewModel() {
                 }
             },
             HomeItem("Inspect Glide/Fresco") { ctx, _ ->
-                ctx.startActivity(Intent(ctx, DemoActivity::class.java))
+                ctx.startActivity(Intent(ctx, ImageLoaderActivity::class.java))
+            },
+            HomeItem("Inspect Lottie") { ctx, _ ->
+                ctx.startActivity(Intent(ctx, LottieActivity::class.java))
             }
         )
     }

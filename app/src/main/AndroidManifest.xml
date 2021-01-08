@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.huya.mobile.uinspector.ui.activity.DemoActivity" />
+        <activity android:name="com.huya.mobile.uinspector.ui.optional.ImageLoaderActivity" />
+        <activity android:name="com.huya.mobile.uinspector.ui.optional.LottieActivity" />
     </application>
 </manifest>
