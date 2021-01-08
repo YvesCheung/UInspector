@@ -136,11 +136,10 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
             props["keepScreenOn"] = view.keepScreenOn
         }
 
-        if (view.pivotX != 0f) {
+        if (view.pivotX.toInt() != view.measuredWidth / 2 ||
+            view.pivotY.toInt() != view.measuredHeight / 2
+        ) { //not the middle of the view
             props["pivotX"] = view.pivotX.dpStr
-        }
-
-        if (view.pivotY != 0f) {
             props["pivotY"] = view.pivotY.dpStr
         }
     }

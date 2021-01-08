@@ -17,8 +17,6 @@ open class ImageViewPropertiesParser(view: ImageView) : ViewPropertiesParser<Ima
 
         props["scaleType"] = view.scaleType
 
-        props["imageMatrix"] = view.imageMatrix.toShortString()
-
         if (view.drawable != null) {
             props["src"] = drawableToString(view.drawable)
         }
