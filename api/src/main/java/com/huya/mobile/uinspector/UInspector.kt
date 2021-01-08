@@ -49,6 +49,7 @@ object UInspector {
     @AnyThread
     fun destroy() {
         if (init.compareAndSet(true, false)) {
+            changeStateInner(false)
             lifecycle.unRegister(application)
             application.stopService(Intent(application, UInspectorNotificationService::class.java))
         }
@@ -89,12 +90,30 @@ object UInspector {
      * If [UInspectorState.isRunning] is true, bring [UInspectorPanel] to front.
      */
     @MainThread
-    internal fun makeSureState() {
+    internal fun syncState() {
         changeStateInner(currentState.isRunning)
     }
 
+    /**
+     * Unlike [changeStateTemporary], [running] will be recorded in [currentState]
+     */
     @MainThread
     internal fun changeStateInner(running: Boolean) {
+        changePanelState(running)
+        currentState.isRunning = running
+        log("change state to ${if (running) "RUNNING" else "IDLE"}")
+    }
+
+    /**
+     * Change the [UInspector] state temporary until the [syncState] to be invoked
+     */
+    @MainThread
+    internal fun changeStateTemporary(running: Boolean) {
+        changePanelState(running)
+        log("change state TEMPORARY to ${if (running) "RUNNING" else "IDLE"}")
+    }
+
+    private fun changePanelState(running: Boolean) {
         val currentLifecycle = currentState.withLifecycle
         if (currentLifecycle != null) { //some activity at the front end
             val activity = currentLifecycle.activity
@@ -111,9 +130,6 @@ object UInspector {
                 mask.show(activity)
             }
         }
-
-        currentState.isRunning = running
-        log("change state to ${if (running) "RUNNING" else "IDLE"}")
     }
 
     private val panelService by lazy(LazyThreadSafetyMode.NONE) {

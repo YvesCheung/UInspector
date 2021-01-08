@@ -54,6 +54,7 @@ internal class UInspectorLifecycle {
         @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
         fun onBackground() {
             log("onBackground: stop service")
+            UInspector.changeStateTemporary(false)
             UInspector.stopService()
         }
     }
@@ -103,7 +104,7 @@ internal class UInspectorLifecycle {
                             ) {
                                 log("onFragmentAttached $f")
                                 if (f is DialogFragment && f !is UInspectorDialogFragment) {
-                                    UInspector.makeSureState()
+                                    UInspector.syncState()
                                 }
                             }
                         }, true
@@ -121,14 +122,14 @@ internal class UInspectorLifecycle {
                                 ) {
                                     log("onFragmentAttached $f")
                                     if (f is android.app.DialogFragment && f !is UInspectorLegacyDialogFragment) {
-                                        UInspector.makeSureState()
+                                        UInspector.syncState()
                                     }
                                 }
                             },
                             true
                         )
                 }
-                UInspector.makeSureState()
+                UInspector.syncState()
             }
         }
     }
