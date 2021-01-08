@@ -53,6 +53,7 @@ internal object WindowManager {
     /**
      * Find all DecorViews from [android.view.WindowManagerGlobal]
      */
+    @Suppress("KDocUnresolvedReference")
     fun findAllDecorViews(): List<View>? {
         try {
             @Suppress("UNCHECKED_CAST")

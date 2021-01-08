@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.huya.mobile.uinspector.util
 
 import android.app.Activity

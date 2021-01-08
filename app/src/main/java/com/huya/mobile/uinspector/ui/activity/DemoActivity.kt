@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import com.bumptech.glide.Glide
-import com.facebook.drawee.backends.pipeline.Fresco
 import com.huya.mobile.uinspector.demo.R
 import kotlinx.android.synthetic.main.activity_demo.*
 
