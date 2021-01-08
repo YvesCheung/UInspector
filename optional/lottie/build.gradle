@@ -1,0 +1,30 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply from: '../../gradle/android_extension.gradle'
+
+dependencies {
+    api project(":Uinspector")
+    implementation "com.airbnb.android:lottie:3.4.1"
+}
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'UInspector'
+
+    libraryGroupId = 'com.huya.mobile'
+    libraryName = 'Uinspector-optional-lottie'
+
+    libraryDescription = 'A UI inspector to traverse a view hierarchy on Android'
+
+    siteUrl = 'https://github.com/YvesCheung/UInspector'
+    gitUrl = 'https://github.com/YvesCheung/UInspector.git'
+
+    libraryVersion = version
+
+    developerId = 'YvesCheung'
+    developerName = 'YvesCheung'
+    developerEmail = '975135274@qq.com'
+}
+
+apply from: "../../gradle/publish.gradle"
