@@ -2,9 +2,12 @@ package com.huya.mobile.uinspector.impl.hierarchy
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Typeface
 import android.text.SpannableStringBuilder
 import android.text.Spanned
+import android.text.method.ScrollingMovementMethod
 import android.text.style.ForegroundColorSpan
+import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import androidx.annotation.ColorRes
@@ -47,11 +50,13 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
                 }
 
                 if (index == hierarchy.lastIndex) {
-                    ssb.withColor(context) {
-                        ssb.newLine(index) {
-                            append(view::class.java.simpleName)
-                            if (view.id > 0) {
-                                append("(${idToString(view.context, view.id)})")
+                    ssb.withBold {
+                        withColor(context) {
+                            ssb.newLine(index) {
+                                append(view::class.java.simpleName)
+                                if (view.id > 0) {
+                                    append("(${idToString(view.context, view.id)})")
+                                }
                             }
                         }
                     }
@@ -68,6 +73,7 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
                     it.afterHierarchy(index, view, ssb)
                 }
             }
+            root.view_hierarchy.movementMethod = ScrollingMovementMethod()
             root.view_hierarchy.text = ssb
         }
         return root
@@ -105,6 +111,20 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
             val end = length
             setSpan(
                 ForegroundColorSpan(ContextCompat.getColor(context, color)),
+                start,
+                end,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+        }
+
+        inline fun SpannableStringBuilder.withBold(
+            write: SpannableStringBuilder.() -> Unit
+        ) {
+            val start = length
+            write()
+            val end = length
+            setSpan(
+                TextAppearanceSpan(null, Typeface.BOLD, -1, null, null),
                 start,
                 end,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
