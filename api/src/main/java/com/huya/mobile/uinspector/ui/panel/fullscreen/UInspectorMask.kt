@@ -6,11 +6,13 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.view.MotionEvent.*
 import android.view.View
 import android.widget.FrameLayout
 import androidx.annotation.RestrictTo
 import androidx.annotation.Size
 import com.huya.mobile.uinspector.UInspector
+import com.huya.mobile.uinspector.hierarchy.TouchDispatcher
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
@@ -60,8 +62,13 @@ internal class UInspectorMask(
 
             override fun onDown(e: MotionEvent): Boolean {
                 downEvent?.recycle()
-                downEvent = MotionEvent.obtain(e)
+                downEvent = obtain(e)
                 return true
+            }
+
+            override fun onSingleTapUp(e: MotionEvent?): Boolean {
+                isSingleTap = true
+                return super.onSingleTapUp(e)
             }
 
             override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
@@ -79,9 +86,31 @@ internal class UInspectorMask(
             }
         })
 
+    private var isSingleTap = false
+
+    private var dispatchDecorView: View? = null
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent): Boolean {
-        return gesture.onTouchEvent(ev)
+        val consume = gesture.onTouchEvent(ev)
+        if (ev.actionMasked == ACTION_DOWN) {
+            val activity = tryGetActivity(context)
+            if (activity != null) {
+                dispatchDecorView =
+                    TouchDispatcher.dispatchEventToFindDecorView(activity, ev, currentDecorView)
+            }
+        } else if (isSingleTap) {
+            isSingleTap = false
+            TouchDispatcher.dispatchCancelEvent(ev, dispatchDecorView)
+        } else {
+            TouchDispatcher.dispatchEvent(ev, dispatchDecorView)
+        }
+
+        if (ev.actionMasked == ACTION_UP || ev.actionMasked == ACTION_CANCEL) {
+            isSingleTap = false
+            dispatchDecorView = null
+        }
+        return consume
     }
 
     fun updateTargetViews(views: List<View>) {

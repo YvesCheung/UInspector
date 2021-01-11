@@ -2,14 +2,13 @@ package com.huya.mobile.uinspector.hierarchy
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.graphics.Rect
 import android.os.Build
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.huya.mobile.uinspector.util.LibName
-import com.huya.mobile.uinspector.util.toLocation
+import com.huya.mobile.uinspector.util.isOnView
 import java.lang.reflect.Field
 import java.util.*
 import kotlin.collections.ArrayList
@@ -35,8 +34,6 @@ internal object TouchTargets {
         f
     }
 
-    private val windowOffset = IntArray(2)
-
     /**
      * 1. find all decorView of current activity
      * 2. dispatch [downEvent] to the decorView and then find the touch targets by [findFirstTouchTargets]
@@ -47,44 +44,10 @@ internal object TouchTargets {
         downEvent: MotionEvent,
         excludeDecorView: View
     ): List<View> {
-        val cancel = MotionEvent.obtain(
-            downEvent.downTime,
-            System.currentTimeMillis(),
-            MotionEvent.ACTION_CANCEL,
-            0f, 0f, 0
-        )
-        try {
-            val decorViews = WindowManager.findDecorViews(activity)
-            for (decor in decorViews.asReversed()) {
-                if (excludeDecorView === decor) {
-                    continue
-                }
-
-                decor.getLocationOnScreen(windowOffset)
-
-                var touchTargets = emptyList<View>()
-                downEvent.toLocation(windowOffset) {
-                    if (isOnView(downEvent, decor)) {
-                        decor.dispatchTouchEvent(downEvent)
-                        touchTargets = findFirstTouchTargets(decor, downEvent)
-                    }
-                }
-
-                cancel.toLocation(windowOffset) {
-                    decor.dispatchTouchEvent(cancel)
-                }
-
-                if (touchTargets.isNotEmpty()) {
-                    return touchTargets
-                }
-            }
-        } finally {
-            cancel.recycle()
-        }
-        return emptyList()
+        return TouchDispatcher.dispatchEventToFindTouchTargets(activity, downEvent, excludeDecorView)
     }
 
-    private fun findFirstTouchTargets(parent: View, touchEvent: MotionEvent): List<View> {
+    internal fun findFirstTouchTargets(parent: View, touchEvent: MotionEvent): List<View> {
         val queue = LinkedList<View>()
         var current: View? = parent
         while (current != null) {
@@ -99,7 +62,7 @@ internal object TouchTargets {
      * 1. Try to get the [view]'s 'mFirstTouchTarget' field
      * 2. If fail, use [findTouchTargetByEvent] instead
      */
-    private fun findFirstTouchTarget(view: View?, touchEvent: MotionEvent): View? {
+    internal fun findFirstTouchTarget(view: View?, touchEvent: MotionEvent): View? {
         if (view is ViewGroup) {
             return try {
                 val touchTarget = firstTouchTarget.get(view)
@@ -164,17 +127,5 @@ internal object TouchTargets {
             }
         }
         return idx
-    }
-
-    /**
-     * @param e Already offset to the current window!!
-     * @param v View in the current window
-     *
-     * @return whether the [e] can be dispatched to [v]
-     */
-    private fun isOnView(e: MotionEvent, v: View): Boolean {
-        val r = Rect()
-        v.getGlobalVisibleRect(r)
-        return r.left <= e.x && e.x <= r.right && r.top <= e.y && e.y <= r.bottom
     }
 }

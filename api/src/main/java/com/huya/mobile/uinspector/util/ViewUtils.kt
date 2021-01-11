@@ -1,5 +1,7 @@
 package com.huya.mobile.uinspector.util
 
+import android.graphics.Rect
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewParent
 
@@ -18,4 +20,16 @@ internal fun View.findRootParent(): View {
         next = current.parent
     }
     return current
+}
+
+/**
+ * @param e Already offset to the current window!!
+ * @param v View in the current window
+ *
+ * @return whether the [e] can be dispatched to [v]
+ */
+internal fun isOnView(e: MotionEvent, v: View): Boolean {
+    val r = Rect()
+    v.getGlobalVisibleRect(r)
+    return r.left <= e.x && e.x <= r.right && r.top <= e.y && e.y <= r.bottom
 }
