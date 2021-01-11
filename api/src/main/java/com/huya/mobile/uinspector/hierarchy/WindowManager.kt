@@ -2,6 +2,7 @@ package com.huya.mobile.uinspector.hierarchy
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Application
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,9 @@ internal object WindowManager {
         val allViews = findAllDecorViews()
         if (allViews != null) {
             return allViews.filter { decorView ->
-                if (decorView.context === activity) { //the special view add directly to windowManager
+                if (tryGetActivity(decorView.context) === activity || //the special view add directly to windowManager
+                    decorView.context is Application //the system/application layer add directly to windowManager
+                ) {
                     return@filter true
                 } else { //normal DecorView
                     val anyChild = (decorView as? ViewGroup)?.getChildAt(0)
