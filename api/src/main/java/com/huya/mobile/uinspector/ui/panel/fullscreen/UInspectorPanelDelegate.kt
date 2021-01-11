@@ -7,9 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import com.huya.mobile.uinspector.hierarchy.ViewHierarchy
-import com.huya.mobile.uinspector.hierarchy.WindowManager
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorPopupPanelContainerImpl
-import com.huya.mobile.uinspector.util.tryGetActivity
 
 /**
  * @author YvesCheung
@@ -34,21 +32,7 @@ internal class UInspectorPanelDelegate {
     fun onCreateDialog(context: Context, theme: Int): Dialog {
         val dialog = UInspectorKeyEventDispatcher(context, theme)
         dialog.onKeyEvent = { keyEvent ->
-            val activity = tryGetActivity(context)
-            val excludeDecorView = mask?.currentDecorView
-            var handle = false
-            if (activity != null) {
-                val decorViews = WindowManager.findDecorViews(activity)
-                for (decor in decorViews.asReversed()) {
-                    if (excludeDecorView === decor) {
-                        continue
-                    }
-
-                    handle = decor.dispatchKeyEvent(keyEvent)
-                    break
-                }
-            }
-            handle
+            mask?.dispatchKeyEvent(keyEvent) ?: false
         }
         dialog.window?.setDimAmount(0f)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

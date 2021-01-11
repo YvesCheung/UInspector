@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.GestureDetector
+import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.MotionEvent.*
 import android.view.View
@@ -14,6 +15,7 @@ import androidx.annotation.Size
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.TouchDispatcher
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
+import com.huya.mobile.uinspector.hierarchy.WindowManager
 import com.huya.mobile.uinspector.state.UInspectorTargetViews
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
@@ -113,6 +115,23 @@ internal class UInspectorMask(
             dispatchDecorView = null
         }
         return consume
+    }
+
+    override fun dispatchKeyEvent(keyEvent: KeyEvent?): Boolean {
+        val activity = tryGetActivity(context)
+        var handle = false
+        if (activity != null) {
+            val decorViews = WindowManager.findDecorViews(activity)
+            for (decor in decorViews.asReversed()) {
+                if (currentDecorView === decor) { //exclude current decorView
+                    continue
+                }
+
+                handle = decor.dispatchKeyEvent(keyEvent)
+                break
+            }
+        }
+        return handle
     }
 
     fun updateTargetViews(views: List<View>) {
