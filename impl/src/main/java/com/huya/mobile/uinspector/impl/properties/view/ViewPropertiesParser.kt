@@ -123,12 +123,12 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
         }
 
         if (view.contentDescription != null) {
-            props["contentDescription"] = view.contentDescription
+            props["contentDescription"] = view.contentDescription.quote()
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             if (view.accessibilityPaneTitle != null) {
-                props["accessibilityPaneTitle"] = view.accessibilityPaneTitle
+                props["accessibilityPaneTitle"] = view.accessibilityPaneTitle.quote()
             }
         }
 
