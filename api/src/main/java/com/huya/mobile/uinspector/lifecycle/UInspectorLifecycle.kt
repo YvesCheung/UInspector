@@ -87,7 +87,7 @@ internal class UInspectorLifecycle {
         val lastActivity = UInspector.currentState.withLifecycle?.activity
         if (lastActivity !== newActivity) {
             if (lastActivity != null) {
-                UInspector.currentState.withLifecycle?.onDestroy()
+                UInspector.currentState.withLifecycle?.clear()
                 UInspector.currentState.withLifecycle = null
             }
             if (newActivity != null) {

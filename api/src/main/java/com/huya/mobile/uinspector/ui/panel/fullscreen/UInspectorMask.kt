@@ -125,7 +125,7 @@ internal class UInspectorMask(
         val oldTarget = state.lastTargetViews?.lastOrNull()
         if (oldTarget != null) {
             decorations.remove(ViewDecoration(oldTarget))
-            state.lastTargetViews?.onDestroy()
+            state.lastTargetViews?.clear()
             state.lastTargetViews = null
             popupPanelContainer.dismiss()
         }
@@ -134,19 +134,21 @@ internal class UInspectorMask(
         if (newTarget != oldTarget && newTarget != null) {
             val decoration = ViewDecoration(newTarget)
             decorations.add(decoration)
-            state.lastTargetViews =
-                UInspectorTargetViews(views).apply {
-                    onDraw.add {
+            state.lastTargetViews = UInspectorTargetViews(views)
+                .addOnDrawListener(object : UInspectorTargetViews.Listener {
+                    override fun onChange() {
                         invalidate()
                     }
-                    onDetach.add {
+                })
+                .addOnDetachListener(object : UInspectorTargetViews.Listener {
+                    override fun onChange() {
                         decorations.remove(decoration)
                         popupPanelContainer.dismiss()
                     }
-                }
+                })
             popupPanelContainer.show(newTarget)
-        }
 
+        }
         invalidate()
     }
 

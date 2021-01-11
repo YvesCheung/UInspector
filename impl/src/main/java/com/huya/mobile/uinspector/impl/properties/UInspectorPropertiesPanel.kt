@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
+import com.huya.mobile.uinspector.state.UInspectorTargetViews
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.huya.mobile.uinspector.util.dpStr
 import kotlinx.android.synthetic.main.uinspector_panel_properties.view.*
@@ -28,16 +29,21 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
 
     override val title = "Properties"
 
+    private var adapter: ViewPropsAdapter? = null
+
     @SuppressLint("SetTextI18n", "InflateParams")
     override fun onCreateView(context: Context): View {
         val root = LayoutInflater.from(context)
             .inflate(R.layout.uinspector_panel_properties, null)
 
-        val targetView =
-            UInspector.currentState.withLifecycle?.lastTargetViews?.lastOrNull()
+        val targets =
+            UInspector.currentState.withLifecycle?.lastTargetViews
+        val targetView = targets?.lastOrNull()
         if (targetView != null) {
-
-            root.view_props_list.adapter = ViewPropsAdapter(ViewProperties(targetView))
+            root.view_props_list.adapter = ViewPropsAdapter(targetView).also {
+                adapter = it
+                targets.addOnDrawListener(it)
+            }
 
             root.uinspector_view_margin.let {
                 it.setBackgroundColor(Color.parseColor("#D3FF93"))
@@ -70,10 +76,21 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
         return root
     }
 
-    private class ViewPropsAdapter(properties: ViewProperties) :
-        RecyclerView.Adapter<ViewPropsHolder>() {
+    override fun onDestroyView() {
+        adapter?.let {
+            UInspector.currentState.withLifecycle?.lastTargetViews?.removeOnDrawListener(it)
+        }
+    }
 
-        private val displayProp = properties.toList()
+    private class ViewPropsAdapter(val targetView: View) :
+        RecyclerView.Adapter<ViewPropsHolder>(), UInspectorTargetViews.Listener {
+
+        private var props: List<Pair<String, Any?>> = ViewProperties(targetView).toList()
+
+        override fun onChange() {
+            props = ViewProperties(targetView).toList()
+            notifyDataSetChanged()
+        }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPropsHolder {
             val textView = TextView(parent.context)
@@ -83,11 +100,11 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
             return ViewPropsHolder(textView)
         }
 
-        override fun getItemCount(): Int = displayProp.size
+        override fun getItemCount(): Int = props.size
 
         @SuppressLint("SetTextI18n")
         override fun onBindViewHolder(holder: ViewPropsHolder, position: Int) {
-            val (name, value) = displayProp[position]
+            val (name, value) = props[position]
             val s = SpannableStringBuilder(name)
                 .append(": ")
                 .append(if (value is CharSequence) value else value.toString())

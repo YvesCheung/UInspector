@@ -127,7 +127,8 @@ object UInspector {
         val currentLifecycle = currentState.withLifecycle
         if (currentLifecycle != null) { //some activity at the front end
             val activity = currentLifecycle.activity
-            currentLifecycle.panel?.close()
+            currentLifecycle.clear()
+
             if (running) {
                 val mask: UInspectorPanel =
                     when {

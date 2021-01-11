@@ -19,7 +19,8 @@ import kotlinx.android.synthetic.main.uinspector_popup_panel_container.view.*
  * @author YvesCheung
  * 2020/12/31
  */
-internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) : UInspectorChildPanelContainer {
+internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
+    UInspectorChildPanelContainer {
 
     private var popupPanel: UInspectorPopupPanel? = null
 
@@ -88,6 +89,7 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) : UInspe
         }
 
         private fun initView() {
+            viewPager.offscreenPageLimit = 3
             viewPager.adapter = adapter
             viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
                 override fun onPageSelected(position: Int) {
@@ -115,6 +117,12 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) : UInspe
         }
 
         override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
+            val panel = children[position]
+            val view = createdPanel.remove(panel)
+            if (view != null) {
+                panel.onDestroyView()
+                container.removeView(view)
+            }
         }
 
         override fun setPrimaryItem(container: ViewGroup, position: Int, obj: Any) {

@@ -12,7 +12,7 @@ import com.yy.mobile.whisper.UseWith
  * 2020/12/30
  */
 @NotThreadSafe
-class UInspectorLifecycleState @UseWith("onDestroy") constructor(val activity: Activity) {
+class UInspectorLifecycleState @UseWith("clear") constructor(val activity: Activity) {
 
     var panel: UInspectorPanel? = null
         internal set
@@ -20,10 +20,10 @@ class UInspectorLifecycleState @UseWith("onDestroy") constructor(val activity: A
     var lastTargetViews: UInspectorTargetViews? = null
         internal set
 
-    internal fun onDestroy() {
+    internal fun clear() {
         panel?.close()
         panel = null
-        lastTargetViews?.onDestroy()
+        lastTargetViews?.clear()
         lastTargetViews = null
     }
 }

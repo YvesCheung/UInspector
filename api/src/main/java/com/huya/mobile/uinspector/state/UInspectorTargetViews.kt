@@ -15,20 +15,23 @@ class UInspectorTargetViews private constructor(
     private val views: MutableList<View> = ArrayList(origin) //copy
 ) : List<View> by views {
 
-    val onDraw = CopyOnWriteArrayList<() -> Unit>()
+    @UseWith("clear")
+    constructor(views: List<View>) : this(origin = views)
 
-    val onDetach = CopyOnWriteArrayList<() -> Unit>()
+    private val onDraw = CopyOnWriteArrayList<Listener>()
+
+    private val onDetach = CopyOnWriteArrayList<Listener>()
 
     private val onPreDrawDispatcher = ViewTreeObserver.OnPreDrawListener {
-        onDraw.forEach { it.invoke() }
+        onDraw.forEach { it.onChange() }
         true
     }
 
     private val attachState = object : View.OnAttachStateChangeListener {
 
         override fun onViewDetachedFromWindow(v: View?) {
-            onDetach.forEach { it.invoke() }
-            onDestroy()
+            onDetach.forEach { it.onChange() }
+            clear()
             views.clear()
         }
 
@@ -37,16 +40,41 @@ class UInspectorTargetViews private constructor(
 
     private val target: View? get() = views.lastOrNull()
 
-    @UseWith("destroy")
-    constructor(views: List<View>) : this(origin = views)
 
     init {
         target?.viewTreeObserver?.addOnPreDrawListener(onPreDrawDispatcher)
         target?.addOnAttachStateChangeListener(attachState)
     }
 
-    internal fun onDestroy() {
+    internal fun clear() {
         target?.removeOnAttachStateChangeListener(attachState)
         target?.viewTreeObserver?.removeOnPreDrawListener(onPreDrawDispatcher)
+    }
+
+    @UseWith("removeOnDrawListener")
+    fun addOnDrawListener(listener: Listener): UInspectorTargetViews {
+        onDraw.add(listener)
+        return this
+    }
+
+    fun removeOnDrawListener(listener: Listener): UInspectorTargetViews {
+        onDraw.remove(listener)
+        return this
+    }
+
+    @UseWith("removeOnDetachListener")
+    fun addOnDetachListener(listener: Listener): UInspectorTargetViews {
+        onDetach.add(listener)
+        return this
+    }
+
+    fun removeOnDetachListener(listener: Listener): UInspectorTargetViews {
+        onDetach.remove(listener)
+        return this
+    }
+
+    interface Listener {
+
+        fun onChange()
     }
 }
