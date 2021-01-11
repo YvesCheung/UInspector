@@ -127,7 +127,7 @@ fun colorToString(@ColorInt color: Int): CharSequence {
 }
 
 fun hexToString(hex: Int): String {
-    return "0x${Integer.toHexString(hex)}"
+    return "0x${Integer.toHexString(hex).toUpperCase()}"
 }
 
 fun drawableToString(drawable: Drawable): CharSequence {
