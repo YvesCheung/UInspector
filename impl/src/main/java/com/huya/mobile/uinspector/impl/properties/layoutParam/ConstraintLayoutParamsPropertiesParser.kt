@@ -1,17 +1,18 @@
 package com.huya.mobile.uinspector.impl.properties.layoutParam
 
-import android.content.Context
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams
 import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import com.huya.mobile.uinspector.util.dpStr
 import com.huya.mobile.uinspector.util.idToString
+import com.huya.mobile.uinspector.util.linkToView
 import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
  * 2021/1/4
  */
-open class ConstraintLayoutParamsPropertiesParser(val context: Context, lp: LayoutParams) :
+open class ConstraintLayoutParamsPropertiesParser(val view: View, lp: LayoutParams) :
     LayoutParamsPropertiesParser<LayoutParams>(lp) {
 
     override fun parse(@Output props: MutableMap<String, Any?>) {
@@ -69,8 +70,15 @@ open class ConstraintLayoutParamsPropertiesParser(val context: Context, lp: Layo
     private fun checkConstraint(name: String, constraint: Int, props: MutableMap<String, Any?>) {
         if (constraint != -1) {
             props[name] =
-                if (constraint == PARENT_ID) "parent"
-                else idToString(context, constraint)
+                if (constraint == PARENT_ID) {
+                    linkToView("parent") {
+                        view.parent as? View
+                    }
+                } else {
+                    linkToView(idToString(view.context, constraint)) {
+                        (view.parent as? View)?.findViewById(constraint)
+                    }
+                }
         }
     }
 

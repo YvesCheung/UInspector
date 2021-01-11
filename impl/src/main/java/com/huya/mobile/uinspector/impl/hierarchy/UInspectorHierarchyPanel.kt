@@ -2,22 +2,19 @@ package com.huya.mobile.uinspector.impl.hierarchy
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Typeface
 import android.text.SpannableStringBuilder
-import android.text.Spanned
 import android.text.method.ScrollingMovementMethod
-import android.text.style.ForegroundColorSpan
-import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
 import com.huya.mobile.uinspector.impl.hierarchy.extra.DefaultHierarchyExtraInfoService
 import com.huya.mobile.uinspector.impl.hierarchy.extra.HierarchyExtraInfoService
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.huya.mobile.uinspector.util.idToString
+import com.huya.mobile.uinspector.util.newLine
+import com.huya.mobile.uinspector.util.withBold
+import com.huya.mobile.uinspector.util.withColor
 import kotlinx.android.synthetic.main.uinspector_panel_hierarchy.view.*
 import java.util.*
 
@@ -86,49 +83,6 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
                 ServiceLoader.load(HierarchyExtraInfoService::class.java).toMutableList()
             services.add(DefaultHierarchyExtraInfoService())
             services
-        }
-
-        inline fun SpannableStringBuilder.newLine(
-            indentSize: Int,
-            write: SpannableStringBuilder.() -> Unit
-        ) {
-            var size = indentSize
-            while (size-- > 0) {
-                append(" ")
-            }
-            append("- ")
-            write()
-            append("\n")
-        }
-
-        inline fun SpannableStringBuilder.withColor(
-            context: Context,
-            @ColorRes color: Int = R.color.uinspector_primary_color,
-            write: SpannableStringBuilder.() -> Unit
-        ) {
-            val start = length
-            write()
-            val end = length
-            setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context, color)),
-                start,
-                end,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
-
-        inline fun SpannableStringBuilder.withBold(
-            write: SpannableStringBuilder.() -> Unit
-        ) {
-            val start = length
-            write()
-            val end = length
-            setSpan(
-                TextAppearanceSpan(null, Typeface.BOLD, -1, null, null),
-                start,
-                end,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
         }
     }
 }

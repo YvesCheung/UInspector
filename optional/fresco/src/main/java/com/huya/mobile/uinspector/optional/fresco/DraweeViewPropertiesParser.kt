@@ -2,15 +2,12 @@ package com.huya.mobile.uinspector.optional.fresco
 
 import android.content.Intent
 import android.net.Uri
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ClickableSpan
-import android.view.View
 import com.facebook.drawee.generic.GenericDraweeHierarchy
 import com.facebook.drawee.view.DraweeView
 import com.facebook.imagepipeline.common.SourceUriType
 import com.facebook.imagepipeline.request.ImageRequest
 import com.huya.mobile.uinspector.impl.properties.view.ImageViewPropertiesParser
+import com.huya.mobile.uinspector.util.link
 import com.yy.mobile.whisper.Output
 
 /**
@@ -56,7 +53,6 @@ class DraweeViewPropertiesParser(
         props["fresco prefer width"] = request.preferredWidth
         props["fresco prefer height"] = request.preferredHeight
 
-
         val rotationOption = request.rotationOptions
         if (rotationOption != null) {
             when {
@@ -73,23 +69,19 @@ class DraweeViewPropertiesParser(
     private fun clickable(uri: Uri): CharSequence {
         val str = uri.toString()
         if (uri.scheme in listOf("http", "https")) {
-            val s = SpannableString(str)
-            s.setSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    try {
-                        view.context.startActivity(
-                            Intent(Intent.ACTION_VIEW, uri)
-                                .setClassName(
-                                    "com.android.browser",
-                                    "com.android.browser.BrowserActivity"
-                                )
-                        )
-                    } catch (e: Throwable) {
-                        view.context.startActivity(Intent(Intent.ACTION_VIEW, uri))
-                    }
+            return link(str) {
+                try {
+                    view.context.startActivity(
+                        Intent(Intent.ACTION_VIEW, uri)
+                            .setClassName(
+                                "com.android.browser",
+                                "com.android.browser.BrowserActivity"
+                            )
+                    )
+                } catch (e: Throwable) {
+                    view.context.startActivity(Intent(Intent.ACTION_VIEW, uri))
                 }
-            }, 0, str.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            return s
+            }
         }
         return str
     }

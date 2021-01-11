@@ -4,14 +4,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.ClickableSpan
 import android.util.Log
-import android.view.View
 import com.bumptech.glide.request.*
 import com.huya.mobile.uinspector.util.drawableToString
 import com.huya.mobile.uinspector.util.idToString
+import com.huya.mobile.uinspector.util.link
 import com.yy.mobile.whisper.Output
 import java.io.File
 import java.net.URI
@@ -90,23 +87,19 @@ class GlideRequestParser(
 
     private fun clickable(scheme: String?, uriStr: String): CharSequence {
         if (scheme in listOf("http", "https")) {
-            val s = SpannableString(uriStr)
-            s.setSpan(object : ClickableSpan() {
-                override fun onClick(view: View) {
-                    try {
-                        context.startActivity(
-                            Intent(Intent.ACTION_VIEW, Uri.parse(uriStr))
-                                .setClassName(
-                                    "com.android.browser",
-                                    "com.android.browser.BrowserActivity"
-                                )
-                        )
-                    } catch (e: Throwable) {
-                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uriStr)))
-                    }
+            return link(uriStr) {
+                try {
+                    context.startActivity(
+                        Intent(Intent.ACTION_VIEW, Uri.parse(uriStr))
+                            .setClassName(
+                                "com.android.browser",
+                                "com.android.browser.BrowserActivity"
+                            )
+                    )
+                } catch (e: Throwable) {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uriStr)))
                 }
-            }, 0, uriStr.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            return s
+            }
         }
         return uriStr
     }

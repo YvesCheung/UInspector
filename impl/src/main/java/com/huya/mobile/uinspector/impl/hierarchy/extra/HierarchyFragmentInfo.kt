@@ -6,8 +6,8 @@ import android.text.SpannableStringBuilder
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.huya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel.Companion.newLine
-import com.huya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel.Companion.withColor
+import com.huya.mobile.uinspector.util.newLine
+import com.huya.mobile.uinspector.util.withColor
 import com.yy.mobile.whisper.Output
 
 /**

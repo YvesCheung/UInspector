@@ -3,8 +3,8 @@ package com.huya.mobile.uinspector.impl.hierarchy.extra
 import android.app.Activity
 import android.text.SpannableStringBuilder
 import android.view.View
-import com.huya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel.Companion.newLine
-import com.huya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel.Companion.withColor
+import com.huya.mobile.uinspector.util.newLine
+import com.huya.mobile.uinspector.util.withColor
 
 /**
  * @author YvesCheung

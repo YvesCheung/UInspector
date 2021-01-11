@@ -1,17 +1,18 @@
 package com.huya.mobile.uinspector.impl.properties.layoutParam
 
-import android.content.Context
 import android.os.Build
+import android.view.View
 import android.widget.RelativeLayout.*
 import androidx.annotation.RequiresApi
 import com.huya.mobile.uinspector.util.idToString
+import com.huya.mobile.uinspector.util.linkToView
 import com.yy.mobile.whisper.Output
 
 /**
  * @author YvesCheung
  * 2021/1/4
  */
-open class RelativeLayoutParamsPropertiesParser(val context: Context, lp: LayoutParams) :
+open class RelativeLayoutParamsPropertiesParser(val view: View, lp: LayoutParams) :
     LayoutParamsPropertiesParser<LayoutParams>(lp) {
 
     override fun parse(@Output props: MutableMap<String, Any?>) {
@@ -54,7 +55,9 @@ open class RelativeLayoutParamsPropertiesParser(val context: Context, lp: Layout
         if (result != 0) {
             props[ruleName] =
                 if (result == TRUE) "TRUE"
-                else idToString(context, result)
+                else linkToView(idToString(view.context, result)) {
+                    (view.parent as? View)?.findViewById(result)
+                }
         }
     }
 }

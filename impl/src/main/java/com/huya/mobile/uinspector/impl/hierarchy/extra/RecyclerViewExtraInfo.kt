@@ -4,8 +4,8 @@ import android.content.Context
 import android.text.SpannableStringBuilder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.huya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel.Companion.newLine
-import com.huya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel.Companion.withColor
+import com.huya.mobile.uinspector.util.newLine
+import com.huya.mobile.uinspector.util.withColor
 
 /**
  * @author YvesCheung

@@ -66,13 +66,13 @@ class ViewProperties(
             }
             return when (lp) {
                 is ConstraintLayout.LayoutParams ->
-                    ConstraintLayoutParamsPropertiesParser(view.context, lp)
+                    ConstraintLayoutParamsPropertiesParser(view, lp)
                 is LinearLayout.LayoutParams ->
                     LinearLayoutParamsPropertiesParser(lp)
                 is FrameLayout.LayoutParams ->
                     FrameLayoutParamsPropertiesParser(lp)
                 is RelativeLayout.LayoutParams ->
-                    RelativeLayoutParamsPropertiesParser(view.context, lp)
+                    RelativeLayoutParamsPropertiesParser(view, lp)
                 else -> LayoutParamsPropertiesParser(lp)
             }
         }
