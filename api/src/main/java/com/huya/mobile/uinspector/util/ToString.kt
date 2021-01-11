@@ -19,6 +19,9 @@ import kotlin.math.roundToInt
  * @author YvesCheung
  * 2021/1/11
  */
+internal val Int.dpTopx: Int
+    get() = (this.toFloat() * Resources.getSystem().displayMetrics.density).toInt()
+
 internal val Int.pxToDp: Int
     get() = (this.toFloat() / Resources.getSystem().displayMetrics.density).toInt()
 

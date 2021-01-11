@@ -50,10 +50,9 @@ class UInspectorAccessibilityPanel(override val priority: Int) : UInspectorChild
             }
             return recyclerView
         }
-        val unSupportText = TextView(context)
-        unSupportText.text =
+        throw UnsupportedOperationException(
             "SDK version must not less than JELLY_BEAN(16) but current is ${Build.VERSION.SDK_INT}"
-        return unSupportText
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)

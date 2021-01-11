@@ -1,5 +1,7 @@
 package com.huya.mobile.uinspector.ui.panel.popup
 
+import android.graphics.Color
+import android.text.method.ScrollingMovementMethod
 import android.view.Gravity.BOTTOM
 import android.view.Gravity.TOP
 import android.view.LayoutInflater
@@ -7,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.huya.mobile.uinspector.R
 import com.huya.mobile.uinspector.UInspector
+import com.huya.mobile.uinspector.util.dpTopx
 import com.huya.mobile.uinspector.util.log
 import com.yy.mobile.whisper.IntDef
 import kotlinx.android.synthetic.main.uinspector_popup_panel_container.view.*
@@ -110,7 +114,19 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val panel = children[position]
             return createdPanel.getOrPut(panel) {
-                val child = panel.onCreateView(container.context)
+                val child =
+                    try {
+                        panel.onCreateView(container.context)
+                    } catch (e: Throwable) {
+                        TextView(container.context).apply {
+                            textSize = 16f
+                            setTextColor(Color.RED)
+                            setPadding(8.dpTopx, 8.dpTopx, 8.dpTopx, 0)
+                            isSingleLine = false
+                            movementMethod = ScrollingMovementMethod()
+                            text = e.toString()
+                        }
+                    }
                 container.addView(child)
                 child
             }
