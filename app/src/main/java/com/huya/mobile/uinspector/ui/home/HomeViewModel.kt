@@ -24,7 +24,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
-import com.huya.mobile.uinspector.UInspector
+import com.huya.mobile.uinspector.demo.BuildConfig
 import com.huya.mobile.uinspector.demo.R
 import com.huya.mobile.uinspector.ui.dialog.DemoDialog
 import com.huya.mobile.uinspector.ui.dialog.DemoDialogFragment
@@ -104,7 +104,14 @@ class HomeViewModel : ViewModel() {
                     oldAnim.end()
                     view.tag = null
                 } else {
-                    UInspector.start(view)
+                    if (BuildConfig.DEBUG) {
+                        try {
+                            Class.forName("com.huya.mobile.uinspector.UInspector")
+                                .getDeclaredMethod("start", View::class.java)
+                                .invoke(view)
+                        } catch (ignore: Throwable) {
+                        }
+                    }
                     val animator = AnimatorSet().setDuration(8 * 1000L)
                     animator.playTogether(
                         ObjectAnimator.ofFloat(view, View.X, view.x, 0f, view.x),
