@@ -17,8 +17,10 @@ import com.yy.mobile.whisper.Output
  * @author YvesCheung
  * 2021/1/7
  */
-class DraweeViewPropertiesParser(private val draweeView: DraweeView<*>, private val request: ImageRequest) :
-    ImageViewPropertiesParser(draweeView) {
+class DraweeViewPropertiesParser(
+    private val draweeView: DraweeView<*>,
+    private val request: ImageRequest
+) : ImageViewPropertiesParser(draweeView) {
 
     override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
@@ -70,12 +72,21 @@ class DraweeViewPropertiesParser(private val draweeView: DraweeView<*>, private 
 
     private fun clickable(uri: Uri): CharSequence {
         val str = uri.toString()
-        if (!uri.scheme.isNullOrBlank()) {
+        if (uri.scheme in listOf("http", "https")) {
             val s = SpannableString(str)
             s.setSpan(object : ClickableSpan() {
                 override fun onClick(widget: View) {
-                    val intent = Intent(Intent.ACTION_VIEW, uri)
-                    view.context.startActivity(intent)
+                    try {
+                        view.context.startActivity(
+                            Intent(Intent.ACTION_VIEW, uri)
+                                .setClassName(
+                                    "com.android.browser",
+                                    "com.android.browser.BrowserActivity"
+                                )
+                        )
+                    } catch (e: Throwable) {
+                        view.context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+                    }
                 }
             }, 0, str.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             return s

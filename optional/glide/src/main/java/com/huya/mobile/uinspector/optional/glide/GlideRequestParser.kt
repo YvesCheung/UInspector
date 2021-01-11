@@ -89,12 +89,21 @@ class GlideRequestParser(
     }
 
     private fun clickable(scheme: String?, uriStr: String): CharSequence {
-        if (!scheme.isNullOrBlank()) {
+        if (scheme in listOf("http", "https")) {
             val s = SpannableString(uriStr)
             s.setSpan(object : ClickableSpan() {
-                override fun onClick(widget: View) {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uriStr))
-                    context.startActivity(intent)
+                override fun onClick(view: View) {
+                    try {
+                        context.startActivity(
+                            Intent(Intent.ACTION_VIEW, Uri.parse(uriStr))
+                                .setClassName(
+                                    "com.android.browser",
+                                    "com.android.browser.BrowserActivity"
+                                )
+                        )
+                    } catch (e: Throwable) {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uriStr)))
+                    }
                 }
             }, 0, uriStr.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             return s

@@ -79,6 +79,7 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
             val textView = TextView(parent.context)
             textView.textSize = 11f
             textView.setTextColor(Color.WHITE)
+            textView.isSingleLine = false
             return ViewPropsHolder(textView)
         }
 
