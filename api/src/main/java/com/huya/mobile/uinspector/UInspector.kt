@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
+import android.view.View
 import androidx.annotation.AnyThread
 import androidx.annotation.MainThread
 import androidx.core.content.ContextCompat
@@ -61,6 +62,13 @@ object UInspector {
 
     @JvmStatic
     @AnyThread
+    fun start(inspectView: View) {
+        pendingInspectView = inspectView
+        start()
+    }
+
+    @JvmStatic
+    @AnyThread
     fun stop() = startService(false)
 
     //private impl ---------------------------------------------------------------------------------
@@ -113,6 +121,8 @@ object UInspector {
         log("change state TEMPORARY to ${if (running) "RUNNING" else "IDLE"}")
     }
 
+    private var pendingInspectView: View? = null
+
     private fun changePanelState(running: Boolean) {
         val currentLifecycle = currentState.withLifecycle
         if (currentLifecycle != null) { //some activity at the front end
@@ -128,6 +138,9 @@ object UInspector {
                     }
                 currentLifecycle.panel = mask
                 mask.show(activity)
+
+                pendingInspectView?.let { mask.updateTargetView(it) }
+                pendingInspectView = null
             }
         }
     }

@@ -1,5 +1,11 @@
 package com.huya.mobile.uinspector.ui.home
 
+import android.animation.Animator
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
+import android.animation.ValueAnimator.INFINITE
+import android.animation.ValueAnimator.RESTART
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -18,6 +24,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.material.snackbar.Snackbar
+import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.demo.R
 import com.huya.mobile.uinspector.ui.dialog.DemoDialog
 import com.huya.mobile.uinspector.ui.dialog.DemoDialogFragment
@@ -89,6 +96,29 @@ class HomeViewModel : ViewModel() {
             },
             HomeItem("Inspect Lottie") { ctx, _ ->
                 ctx.startActivity(Intent(ctx, LottieActivity::class.java))
+            },
+            HomeItem("Start/Stop ObjectAnimator") { ctx, _ ->
+                val view = ctx.findViewById<View>(R.id.fab)
+                val oldAnim = view.tag
+                if (oldAnim is Animator) {
+                    oldAnim.end()
+                    view.tag = null
+                } else {
+                    UInspector.start(view)
+                    val animator = AnimatorSet().setDuration(8 * 1000L)
+                    animator.playTogether(
+                        ObjectAnimator.ofFloat(view, View.X, view.x, 0f, view.x),
+                        ObjectAnimator.ofFloat(view, View.Y, view.y, 0f, view.y)
+                    )
+                    animator.childAnimations.forEach {
+                        if (it is ValueAnimator) {
+                            it.repeatCount = INFINITE
+                            it.repeatMode = RESTART
+                        }
+                    }
+                    animator.start()
+                    view.tag = animator
+                }
             }
         )
     }
