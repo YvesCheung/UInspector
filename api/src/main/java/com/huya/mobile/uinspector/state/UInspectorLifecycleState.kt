@@ -1,9 +1,9 @@
 package com.huya.mobile.uinspector.state
 
 import android.app.Activity
-import android.view.View
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
 import com.yy.mobile.whisper.NotThreadSafe
+import com.yy.mobile.whisper.UseWith
 
 /**
  * Store the information which is bound to the lifecycle of [activity]
@@ -12,11 +12,18 @@ import com.yy.mobile.whisper.NotThreadSafe
  * 2020/12/30
  */
 @NotThreadSafe
-class UInspectorLifecycleState(val activity: Activity) {
+class UInspectorLifecycleState @UseWith("onDestroy") constructor(val activity: Activity) {
 
     var panel: UInspectorPanel? = null
         internal set
 
-    var lastTargetViews: List<View>? = null
+    var lastTargetViews: UInspectorTargetViews? = null
         internal set
+
+    internal fun onDestroy() {
+        panel?.close()
+        panel = null
+        lastTargetViews?.onDestroy()
+        lastTargetViews = null
+    }
 }

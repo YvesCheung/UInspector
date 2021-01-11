@@ -14,6 +14,7 @@ import androidx.annotation.Size
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.TouchDispatcher
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
+import com.huya.mobile.uinspector.state.UInspectorTargetViews
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorPopupPanelContainerImpl
@@ -96,10 +97,11 @@ internal class UInspectorMask(
         if (ev.actionMasked == ACTION_DOWN) {
             val activity = tryGetActivity(context)
             if (activity != null) {
+                //find the real target who can consume this event
                 dispatchDecorView =
                     TouchDispatcher.dispatchEventToFindDecorView(activity, ev, currentDecorView)
             }
-        } else if (isSingleTap) {
+        } else if (isSingleTap) { //single tap is consumed by us. dispatch cancel to target.
             isSingleTap = false
             TouchDispatcher.dispatchCancelEvent(ev, dispatchDecorView)
         } else {
@@ -123,14 +125,25 @@ internal class UInspectorMask(
         val oldTarget = state.lastTargetViews?.lastOrNull()
         if (oldTarget != null) {
             decorations.remove(ViewDecoration(oldTarget))
+            state.lastTargetViews?.onDestroy()
             state.lastTargetViews = null
             popupPanelContainer.dismiss()
         }
 
         val newTarget = views.lastOrNull()
         if (newTarget != oldTarget && newTarget != null) {
-            decorations.add(ViewDecoration(newTarget))
-            state.lastTargetViews = views
+            val decoration = ViewDecoration(newTarget)
+            decorations.add(decoration)
+            state.lastTargetViews =
+                UInspectorTargetViews(views).apply {
+                    onDraw.add {
+                        invalidate()
+                    }
+                    onDetach.add {
+                        decorations.remove(decoration)
+                        popupPanelContainer.dismiss()
+                    }
+                }
             popupPanelContainer.show(newTarget)
         }
 
