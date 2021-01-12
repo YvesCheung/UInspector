@@ -23,13 +23,13 @@ Uinspector-Optional-Fresco helps us to inspect the properties of `SimpleDraweeVi
 
 
 2. Run your app and turn on the Uinspector. Click the `SimpleDraweeView`
-
-    ![Inspect Fresco](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/fresco.jpg)
+ 
+    <img src="https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/fresco.jpg" alt="Inspect Fresco" width="360">
     
     Now you can see the properties listed in the popupPanel:
     
-    `fresco src` : The image source set in SimpleDraweeView
-    `fresco src type` : The type of *fresco src*
-    `fresco decode` : The bitmap decode config used for this image
-    `fresco prefer width/height` : What size the image is going to download
-    `fresco rotation` : How the image should be rotated by Fresco
+    - `fresco src` : The image source set in SimpleDraweeView
+    - `fresco src type` : The type of *fresco src*
+    - `fresco decode` : The bitmap decode config used for this image
+    - `fresco prefer width/height` : What size the image is going to download
+    - `fresco rotation` : How the image should be rotated by Fresco
