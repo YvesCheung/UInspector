@@ -108,7 +108,7 @@ class HomeViewModel : ViewModel() {
                         try {
                             Class.forName("com.huya.mobile.uinspector.UInspector")
                                 .getDeclaredMethod("start", View::class.java)
-                                .invoke(view)
+                                .invoke(null, view)
                         } catch (ignore: Throwable) {
                         }
                     }
