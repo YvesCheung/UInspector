@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
@@ -88,8 +89,21 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
         private var props: List<Pair<String, Any?>> = ViewProperties(targetView).toList()
 
         override fun onChange() {
+            val oldProps = props
             props = ViewProperties(targetView).toList()
-            notifyDataSetChanged()
+            DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+
+                override fun getOldListSize(): Int = oldProps.size
+
+                override fun getNewListSize(): Int = props.size
+
+                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                    oldProps[oldItemPosition].first == props[newItemPosition].first
+
+                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
+                    oldProps[oldItemPosition].second == props[newItemPosition].second
+
+            }).dispatchUpdatesTo(this)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPropsHolder {
@@ -97,6 +111,7 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
             textView.textSize = 11f
             textView.setTextColor(Color.WHITE)
             textView.isSingleLine = false
+            textView.movementMethod = LinkMovementMethod.getInstance()
             return ViewPropsHolder(textView)
         }
 
@@ -120,7 +135,6 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             holder.text.text = s
-            holder.text.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 
