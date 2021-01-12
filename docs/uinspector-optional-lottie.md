@@ -28,9 +28,9 @@ Uinspector-Optional-Lottie helps us to inspect the properties of `LottieAnimatio
     
     Now you can see the properties listed in the popupPanel:
     
-    `lottie fileName` : The json/zip file if exist
-    `lottie rawRes` : The resource id if exist
-    `lottie speed` : The speed of playing animation
-    `lottie duration` : How long the animation is
-    `lottie repeat mode` : The repeat mode of the animation
-    `lottie repeat count` : The repeat count of the animation
+    - `lottie fileName` : The json/zip file if exist
+    - `lottie rawRes` : The resource id if exist
+    - `lottie speed` : The speed of playing animation
+    - `lottie duration` : How long the animation is
+    - `lottie repeat mode` : The repeat mode of the animation
+    - `lottie repeat count` : The repeat count of the animation
