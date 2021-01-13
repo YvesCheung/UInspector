@@ -96,23 +96,26 @@ internal class UInspectorMask(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(ev: MotionEvent): Boolean {
         val consume = gesture.onTouchEvent(ev)
-        if (ev.actionMasked == ACTION_DOWN) {
-            val activity = tryGetActivity(context)
-            if (activity != null) {
-                //find the real target who can consume this event
-                dispatchDecorView =
-                    TouchDispatcher.dispatchEventToFindDecorView(activity, ev, currentDecorView)
-            }
-        } else if (isSingleTap) { //single tap is consumed by us. dispatch cancel to target.
-            isSingleTap = false
-            TouchDispatcher.dispatchCancelEvent(ev, dispatchDecorView)
-        } else {
-            TouchDispatcher.dispatchEvent(ev, dispatchDecorView)
-        }
 
-        if (ev.actionMasked == ACTION_UP || ev.actionMasked == ACTION_CANCEL) {
-            isSingleTap = false
-            dispatchDecorView = null
+        ev.fromLocation(windowOffset) {
+            if (ev.actionMasked == ACTION_DOWN) {
+                val activity = tryGetActivity(context)
+                if (activity != null) {
+                    //find the real target who can consume this event
+                    dispatchDecorView =
+                        TouchDispatcher.dispatchEventToFindDecorView(activity, ev, currentDecorView)
+                }
+            } else if (isSingleTap) { //single tap is consumed by us. dispatch cancel to target.
+                isSingleTap = false
+                TouchDispatcher.dispatchCancelEvent(ev, dispatchDecorView)
+            } else {
+                TouchDispatcher.dispatchEvent(ev, dispatchDecorView)
+            }
+
+            if (ev.actionMasked == ACTION_UP || ev.actionMasked == ACTION_CANCEL) {
+                isSingleTap = false
+                dispatchDecorView = null
+            }
         }
         return consume
     }
