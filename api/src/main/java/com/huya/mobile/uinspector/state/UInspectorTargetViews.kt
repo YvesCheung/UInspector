@@ -22,8 +22,14 @@ class UInspectorTargetViews private constructor(
 
     private val onDetach = CopyOnWriteArrayList<Listener>()
 
+    private val target = views.lastOrNull()
+
     private val onPreDrawDispatcher = ViewTreeObserver.OnPreDrawListener {
-        onDraw.forEach { it.onChange() }
+        val view = target
+        val parent = target?.parent as? View
+        if ((view != null && view.isDirty) || (parent != null && parent.isDirty)) {
+            onDraw.forEach { it.onChange() }
+        }
         true
     }
 
@@ -37,9 +43,6 @@ class UInspectorTargetViews private constructor(
 
         override fun onViewAttachedToWindow(v: View?) {}
     }
-
-    private val target: View? get() = views.lastOrNull()
-
 
     init {
         target?.viewTreeObserver?.addOnPreDrawListener(onPreDrawDispatcher)
