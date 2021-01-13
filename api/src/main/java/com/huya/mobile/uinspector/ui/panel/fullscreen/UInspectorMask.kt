@@ -154,6 +154,11 @@ internal class UInspectorMask(
             val decoration = ViewDecoration(newTarget)
             decorations.add(decoration)
             state.lastTargetViews = UInspectorTargetViews(views)
+                .addOnScrollListener(object : UInspectorTargetViews.Listener {
+                    override fun onChange() {
+                        invalidate()
+                    }
+                })
                 .addOnDrawListener(object : UInspectorTargetViews.Listener {
                     override fun onChange() {
                         invalidate()

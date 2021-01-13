@@ -22,6 +22,8 @@ class UInspectorTargetViews private constructor(
 
     private val onDetach = CopyOnWriteArrayList<Listener>()
 
+    private val onScroll = CopyOnWriteArrayList<Listener>()
+
     private val target = views.lastOrNull()
 
     private val onPreDrawDispatcher = ViewTreeObserver.OnPreDrawListener {
@@ -31,6 +33,10 @@ class UInspectorTargetViews private constructor(
             onDraw.forEach { it.onChange() }
         }
         true
+    }
+
+    private val onScrollDispatcher = ViewTreeObserver.OnScrollChangedListener {
+        onScroll.forEach { it.onChange() }
     }
 
     private val attachState = object : View.OnAttachStateChangeListener {
@@ -45,6 +51,7 @@ class UInspectorTargetViews private constructor(
     }
 
     init {
+        target?.viewTreeObserver?.addOnScrollChangedListener(onScrollDispatcher)
         target?.viewTreeObserver?.addOnPreDrawListener(onPreDrawDispatcher)
         target?.addOnAttachStateChangeListener(attachState)
     }
@@ -52,6 +59,7 @@ class UInspectorTargetViews private constructor(
     internal fun clear() {
         target?.removeOnAttachStateChangeListener(attachState)
         target?.viewTreeObserver?.removeOnPreDrawListener(onPreDrawDispatcher)
+        target?.viewTreeObserver?.removeOnScrollChangedListener(onScrollDispatcher)
     }
 
     @UseWith("removeOnDrawListener")
@@ -73,6 +81,17 @@ class UInspectorTargetViews private constructor(
 
     fun removeOnDetachListener(listener: Listener): UInspectorTargetViews {
         onDetach.remove(listener)
+        return this
+    }
+
+    @UseWith("removeOnScrollListener")
+    fun addOnScrollListener(listener: Listener): UInspectorTargetViews {
+        onScroll.add(listener)
+        return this
+    }
+
+    fun removeOnScrollListener(listener: Listener): UInspectorTargetViews {
+        onScroll.remove(listener)
         return this
     }
 
