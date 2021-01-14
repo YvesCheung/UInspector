@@ -6,6 +6,7 @@ import android.os.Build
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import com.huya.mobile.uinspector.util.LibName
 import com.huya.mobile.uinspector.util.isOnView
@@ -103,7 +104,7 @@ internal object TouchTargets {
         }
 
         for (child in dispatchTouchOrder.asReversed()) { //from top to bottom
-            if (isOnView(touchEvent, child)) {
+            if (child.visibility != GONE && isOnView(touchEvent, child)) {
                 return child
             }
         }
