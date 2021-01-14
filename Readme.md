@@ -4,7 +4,7 @@
 
 > A UI inspector to traverse a view hierarchy on Android
 
-[![Download](https://api.bintray.com/packages/yvescheung/maven/UInspector/images/download.svg)](https://bintray.com/yvescheung/maven/UInspector/_latestVersion) [![](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector) [![hackmd-github-sync-badge](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ/badge)](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ)
+![Build](https://github.com/YvesCheung/UInspector/workflows/Build/badge.svg) [![Download](https://api.bintray.com/packages/yvescheung/maven/UInspector/images/download.svg)](https://bintray.com/yvescheung/maven/UInspector/_latestVersion) [![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector) [![hackmd-github-sync-badge](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ/badge)](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ)
 
 ## Preview
 
@@ -16,7 +16,7 @@
 ## Feature
 
 - Low intrusive, no code change required
-- Turn on/off inspector throught the notification
+- Turn on/off inspector throught the **notification**
 - Select the target view by clicking on it
 - **What's LayoutInspector can't do?**
     - Tracking animations
