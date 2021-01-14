@@ -15,10 +15,17 @@
 
 ## Feature
 
-- Low intrusive, no code change required.
-- Turn on/off inspector throught the notification.
-- Select the target view by clicking on it.
-- Support to add your custom panel or custom view properties.
+- Low intrusive, no code change required
+- Turn on/off inspector throught the notification
+- Select the target view by clicking on it
+- **What's LayoutInspector can't do?**
+    - Tracking animations
+        
+        ![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/trace_animator.gif)
+        
+    - Support to add your custom panel or custom view properties
+        
+        [See more](#Develop)
 
 ## Get Started
 
