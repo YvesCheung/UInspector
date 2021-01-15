@@ -1,10 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply from: '../gradle/android_extension.gradle'
+apply from: '../../gradle/android_extension.gradle'
 
 dependencies {
-    api project(":Uinspector-optional-autoinstall")
     api project(":Uinspector-api")
 }
 
@@ -13,7 +12,7 @@ ext {
     bintrayName = 'UInspector'
 
     libraryGroupId = 'com.huya.mobile'
-    libraryName = 'Uinspector'
+    libraryName = 'Uinspector-optional-autoinstall'
 
     libraryDescription = 'A UI inspector to traverse a view hierarchy on Android'
 
@@ -27,4 +26,4 @@ ext {
     developerEmail = '975135274@qq.com'
 }
 
-apply from: "../gradle/publish.gradle"
+apply from: "../../gradle/publish.gradle"

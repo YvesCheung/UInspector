@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.huya.mobile.uinspector.optional.autoinstall">
+
+    <application>
+        <provider
+            android:name="com.huya.mobile.uinspector.optional.UInspectorInstaller"
+            android:authorities="${applicationId}.uinspector.optional.installer"
+            android:exported="false" />
+    </application>
+</manifest>

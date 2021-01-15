@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.lifecycle
+package com.huya.mobile.uinspector.optional
 
 import android.content.ContentProvider
 import android.content.ContentValues
@@ -8,6 +8,18 @@ import androidx.annotation.RestrictTo
 import com.huya.mobile.uinspector.UInspector
 
 /**
+ * Auto install the [UInspector].
+ *
+ * You can disable this feature by excluding this module in `build.gradle`:
+ *
+ * ```groovy
+ * dependencies {
+ *     debugImplementation('com.huya.mobile:Uinspector:1.0.8') {
+ *         exclude module: 'Uinspector-optional-autoinstall'
+ *     }
+ * }
+ * ```
+ *
  * @author YvesCheung
  * 2020/12/28
  */
