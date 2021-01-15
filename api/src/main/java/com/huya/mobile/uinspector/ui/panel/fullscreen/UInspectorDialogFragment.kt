@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import com.huya.mobile.uinspector.lifecycle.Disposable
+import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelContainer
 
 /**
@@ -52,4 +54,12 @@ internal class UInspectorDialogFragment : DialogFragment(), UInspectorPanel {
     override fun updateTargetView(view: View) = delegate.updateTargetView(view)
 
     override fun updateTargetViews(views: List<View>) = delegate.updateTargetViews(views)
+
+    override fun addDecoration(decoration: UInspectorDecoration): Disposable =
+        delegate.addDecoration(decoration)
+
+    override fun removeDecoration(decoration: UInspectorDecoration) =
+        delegate.removeDecoration(decoration)
+
+    override fun invalidate() = delegate.invalidateMask()
 }

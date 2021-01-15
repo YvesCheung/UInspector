@@ -6,7 +6,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import androidx.annotation.MainThread
 import com.huya.mobile.uinspector.hierarchy.ViewHierarchy
+import com.huya.mobile.uinspector.lifecycle.Disposable
+import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorPopupPanelContainerImpl
 
 /**
@@ -19,16 +22,36 @@ internal class UInspectorPanelDelegate {
     var mask: UInspectorMask? = null
 
     val childPanelContainer: UInspectorPopupPanelContainerImpl?
+        @MainThread
         get() = mask?.popupPanelContainer
 
+    @MainThread
     fun updateTargetViews(views: List<View>) {
         mask?.updateTargetViews(views)
     }
 
+    @MainThread
     fun updateTargetView(view: View) {
         mask?.updateTargetViews(ViewHierarchy.get(view))
     }
 
+    @MainThread
+    fun addDecoration(decoration: UInspectorDecoration): Disposable {
+        //todo: if mask == null, add to a waiting queue?
+        return mask?.addDecoration(decoration) ?: Disposable.EMPTY
+    }
+
+    @MainThread
+    fun removeDecoration(decoration: UInspectorDecoration) {
+        mask?.removeDecoration(decoration)
+    }
+
+    @MainThread
+    fun invalidateMask() {
+        mask?.invalidate()
+    }
+
+    @MainThread
     fun onCreateDialog(context: Context, theme: Int): Dialog {
         val dialog = UInspectorKeyEventDispatcher(context, theme)
         dialog.onKeyEvent = { keyEvent ->
@@ -41,10 +64,12 @@ internal class UInspectorPanelDelegate {
         return dialog
     }
 
+    @MainThread
     fun onCreateView(context: Context): View {
         return UInspectorMask(context).also { mask = it }
     }
 
+    @MainThread
     fun onStart(dialog: Dialog?) {
         dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
     }

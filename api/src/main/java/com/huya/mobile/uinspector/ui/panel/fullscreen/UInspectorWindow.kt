@@ -7,6 +7,8 @@ import android.view.View
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 import android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+import com.huya.mobile.uinspector.lifecycle.Disposable
+import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelContainer
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -40,6 +42,13 @@ class UInspectorWindow : UInspectorPanel {
         }
     }
 
+    override fun close() {
+        if (added.compareAndSet(true, false)) {
+            val view = delegate.mask
+            if (view != null) windowManager?.removeView(view)
+        }
+    }
+
     override fun updateTargetViews(views: List<View>) {
         delegate.updateTargetViews(views)
     }
@@ -48,10 +57,11 @@ class UInspectorWindow : UInspectorPanel {
         delegate.updateTargetView(view)
     }
 
-    override fun close() {
-        if (added.compareAndSet(true, false)) {
-            val view = delegate.mask
-            if (view != null) windowManager?.removeView(view)
-        }
-    }
+    override fun addDecoration(decoration: UInspectorDecoration): Disposable =
+        delegate.addDecoration(decoration)
+
+    override fun removeDecoration(decoration: UInspectorDecoration) =
+        delegate.removeDecoration(decoration)
+
+    override fun invalidate() = delegate.invalidateMask()
 }

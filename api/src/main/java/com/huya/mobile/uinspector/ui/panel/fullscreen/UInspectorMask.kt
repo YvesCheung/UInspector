@@ -16,6 +16,7 @@ import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.TouchDispatcher
 import com.huya.mobile.uinspector.hierarchy.TouchTargets
 import com.huya.mobile.uinspector.hierarchy.WindowManager
+import com.huya.mobile.uinspector.lifecycle.Disposable
 import com.huya.mobile.uinspector.state.UInspectorTargetViews
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
@@ -188,6 +189,17 @@ internal class UInspectorMask(
             canvas.restoreToCount(c)
         }
         super.dispatchDraw(canvas)
+    }
+
+    fun addDecoration(decoration: UInspectorDecoration): Disposable {
+        decorations.add(decoration)
+        return Disposable.create {
+            removeDecoration(decoration)
+        }
+    }
+
+    fun removeDecoration(decoration: UInspectorDecoration) {
+        decorations.remove(decoration)
     }
 
     override fun onDetachedFromWindow() {
