@@ -14,12 +14,13 @@ import com.huya.mobile.uinspector.UInspector
  *
  * ```groovy
  * dependencies {
- *     debugImplementation('com.huya.mobile:Uinspector:1.0.8') {
+ *     debugImplementation('com.huya.mobile:Uinspector:x.y.z') {
  *         exclude module: 'Uinspector-optional-autoinstall'
  *     }
  * }
  * ```
  *
+ * @since 1.0.9
  * @author YvesCheung
  * 2020/12/28
  */
