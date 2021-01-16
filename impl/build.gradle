@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply from: '../gradle/android_extension.gradle'
 
 dependencies {
+    implementation "com.github.lzyzsd.randomcolor:library:1.0.0"
     api project(":Uinspector-optional-autoinstall")
     api project(":Uinspector-api")
 }

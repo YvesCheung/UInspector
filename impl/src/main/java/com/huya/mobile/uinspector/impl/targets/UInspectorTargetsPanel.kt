@@ -2,6 +2,8 @@ package com.huya.mobile.uinspector.impl.targets
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.GradientDrawable.OVAL
 import android.os.Build
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -11,10 +13,13 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.R
+import com.huya.mobile.uinspector.impl.utils.dpToPx
+import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.huya.mobile.uinspector.util.idToString
 import com.huya.mobile.uinspector.util.visibilityToString
@@ -29,6 +34,8 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
 
     override val title = "Targets"
 
+    private val decorations = mutableListOf<UInspectorDecoration>()
+
     @SuppressLint("InflateParams")
     override fun onCreateView(context: Context): View {
         val root = LayoutInflater.from(context)
@@ -37,46 +44,71 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
             UInspector.currentState.withLifecycle?.lastTargetViews?.lastOrNull()
         if (targetView != null) {
             val parent = targetView.parent
-            if (parent is View) {
-                root.view_targets_parent_title.visibility = VISIBLE
-                root.view_targets_parent.visibility = VISIBLE
-                root.view_targets_parent.adapter = Adapter(listOf(IndexedValue<View>(-1, parent)))
-            } else {
-                root.view_targets_parent_title.visibility = GONE
-                root.view_targets_parent.visibility = GONE
-            }
-
-            val children =
-                if (targetView is ViewGroup) targetView.children.withIndex().toList()
+            val parentList: List<ViewInfo> =
+                if (parent is View) listOf(ViewInfo(parent))
                 else emptyList()
-            if (children.isNotEmpty()) {
-                root.view_targets_children_title.visibility = VISIBLE
-                root.view_targets_children.visibility = VISIBLE
-                root.view_targets_children.adapter = Adapter(children)
-            } else {
-                root.view_targets_children_title.visibility = GONE
-                root.view_targets_children.visibility = GONE
-            }
+            setupList(root.view_targets_parent_title, root.view_targets_parent, parentList)
 
-            val brothers =
+            val children: List<ViewInfo> =
+                if (targetView is ViewGroup)
+                    targetView.children.mapIndexedTo(mutableListOf()) { index, view ->
+                        ViewInfo(view, index)
+                    }
+                else emptyList()
+            setupList(root.view_targets_children_title, root.view_targets_children, children)
+
+            val brothers: List<ViewInfo> =
                 if (parent is ViewGroup)
-                    parent.children.withIndex()
-                        .filterTo(mutableListOf()) { it.value !== targetView }
-                else
-                    @Suppress("RemoveExplicitTypeArguments") emptyList<IndexedValue<View>>()
-            if (brothers.isNotEmpty()) {
-                root.view_targets_brother_title.visibility = VISIBLE
-                root.view_targets_brother.visibility = VISIBLE
-                root.view_targets_brother.adapter = Adapter(brothers)
-            } else {
-                root.view_targets_brother_title.visibility = GONE
-                root.view_targets_brother.visibility = GONE
-            }
+                    parent.children.mapIndexedNotNullTo(mutableListOf()) { index, view ->
+                        if (view !== targetView) ViewInfo(view, index)
+                        else null
+                    }
+                else emptyList()
+            setupList(root.view_targets_brother_title, root.view_targets_brother, brothers)
         }
         return root
     }
 
-    private inner class Adapter(val views: List<IndexedValue<View>>) : RecyclerView.Adapter<VH>() {
+    private fun setupList(title: View, list: RecyclerView, data: List<ViewInfo>) {
+        if (data.isNotEmpty()) {
+            data.forEach { (child, _, color) ->
+                decorations.add(TargetStrokeDecoration(child, color))
+            }
+            title.visibility = VISIBLE
+            list.visibility = VISIBLE
+            list.adapter = Adapter(data)
+        } else {
+            title.visibility = GONE
+            list.visibility = GONE
+        }
+    }
+
+    override fun onUserVisibleHint(visible: Boolean) {
+        if (visible) {
+            decorations.forEach { decoration ->
+                UInspector.currentState.withLifecycle?.panel?.addDecoration(decoration)
+            }
+        } else {
+            decorations.forEach { decoration ->
+                UInspector.currentState.withLifecycle?.panel?.removeDecoration(decoration)
+            }
+        }
+        if (decorations.isNotEmpty()) {
+            UInspector.currentState.withLifecycle?.panel?.invalidate()
+        }
+    }
+
+    override fun onDestroyView() {
+        decorations.forEach { decoration ->
+            UInspector.currentState.withLifecycle?.panel?.removeDecoration(decoration)
+        }
+        if (decorations.isNotEmpty()) {
+            UInspector.currentState.withLifecycle?.panel?.invalidate()
+        }
+        super.onDestroyView()
+    }
+
+    private inner class Adapter(val views: List<ViewInfo>) : RecyclerView.Adapter<VH>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
             val root = LayoutInflater.from(parent.context)
@@ -88,7 +120,7 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
 
         override fun onBindViewHolder(holder: VH, position: Int) {
             val ctx = holder.itemView.context
-            val (index, target) = views[position]
+            val (target, index, color) = views[position]
             val name = StringBuilder(target::class.java.simpleName)
             if (target.id > 0) {
                 name.append("(${idToString(ctx, target.id)})")
@@ -100,6 +132,13 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
                 holder.textView.setTextColor(ctx.resources.getColor(android.R.color.darker_gray))
                 name.append("(${visibilityToString(target.visibility)})")
             }
+            val colorMark = GradientDrawable().apply {
+                shape = OVAL
+                setColor(color)
+                setBounds(0, 0, 20.dpToPx, 20.dpToPx)
+            }
+            holder.textView.setCompoundDrawables(colorMark, null, null, null)
+            holder.textView.compoundDrawablePadding = 8.dpToPx
             holder.textView.gravity = Gravity.CENTER_VERTICAL or Gravity.START
             holder.textView.text = name
             holder.textView.setOnClickListener {
@@ -117,4 +156,10 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
     }
 
     private class VH(val textView: TextView) : RecyclerView.ViewHolder(textView)
+
+    private data class ViewInfo(
+        val view: View,
+        val index: Int = -1,
+        @ColorInt val color: Int = ColorGenerator.next()
+    )
 }
