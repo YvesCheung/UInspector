@@ -7,6 +7,7 @@ import com.facebook.drawee.view.DraweeView
 import com.facebook.imagepipeline.common.SourceUriType
 import com.facebook.imagepipeline.request.ImageRequest
 import com.huya.mobile.uinspector.impl.properties.view.ImageViewPropertiesParser
+import com.huya.mobile.uinspector.util.idToString
 import com.huya.mobile.uinspector.util.link
 import com.yy.mobile.whisper.Output
 
@@ -28,7 +29,7 @@ class DraweeViewPropertiesParser(
         }
 
         val uri = request.sourceUri
-        props["fresco src"] = if (uri != null) clickable(uri) else "null"
+        props["fresco src"] = if (uri != null) tryResId(uri) ?: clickable(uri) else "null"
 
         val type = request.sourceUriType
         props["fresco src type"] =
@@ -64,6 +65,16 @@ class DraweeViewPropertiesParser(
                     props["fresco rotation"] = rotationOption.forcedAngle
             }
         }
+    }
+
+    private fun tryResId(uri: Uri): CharSequence? {
+        if (uri.scheme == "res") {
+            val id = uri.lastPathSegment?.toIntOrNull()
+            if (id != null) {
+                return idToString(draweeView.context, id)
+            }
+        }
+        return null
     }
 
     private fun clickable(uri: Uri): CharSequence {
