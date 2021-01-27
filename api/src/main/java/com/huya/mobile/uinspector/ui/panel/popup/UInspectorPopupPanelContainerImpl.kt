@@ -2,6 +2,7 @@ package com.huya.mobile.uinspector.ui.panel.popup
 
 import android.graphics.Color
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.Gravity.BOTTOM
 import android.view.Gravity.TOP
 import android.view.LayoutInflater
@@ -124,7 +125,7 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
                             setPadding(8.dpTopx, 8.dpTopx, 8.dpTopx, 0)
                             isSingleLine = false
                             movementMethod = ScrollingMovementMethod()
-                            text = e.toString()
+                            text = Log.getStackTraceString(e)
                         }
                     }
                 container.addView(child)
