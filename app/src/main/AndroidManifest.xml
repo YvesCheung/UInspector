@@ -25,5 +25,6 @@
 
         <activity android:name="com.huya.mobile.uinspector.ui.optional.ImageLoaderActivity" />
         <activity android:name="com.huya.mobile.uinspector.ui.optional.LottieActivity" />
+        <activity android:name="com.example.compose.rally.RallyActivity" />
     </application>
 </manifest>

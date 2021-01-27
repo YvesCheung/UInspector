@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.compose.rally.RallyActivity
 import com.google.android.material.snackbar.Snackbar
 import com.huya.mobile.uinspector.demo.BuildConfig
 import com.huya.mobile.uinspector.demo.R
@@ -35,6 +36,9 @@ class HomeViewModel : ViewModel() {
 
     val data: LiveData<List<HomeItem>> = MutableLiveData<List<HomeItem>>().apply {
         value = listOf(
+            HomeItem("Inspect Jetpack compose") { ctx, _ ->
+                ctx.startActivity(Intent(ctx, RallyActivity::class.java))
+            },
             HomeItem("Show DialogFragment") { ctx, _ ->
                 DemoDialogFragment().show(ctx.supportFragmentManager, "DemoDialogFragment")
             },
