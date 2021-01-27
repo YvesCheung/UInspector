@@ -46,6 +46,7 @@ class ViewProperties(
                 is LinearLayout -> LinearLayoutPropertiesParser(view)
                 is RelativeLayout -> RelativeLayoutPropertiesParser(view)
                 is FrameLayout -> FrameLayoutPropertiesParser(view)
+                is ViewGroup -> ViewGroupPropertiesParser(view)
                 else -> ViewPropertiesParser(view)
             }
         }
