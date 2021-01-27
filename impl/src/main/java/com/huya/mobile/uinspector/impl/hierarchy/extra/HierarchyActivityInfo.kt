@@ -16,7 +16,7 @@ open class HierarchyActivityInfo(private val activity: Activity) : HierarchyExtr
         if (index == 0) {
             s.withColor(activity) {
                 newLine(0) {
-                    append(activity::class.java.canonicalName)
+                    append(activity::class.java.canonicalName ?: activity::class.java.name)
                 }
             }
         }

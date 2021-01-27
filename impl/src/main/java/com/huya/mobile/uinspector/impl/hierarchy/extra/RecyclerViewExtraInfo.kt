@@ -19,7 +19,7 @@ open class RecyclerViewExtraInfo(private val context: Context) : HierarchyExtraI
             if (adapter != null) {
                 s.withColor(context) {
                     newLine(index) {
-                        append(adapter::class.java.canonicalName)
+                        append(adapter::class.java.canonicalName ?: adapter::class.java.name)
                     }
                 }
             }

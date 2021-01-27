@@ -24,7 +24,7 @@ open class HierarchyFragmentInfo(val activity: Activity) : HierarchyExtraInfo {
         if (fragment != null) {
             s.withColor(activity) {
                 newLine(index) {
-                    append(fragment::class.java.canonicalName)
+                    append(fragment::class.java.canonicalName ?: fragment::class.java.name)
                 }
             }
         }

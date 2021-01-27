@@ -14,12 +14,12 @@ open class RecyclerViewPropertiesParser(view: RecyclerView) : ViewPropertiesPars
 
         val lm = view.layoutManager
         if (lm != null) {
-            props["layoutManager"] = lm::class.java.simpleName
+            props["layoutManager"] = lm::class.java.simpleName.ifBlank { lm::class.java.name }
         }
 
         val adapter = view.adapter
         if (adapter != null) {
-            props["adapter"] = adapter::class.java.canonicalName
+            props["adapter"] = adapter::class.java.canonicalName ?: adapter::class.java.name
         }
     }
 }
