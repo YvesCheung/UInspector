@@ -18,6 +18,7 @@ package com.example.compose.rally.ui.accounts
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.rally.data.Account
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
@@ -27,7 +28,8 @@ import com.huya.mobile.uinspector.demo.R
  * The Accounts screen.
  */
 @Composable
-fun AccountsBody(accounts: List<Account>) {
+@Preview
+fun AccountsBody(accounts: List<Account> = emptyList()) {
     StatementBody(
         items = accounts,
         amounts = { account -> account.balance },

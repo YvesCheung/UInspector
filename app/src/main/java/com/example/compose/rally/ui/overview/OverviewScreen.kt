@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.RallyScreen
 import com.example.compose.rally.data.UserData
@@ -34,6 +35,7 @@ import com.example.compose.rally.ui.components.*
 import com.huya.mobile.uinspector.demo.R
 
 @Composable
+@Preview
 fun OverviewBody(onScreenChange: (RallyScreen) -> Unit = {}) {
     ScrollableColumn(contentPadding = PaddingValues(16.dp)) {
         AlertCard()

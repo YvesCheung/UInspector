@@ -18,6 +18,7 @@ package com.example.compose.rally.ui.bills
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.rally.data.Bill
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
@@ -27,7 +28,8 @@ import com.huya.mobile.uinspector.demo.R
  * The Bills screen.
  */
 @Composable
-fun BillsBody(bills: List<Bill>) {
+@Preview
+fun BillsBody(bills: List<Bill> = emptyList()) {
     StatementBody(
         items = bills,
         amounts = { bill -> bill.amount },
