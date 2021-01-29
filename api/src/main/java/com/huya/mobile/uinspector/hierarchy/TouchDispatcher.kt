@@ -50,7 +50,7 @@ object TouchDispatcher {
 
                 decor.getLocationOnScreen(windowOffset)
 
-                var touchTargets: View? = null
+                var touchTargets: Layer? = null
                 downEvent.toLocation(windowOffset) {
                     if (isOnView(it, decor)) {
                         decor.dispatchTouchEvent(it)
@@ -77,7 +77,7 @@ object TouchDispatcher {
         activity: Activity,
         downEvent: MotionEvent,
         excludeDecorView: View
-    ): List<View> {
+    ): List<Layer> {
         obtainCancel(downEvent.downTime) { cancel ->
             val decorViews = WindowManager.findDecorViews(activity)
             for (decor in decorViews.asReversed()) {
@@ -87,7 +87,7 @@ object TouchDispatcher {
 
                 decor.getLocationOnScreen(windowOffset)
 
-                var touchTargets = emptyList<View>()
+                var touchTargets = emptyList<Layer>()
                 downEvent.toLocation(windowOffset) {
                     if (isOnView(it, decor)) {
                         decor.dispatchTouchEvent(it)
