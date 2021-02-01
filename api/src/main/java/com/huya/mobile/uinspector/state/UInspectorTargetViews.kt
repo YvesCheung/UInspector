@@ -2,6 +2,8 @@ package com.huya.mobile.uinspector.state
 
 import android.view.View
 import android.view.ViewTreeObserver
+import com.huya.mobile.uinspector.hierarchy.AndroidView
+import com.huya.mobile.uinspector.hierarchy.Layer
 import com.yy.mobile.whisper.UseWith
 import java.util.concurrent.CopyOnWriteArrayList
 
@@ -11,12 +13,12 @@ import java.util.concurrent.CopyOnWriteArrayList
  */
 @Suppress("MemberVisibilityCanBePrivate")
 class UInspectorTargetViews private constructor(
-    origin: List<View>,
-    private val views: MutableList<View> = ArrayList(origin) //copy
-) : List<View> by views {
+    origin: List<Layer>,
+    private val views: MutableList<Layer> = ArrayList(origin) //copy
+) : List<Layer> by views {
 
     @UseWith("clear")
-    constructor(views: List<View>) : this(origin = views)
+    constructor(views: List<Layer>) : this(origin = views)
 
     private val onDraw = CopyOnWriteArrayList<Listener>()
 
@@ -27,9 +29,11 @@ class UInspectorTargetViews private constructor(
     private val target = views.lastOrNull()
 
     private val onPreDrawDispatcher = ViewTreeObserver.OnPreDrawListener {
-        val view = target
-        val parent = target?.parent as? View
-        if ((view != null && view.isDirty) || (parent != null && parent.isDirty)) {
+        val view = target as? AndroidView
+        val parent = target?.parent as? AndroidView
+        if (view == null) {
+            onDraw.forEach { it.onChange() }
+        } else if (view.view.isDirty || (parent != null && parent.view.isDirty)) {
             onDraw.forEach { it.onChange() }
         }
         true
@@ -51,15 +55,19 @@ class UInspectorTargetViews private constructor(
     }
 
     init {
-        target?.viewTreeObserver?.addOnScrollChangedListener(onScrollDispatcher)
-        target?.viewTreeObserver?.addOnPreDrawListener(onPreDrawDispatcher)
-        target?.addOnAttachStateChangeListener(attachState)
+        if (target is AndroidView) {
+            target.view.viewTreeObserver?.addOnScrollChangedListener(onScrollDispatcher)
+            target.view.viewTreeObserver?.addOnPreDrawListener(onPreDrawDispatcher)
+            target.view.addOnAttachStateChangeListener(attachState)
+        }
     }
 
     internal fun clear() {
-        target?.removeOnAttachStateChangeListener(attachState)
-        target?.viewTreeObserver?.removeOnPreDrawListener(onPreDrawDispatcher)
-        target?.viewTreeObserver?.removeOnScrollChangedListener(onScrollDispatcher)
+        if (target is AndroidView) {
+            target.view.removeOnAttachStateChangeListener(attachState)
+            target.view.viewTreeObserver?.removeOnPreDrawListener(onPreDrawDispatcher)
+            target.view.viewTreeObserver?.removeOnScrollChangedListener(onScrollDispatcher)
+        }
     }
 
     @UseWith("removeOnDrawListener")

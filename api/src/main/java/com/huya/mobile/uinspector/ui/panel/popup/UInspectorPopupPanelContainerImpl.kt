@@ -15,6 +15,8 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.huya.mobile.uinspector.R
 import com.huya.mobile.uinspector.UInspector
+import com.huya.mobile.uinspector.hierarchy.AndroidView
+import com.huya.mobile.uinspector.hierarchy.Layer
 import com.huya.mobile.uinspector.util.dpTopx
 import com.huya.mobile.uinspector.util.log
 import com.yy.mobile.whisper.IntDef
@@ -30,6 +32,10 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
     private var popupPanel: UInspectorPopupPanel? = null
 
     override fun show(anchorView: View) {
+        show(AndroidView(anchorView))
+    }
+
+    override fun show(anchorView: Layer) {
         dismiss()
         val childrenPanel = UInspector.createChildPanels()
         if (childrenPanel.isNotEmpty()) {
@@ -38,14 +44,13 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
                     .inflate(R.layout.uinspector_popup_panel_container, parent),
                 childrenPanel
             ).apply {
-                val anchorLocation =
-                    IntArray(2).also { anchorView.getLocationOnScreen(it) }
-                val panelHeight = anchorView.context.resources
+                val anchorLocation = anchorView.getLocation()
+                val panelHeight = parent.context.resources
                     .getDimension(R.dimen.popup_panel_container_height)
                 //Note: parent.measuredHeight is close to the screen height.
                 //  It's not 100% accurate
                 if (anchorLocation[1] > panelHeight &&
-                    anchorLocation[1] + anchorView.measuredHeight > parent.measuredHeight - panelHeight
+                    anchorLocation[1] + anchorView.height > parent.measuredHeight - panelHeight
                 ) {
                     showAt(TOP)
                 } else {

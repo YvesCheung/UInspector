@@ -4,49 +4,58 @@ import android.graphics.*
 import android.os.Build
 import android.view.View
 import android.view.ViewGroup
+import com.huya.mobile.uinspector.hierarchy.AndroidView
+import com.huya.mobile.uinspector.hierarchy.Layer
+import com.yy.mobile.whisper.DeprecatedBy
 
 /**
  * @author YvesCheung
  * 2020/12/29
  */
-open class ViewDecoration(val view: View) : UInspectorDecoration {
+open class ViewDecoration(val layer: Layer) : UInspectorDecoration {
+
+    @DeprecatedBy(replaceWith = "ViewDecoration(com.huya.mobile.uinspector.hierarchy.AndroidView(%s))")
+    constructor(view: View) : this(AndroidView(view))
 
     override fun draw(canvas: Canvas) {
-        val location = IntArray(2).also { view.getLocationOnScreen(it) }
+        val location = layer.getLocation()
         val viewBounds = Rect(
             location[0],
             location[1],
-            location[0] + view.measuredWidth,
-            location[1] + view.measuredHeight
+            location[0] + layer.width,
+            location[1] + layer.height
         )
 
-        (view.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
-            val marginBounds = Rect(
-                viewBounds.left - lp.leftMargin,
-                viewBounds.top - lp.topMargin,
-                viewBounds.right + lp.rightMargin,
-                viewBounds.bottom + lp.bottomMargin
-            )
-            if (viewBounds != marginBounds) {
-                canvas.difference(marginBounds, viewBounds) {
-                    drawRect(marginBounds, marginPaint)
+        if (layer is AndroidView) {
+            val view = layer.view
+            (view.layoutParams as? ViewGroup.MarginLayoutParams)?.let { lp ->
+                val marginBounds = Rect(
+                    viewBounds.left - lp.leftMargin,
+                    viewBounds.top - lp.topMargin,
+                    viewBounds.right + lp.rightMargin,
+                    viewBounds.bottom + lp.bottomMargin
+                )
+                if (viewBounds != marginBounds) {
+                    canvas.difference(marginBounds, viewBounds) {
+                        drawRect(marginBounds, marginPaint)
+                    }
                 }
             }
-        }
 
-        val paddingBound = Rect(
-            viewBounds.left + view.paddingLeft,
-            viewBounds.top + view.paddingTop,
-            viewBounds.right - view.paddingRight,
-            viewBounds.bottom - view.paddingBottom
-        )
-        if (viewBounds != paddingBound) {
-            canvas.difference(viewBounds, paddingBound) {
-                drawRect(viewBounds, paddingPaint)
+            val paddingBound = Rect(
+                viewBounds.left + view.paddingLeft,
+                viewBounds.top + view.paddingTop,
+                viewBounds.right - view.paddingRight,
+                viewBounds.bottom - view.paddingBottom
+            )
+            if (viewBounds != paddingBound) {
+                canvas.difference(viewBounds, paddingBound) {
+                    drawRect(viewBounds, paddingPaint)
+                }
+                canvas.drawRect(paddingBound, boundPaint)
+            } else {
+                canvas.drawRect(viewBounds, boundPaint)
             }
-            canvas.drawRect(paddingBound, boundPaint)
-        } else {
-            canvas.drawRect(viewBounds, boundPaint)
         }
     }
 
@@ -71,9 +80,9 @@ open class ViewDecoration(val view: View) : UInspectorDecoration {
         }
     }
 
-    override fun hashCode(): Int = view.hashCode()
+    override fun hashCode(): Int = layer.hashCode()
 
-    override fun equals(other: Any?): Boolean = other is ViewDecoration && view === other.view
+    override fun equals(other: Any?): Boolean = other is ViewDecoration && layer === other.layer
 
     companion object {
 

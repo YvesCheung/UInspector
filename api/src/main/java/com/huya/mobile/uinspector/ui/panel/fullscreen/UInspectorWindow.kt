@@ -7,6 +7,7 @@ import android.view.View
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
 import android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+import com.huya.mobile.uinspector.hierarchy.Layer
 import com.huya.mobile.uinspector.lifecycle.Disposable
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelContainer
@@ -49,13 +50,13 @@ class UInspectorWindow : UInspectorPanel {
         }
     }
 
-    override fun updateTargetViews(views: List<View>) {
-        delegate.updateTargetViews(views)
-    }
+    override fun updateTargetViews(views: List<View>) = delegate.updateTargetViews(views)
 
-    override fun updateTargetView(view: View) {
-        delegate.updateTargetView(view)
-    }
+    override fun updateTargetView(view: View) = delegate.updateTargetView(view)
+
+    override fun updateTargetLayer(layer: Layer) = delegate.updateTargetLayer(layer)
+
+    override fun updateTargetLayers(layers: List<Layer>) = delegate.updateTargetLayers(layers)
 
     override fun addDecoration(decoration: UInspectorDecoration): Disposable =
         delegate.addDecoration(decoration)

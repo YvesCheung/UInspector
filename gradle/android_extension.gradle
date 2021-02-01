@@ -1,3 +1,6 @@
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 android {
     compileSdkVersion 30
 
@@ -8,11 +11,6 @@ android {
         versionName "1.0"
     }
 
-    buildFeatures {
-        // Enables Jetpack Compose for this module
-        compose true
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -21,11 +19,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         useIR = true
-    }
-
-    composeOptions {
-        kotlinCompilerVersion kotlin_version
-        kotlinCompilerExtensionVersion compose_version
     }
 }
 

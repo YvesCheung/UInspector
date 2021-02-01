@@ -17,6 +17,8 @@ import androidx.annotation.ColorInt
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.huya.mobile.uinspector.UInspector
+import com.huya.mobile.uinspector.hierarchy.AndroidView
+import com.huya.mobile.uinspector.hierarchy.Layer
 import com.huya.mobile.uinspector.impl.R
 import com.huya.mobile.uinspector.impl.utils.dpToPx
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
@@ -43,27 +45,23 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
         val targetView =
             UInspector.currentState.withLifecycle?.lastTargetViews?.lastOrNull()
         if (targetView != null) {
-            val parent = targetView.parent
+            val parent: Layer? = targetView.parent
             val parentList: List<ViewInfo> =
-                if (parent is View) listOf(ViewInfo(parent))
+                if (parent != null) listOf(ViewInfo(parent))
                 else emptyList()
             setupList(root.view_targets_parent_title, root.view_targets_parent, parentList)
 
             val children: List<ViewInfo> =
-                if (targetView is ViewGroup)
-                    targetView.children.mapIndexedTo(mutableListOf()) { index, view ->
-                        ViewInfo(view, index)
-                    }
-                else emptyList()
+                targetView.children.mapIndexedTo(mutableListOf()) { index, view ->
+                    ViewInfo(view, index)
+                }
             setupList(root.view_targets_children_title, root.view_targets_children, children)
 
             val brothers: List<ViewInfo> =
-                if (parent is ViewGroup)
-                    parent.children.mapIndexedNotNullTo(mutableListOf()) { index, view ->
-                        if (view !== targetView) ViewInfo(view, index)
-                        else null
-                    }
-                else emptyList()
+                parent?.children?.mapIndexedNotNullTo(mutableListOf()) { index, view ->
+                    if (view !== targetView) ViewInfo(view, index)
+                    else null
+                } ?: emptyList()
             setupList(root.view_targets_brother_title, root.view_targets_brother, brothers)
         }
         return root
@@ -121,16 +119,14 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
         override fun onBindViewHolder(holder: VH, position: Int) {
             val ctx = holder.itemView.context
             val (target, index, color) = views[position]
-            val name = StringBuilder(target::class.java.simpleName)
-            if (target.id > 0) {
-                name.append("(${idToString(ctx, target.id)})")
-            }
+            val name = StringBuilder(target.name)
+            target.id?.let { id -> name.append("(").append(id).append(")") }
             if (index >= 0) {
                 name.append("(index $index)")
             }
-            if (target.visibility != VISIBLE) {
+            if (target is AndroidView && target.view.visibility != VISIBLE) {
                 holder.textView.setTextColor(ctx.resources.getColor(android.R.color.darker_gray))
-                name.append("(${visibilityToString(target.visibility)})")
+                name.append("(${visibilityToString(target.view.visibility)})")
             }
             val colorMark = GradientDrawable().apply {
                 shape = OVAL
@@ -142,8 +138,8 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
             holder.textView.gravity = Gravity.CENTER_VERTICAL or Gravity.START
             holder.textView.text = name
             holder.textView.setOnClickListener {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT || target.isAttachedToWindow) {
-                    UInspector.currentState.withLifecycle?.panel?.updateTargetView(target)
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+                    UInspector.currentState.withLifecycle?.panel?.updateTargetLayer(target)
                 } else {
                     Toast.makeText(
                         holder.itemView.context,
@@ -158,7 +154,7 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
     private class VH(val textView: TextView) : RecyclerView.ViewHolder(textView)
 
     private data class ViewInfo(
-        val view: View,
+        val layer: Layer,
         val index: Int = -1,
         @ColorInt val color: Int = ColorGenerator.next()
     )

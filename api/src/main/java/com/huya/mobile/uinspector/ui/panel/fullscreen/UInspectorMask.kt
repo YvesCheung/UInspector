@@ -83,7 +83,7 @@ internal class UInspectorMask(
                         event.fromLocation(windowOffset) {
                             TouchTargets.findTouchTargets(activity, event, currentDecorView)
                         }
-                    updateTargetLayer(touchTargets)
+                    updateTargetLayers(touchTargets)
                     return true
                 }
                 return false
@@ -139,48 +139,47 @@ internal class UInspectorMask(
     }
 
     fun updateTargetViews(views: List<View>) {
-        updateTargetLayer(views.map(::AndroidView))
+        updateTargetLayers(views.map(::AndroidView))
     }
 
-    fun updateTargetLayer(layers: List<Layer>) {
+    fun updateTargetLayers(layers: List<Layer>) {
         val dumpViews =
             layers.joinToString(" -> ") { layer -> layer.name }
         log("Targets = $dumpViews")
 
-//        val state = UInspector.currentState.withLifecycle ?: return
-//
-//        val oldTarget = state.lastTargetViews?.lastOrNull()
-//        if (oldTarget != null) {
-//            decorations.remove(ViewDecoration(oldTarget))
-//            state.lastTargetViews?.clear()
-//            state.lastTargetViews = null
-//            popupPanelContainer.dismiss()
-//        }
-//
-//        val newTarget = layers.lastOrNull()
-//        if (newTarget != oldTarget && newTarget != null) {
-//            val decoration = ViewDecoration(newTarget)
-//            decorations.add(decoration)
-//            state.lastTargetViews = UInspectorTargetViews(layers)
-//                .addOnScrollListener(object : UInspectorTargetViews.Listener {
-//                    override fun onChange() {
-//                        invalidate()
-//                    }
-//                })
-//                .addOnDrawListener(object : UInspectorTargetViews.Listener {
-//                    override fun onChange() {
-//                        invalidate()
-//                    }
-//                })
-//                .addOnDetachListener(object : UInspectorTargetViews.Listener {
-//                    override fun onChange() {
-//                        decorations.remove(decoration)
-//                        popupPanelContainer.dismiss()
-//                    }
-//                })
-//            popupPanelContainer.show(newTarget)
-//
-//        }
+        val state = UInspector.currentState.withLifecycle ?: return
+
+        val oldTarget = state.lastTargetViews?.lastOrNull()
+        if (oldTarget != null) {
+            decorations.remove(ViewDecoration(oldTarget))
+            state.lastTargetViews?.clear()
+            state.lastTargetViews = null
+            popupPanelContainer.dismiss()
+        }
+
+        val newTarget = layers.lastOrNull()
+        if (newTarget != oldTarget && newTarget != null) {
+            val decoration = ViewDecoration(newTarget)
+            decorations.add(decoration)
+            state.lastTargetViews = UInspectorTargetViews(layers)
+                .addOnScrollListener(object : UInspectorTargetViews.Listener {
+                    override fun onChange() {
+                        invalidate()
+                    }
+                })
+                .addOnDrawListener(object : UInspectorTargetViews.Listener {
+                    override fun onChange() {
+                        invalidate()
+                    }
+                })
+                .addOnDetachListener(object : UInspectorTargetViews.Listener {
+                    override fun onChange() {
+                        decorations.remove(decoration)
+                        popupPanelContainer.dismiss()
+                    }
+                })
+            popupPanelContainer.show(newTarget)
+        }
         invalidate()
     }
 

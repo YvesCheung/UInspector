@@ -7,6 +7,8 @@ import android.graphics.drawable.ColorDrawable
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.annotation.MainThread
+import com.huya.mobile.uinspector.hierarchy.AndroidView
+import com.huya.mobile.uinspector.hierarchy.Layer
 import com.huya.mobile.uinspector.hierarchy.ViewHierarchy
 import com.huya.mobile.uinspector.lifecycle.Disposable
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
@@ -32,7 +34,17 @@ internal class UInspectorPanelDelegate {
 
     @MainThread
     fun updateTargetView(view: View) {
-        mask?.updateTargetViews(ViewHierarchy.get(view))
+        updateTargetLayer(AndroidView(view))
+    }
+
+    @MainThread
+    fun updateTargetLayers(layers: List<Layer>) {
+        mask?.updateTargetLayers(layers)
+    }
+
+    @MainThread
+    fun updateTargetLayer(layer: Layer) {
+        mask?.updateTargetLayers(ViewHierarchy.get(layer))
     }
 
     @MainThread

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.huya.mobile.uinspector.hierarchy.Layer
 import com.huya.mobile.uinspector.lifecycle.Disposable
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelContainer
@@ -54,6 +55,10 @@ internal class UInspectorLegacyDialogFragment : DialogFragment(), UInspectorPane
     override fun updateTargetView(view: View) = delegate.updateTargetView(view)
 
     override fun updateTargetViews(views: List<View>) = delegate.updateTargetViews(views)
+
+    override fun updateTargetLayer(layer: Layer) = delegate.updateTargetLayer(layer)
+
+    override fun updateTargetLayers(layers: List<Layer>) = delegate.updateTargetLayers(layers)
 
     override fun addDecoration(decoration: UInspectorDecoration): Disposable =
         delegate.addDecoration(decoration)

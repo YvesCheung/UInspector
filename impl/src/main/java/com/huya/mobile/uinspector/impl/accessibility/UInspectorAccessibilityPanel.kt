@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.huya.mobile.uinspector.UInspector
+import com.huya.mobile.uinspector.hierarchy.AndroidView
+import com.huya.mobile.uinspector.hierarchy.Layer
 import com.huya.mobile.uinspector.impl.R
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import kotlinx.android.synthetic.main.uinspector_view_list_item.view.*
@@ -56,7 +58,7 @@ class UInspectorAccessibilityPanel(override val priority: Int) : UInspectorChild
     }
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-    private inner class Adapter(val targetView: View) : RecyclerView.Adapter<VH>() {
+    private inner class Adapter(val targetView: Layer) : RecyclerView.Adapter<VH>() {
         @SuppressLint("InflateParams")
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
             val root = LayoutInflater.from(parent.context)
@@ -71,7 +73,9 @@ class UInspectorAccessibilityPanel(override val priority: Int) : UInspectorChild
             holder.textView.text = action.name
             holder.textView.setOnClickListener {
                 try {
-                    targetView.performAccessibilityAction(action.action, action.arguments)
+                    if (targetView is AndroidView) {
+                        targetView.view.performAccessibilityAction(action.action, action.arguments)
+                    }
                 } catch (e: Throwable) {
                     Log.e("UInspectorAccessibility", e.toString())
                 }

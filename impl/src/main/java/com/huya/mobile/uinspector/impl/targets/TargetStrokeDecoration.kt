@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 import androidx.annotation.ColorInt
+import com.huya.mobile.uinspector.hierarchy.Layer
 import com.huya.mobile.uinspector.impl.utils.dpToPx
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 
@@ -14,26 +15,26 @@ import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
  * 2021/1/15
  */
 class TargetStrokeDecoration(
-    private val view: View,
+    private val layer: Layer,
     @ColorInt private val representativeColor: Int
 ) : UInspectorDecoration {
 
     override fun draw(canvas: Canvas) {
         boundPaint.color = representativeColor
-        val location = IntArray(2).also { view.getLocationOnScreen(it) }
+        val location = layer.getLocation()
         val viewBounds = Rect(
             location[0],
             location[1],
-            location[0] + view.measuredWidth,
-            location[1] + view.measuredHeight
+            location[0] + layer.width,
+            location[1] + layer.height
         )
         canvas.drawRect(viewBounds, boundPaint)
     }
 
-    override fun hashCode(): Int = view.hashCode()
+    override fun hashCode(): Int = layer.hashCode()
 
     override fun equals(other: Any?): Boolean =
-        other is TargetStrokeDecoration && view === other.view
+        other is TargetStrokeDecoration && layer === other.layer
 
     companion object {
 

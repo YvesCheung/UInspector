@@ -19,4 +19,15 @@ object ViewHierarchy {
         result.reverse()
         return result
     }
+
+    fun get(target: Layer): List<Layer> {
+        val result = mutableListOf(target)
+        var parent: Layer? = target.parent
+        while (parent != null) {
+            result.add(parent)
+            parent = parent.parent
+        }
+        result.reverse()
+        return result
+    }
 }
