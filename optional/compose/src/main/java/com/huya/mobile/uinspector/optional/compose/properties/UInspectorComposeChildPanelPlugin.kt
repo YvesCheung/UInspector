@@ -17,13 +17,14 @@ class UInspectorComposeChildPanelPlugin : UInspectorDefaultChildPanelPlugin() {
     override fun createPanels(): Set<UInspectorChildPanel> {
         val target: Layer? =
             UInspector.currentState.withLifecycle?.lastTargetViews?.lastOrNull()
-        if (target is ComposeView) {
-            return setOf(
+        return if (target is ComposeView) {
+            setOf(
+                UInspectorComposePropertiesPanel(PROPERTIES_PRIORITY),
                 UInspectorHierarchyPanel(HIERARCHY_PRIORITY),
                 UInspectorTargetsPanel(TARGETS_PRIORITY)
             )
         } else {
-            return super.createPanels()
+            super.createPanels()
         }
     }
 }
