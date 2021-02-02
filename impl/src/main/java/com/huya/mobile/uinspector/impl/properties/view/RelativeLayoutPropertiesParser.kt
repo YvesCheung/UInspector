@@ -10,7 +10,7 @@ import com.yy.mobile.whisper.Output
  * @author YvesCheung
  * 2021/1/4
  */
-open class RelativeLayoutPropertiesParser(view: RelativeLayout) : ViewPropertiesParser<RelativeLayout>(view) {
+open class RelativeLayoutPropertiesParser(view: RelativeLayout) : ViewGroupPropertiesParser<RelativeLayout>(view) {
 
     override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)

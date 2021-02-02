@@ -11,7 +11,7 @@ import com.yy.mobile.whisper.Output
  * @author YvesCheung
  * 2021/1/4
  */
-open class LinearLayoutPropertiesParser(view: LinearLayout) : ViewPropertiesParser<LinearLayout>(view) {
+open class LinearLayoutPropertiesParser(view: LinearLayout) : ViewGroupPropertiesParser<LinearLayout>(view) {
 
     override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
