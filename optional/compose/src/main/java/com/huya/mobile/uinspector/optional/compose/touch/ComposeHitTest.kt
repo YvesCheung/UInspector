@@ -20,7 +20,8 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
         if (delegateResult != null) return delegateResult
 
         if (current is AndroidComposeView || current is ComposeView) {
-            val position = position(event)
+            //todo: Why needs transform into Offset in compose?
+            //val position = position(event)
             for (child in current.children.toList().asReversed()) {
                 if (child is AndroidView) {
                     val childResult = delegate.findNextTarget(event, child)
@@ -29,7 +30,7 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
                     }
                 } else if (child is ComposeView) {
                     val bounds = child.layoutInfo.bounds
-                    if (position in bounds) {
+                    if (event in bounds) {
                         return child
                     }
                     if (bounds == EMPTY) {
