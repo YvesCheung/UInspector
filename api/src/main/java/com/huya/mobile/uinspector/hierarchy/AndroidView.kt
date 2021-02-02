@@ -20,7 +20,7 @@ constructor(val view: View) : Layer {
         get() = view::class.java.simpleName.ifBlank { view::class.java.name }
 
     override val id: CharSequence?
-        get() = if (view.id > 0) "(${idToString(view.context, view.id)})" else null
+        get() = if (view.id > 0) idToString(view.context, view.id) else null
 
     override val parent: Layer? get() = (view.parent as? View)?.let { LayerFactory.create(it) }
 

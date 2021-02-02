@@ -12,6 +12,6 @@ import com.huya.mobile.uinspector.plugins.UInspectorPlugins
 class UInspectorLottieService : UInspectorPluginService {
 
     override fun onCreate(context: Context, plugins: UInspectorPlugins) {
-        plugins.prepend(ViewPropertiesParserPlugin::class.java, LottiePropertiesParserPlugin())
+        plugins.append(ViewPropertiesParserPlugin::class.java, LottiePropertiesParserPlugin())
     }
 }

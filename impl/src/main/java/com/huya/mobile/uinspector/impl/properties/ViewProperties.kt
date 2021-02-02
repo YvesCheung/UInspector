@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.impl.properties.layoutParam.*
 import com.huya.mobile.uinspector.impl.properties.view.*
 import java.util.*
@@ -30,7 +31,7 @@ class ViewProperties(
     object ViewPropertiesParserFactory {
 
         private val parserFactory =
-            ServiceLoader.load(ViewPropertiesParserPlugin::class.java)
+            UInspector.plugins[ViewPropertiesParserPlugin::class.java]
 
         fun of(view: View): ViewPropertiesParser<out View> {
             for (service in parserFactory) {
@@ -55,7 +56,7 @@ class ViewProperties(
     object LayoutParamsPropertiesParserFactory {
 
         private val parserFactory =
-            ServiceLoader.load(LayoutParamsPropertiesParserService::class.java)
+            UInspector.plugins[LayoutParamsPropertiesParserService::class.java]
 
         fun of(view: View, lp: ViewGroup.LayoutParams):
             LayoutParamsPropertiesParser<out ViewGroup.LayoutParams> {

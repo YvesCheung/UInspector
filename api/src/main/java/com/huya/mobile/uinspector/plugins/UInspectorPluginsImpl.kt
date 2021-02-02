@@ -18,17 +18,17 @@ internal class UInspectorPluginsImpl : UInspectorPlugins {
     override fun <Plugin : UInspectorPlugin> prepend(cls: Class<out Plugin>, plugin: Plugin) {
         synchronized(plugins) {
             val pluginList = plugins.getOrPut(cls) { mutableListOf() }
-            if (pluginList.all { it.uniqueKey != plugin.uniqueKey }) {
-                pluginList.add(0, plugin)
-            }
+            pluginList.removeIf { it.uniqueKey == plugin.uniqueKey }
+            pluginList.add(0, plugin)
         }
     }
 
     override fun <Plugin : UInspectorPlugin> append(cls: Class<out Plugin>, plugin: Plugin) {
         synchronized(plugins) {
             val pluginList = plugins.getOrPut(cls) { mutableListOf() }
-            pluginList.removeIf { it.uniqueKey == plugin.uniqueKey }
-            pluginList.add(plugin)
+            if (pluginList.all { it.uniqueKey != plugin.uniqueKey }) {
+                pluginList.add(plugin)
+            }
         }
     }
 }

@@ -12,6 +12,6 @@ import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelPlugin
 class UInspectorDefaultPluginService : UInspectorPluginService {
 
     override fun onCreate(context: Context, plugins: UInspectorPlugins) {
-        plugins.prepend(UInspectorChildPanelPlugin::class.java, UInspectorDefaultChildPanelPlugin())
+        plugins.append(UInspectorChildPanelPlugin::class.java, UInspectorDefaultChildPanelPlugin())
     }
 }

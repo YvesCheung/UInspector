@@ -12,6 +12,6 @@ import com.huya.mobile.uinspector.plugins.UInspectorPlugins
 open class UInspectorFrescoService : UInspectorPluginService {
 
     override fun onCreate(context: Context, plugins: UInspectorPlugins) {
-        plugins.prepend(ViewPropertiesParserPlugin::class.java, FrescoPropertiesParserPlugin())
+        plugins.append(ViewPropertiesParserPlugin::class.java, FrescoPropertiesParserPlugin())
     }
 }

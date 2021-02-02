@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.Group
 import androidx.compose.ui.tooling.NodeGroup
+import androidx.compose.ui.tooling.SourceLocation
 import androidx.compose.ui.tooling.asTree
 import androidx.compose.ui.unit.IntBounds
 import java.lang.reflect.Field
@@ -111,6 +112,7 @@ internal object ComposeInspector {
                     name = name,
                     bounds = box,
                     modifiers = emptyList(),
+                    source = location,
                     // The compositionData val is marked as internal, and not intended for public consumption.
                     children = subcomposer.compositionData.asTree().layoutInfos,
                     view = null
@@ -166,6 +168,7 @@ internal object ComposeInspector {
             name = name,
             bounds = box,
             modifiers = modifierInfo.map { it.modifier },
+            source = location,
             children = children + subComposedChildren,
             view = node as? View
         )
@@ -266,6 +269,7 @@ data class ComposeLayoutInfo(
     val bounds: IntBounds,
     val modifiers: List<Modifier>,
     val children: Sequence<ComposeLayoutInfo>,
+    val source: SourceLocation?,
     val view: View?,
     val isSubcomposition: Boolean = false
 ) {

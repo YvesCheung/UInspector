@@ -4,7 +4,7 @@ import android.view.View
 import com.huya.mobile.uinspector.plugins.UInspectorPlugin
 
 /**
- * Using Java SPI: To add your custom view's properties
+ * To add your custom view's properties
  *
  * @author YvesCheung
  * 2021/1/3

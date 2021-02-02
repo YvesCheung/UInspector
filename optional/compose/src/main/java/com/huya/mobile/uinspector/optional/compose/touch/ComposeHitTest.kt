@@ -63,3 +63,8 @@ operator fun IntBounds.contains(position: Offset): Boolean {
     return position.x < this.right && position.x > this.left &&
         position.y < this.bottom && position.y > this.top
 }
+
+operator fun IntBounds.contains(position: MotionEvent): Boolean {
+    return position.x < this.right && position.x > this.left &&
+        position.y < this.bottom && position.y > this.top
+}
