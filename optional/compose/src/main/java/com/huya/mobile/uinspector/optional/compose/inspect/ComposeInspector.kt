@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.asTree
 import androidx.compose.ui.unit.IntBounds
 import java.lang.reflect.Field
 import androidx.compose.ui.tooling.inspector.LayoutInspectorTree
+import java.util.*
 
 /**
  * Why [LayoutInspectorTree] not work?
@@ -267,4 +268,17 @@ data class ComposeLayoutInfo(
     val children: Sequence<ComposeLayoutInfo>,
     val view: View?,
     val isSubcomposition: Boolean = false
-)
+) {
+
+    override fun hashCode(): Int = Objects.hash(name, bounds, view, isSubcomposition)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ComposeLayoutInfo) return false
+        if (name != other.name) return false
+        if (bounds != other.bounds) return false
+        if (view != other.view) return false
+        if (isSubcomposition != other.isSubcomposition) return false
+        return true
+    }
+}

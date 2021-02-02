@@ -4,12 +4,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
 import com.huya.mobile.uinspector.util.idToString
+import com.yy.mobile.whisper.NeedError
 
 /**
+ * @see LayerFactory.create
+ *
  * @author YvesCheung
  * 2021/1/29
  */
-open class AndroidView(val view: View) : Layer {
+open class AndroidView
+@NeedError("Use LayerFactory.create(view) instead!")
+constructor(val view: View) : Layer {
 
     override val name: CharSequence
         get() = view::class.java.simpleName.ifBlank { view::class.java.name }

@@ -148,6 +148,6 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
     private data class ViewInfo(
         val layer: Layer,
         val index: Int = -1,
-        @ColorInt val color: Int = ColorGenerator.next()
+        @ColorInt val color: Int = ColorGenerator.next(layer)
     )
 }
