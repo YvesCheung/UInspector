@@ -14,8 +14,6 @@ import androidx.annotation.RestrictTo
 import androidx.annotation.Size
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.*
-import com.huya.mobile.uinspector.hierarchy.TouchTargets
-import com.huya.mobile.uinspector.hierarchy.WindowManager
 import com.huya.mobile.uinspector.lifecycle.Disposable
 import com.huya.mobile.uinspector.state.UInspectorTargetViews
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
@@ -139,7 +137,7 @@ internal class UInspectorMask(
     }
 
     fun updateTargetViews(views: List<View>) {
-        updateTargetLayers(views.map(::AndroidView))
+        updateTargetLayers(views.map(LayerFactory::create))
     }
 
     fun updateTargetLayers(layers: List<Layer>) {

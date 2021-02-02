@@ -28,6 +28,8 @@ class UInspectorTargetViews private constructor(
 
     private val target = views.lastOrNull()
 
+    val lastView: View? = (target as? AndroidView)?.view
+
     private val onPreDrawDispatcher = ViewTreeObserver.OnPreDrawListener {
         val view = target as? AndroidView
         val parent = target?.parent as? AndroidView

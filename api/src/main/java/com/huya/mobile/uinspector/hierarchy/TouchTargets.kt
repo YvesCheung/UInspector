@@ -11,7 +11,7 @@ import java.util.*
  */
 object TouchTargets {
 
-    val hitTest: HitTest = AndroidHitTest()
+    val hitTest: HitTest by lazy(LazyThreadSafetyMode.NONE) { HitTestFactory.create() }
 
     /**
      * 1. find all decorView of current activity
@@ -32,7 +32,7 @@ object TouchTargets {
 
     fun findFirstTouchTargets(parent: View, touchEvent: MotionEvent): List<Layer> {
         val queue = LinkedList<Layer>()
-        var current: Layer? = AndroidView(parent)
+        var current: Layer? = LayerFactory.create(parent)
         while (current != null) {
             queue.add(current)
 
@@ -42,6 +42,6 @@ object TouchTargets {
     }
 
     fun findFirstTouchTarget(parent: View, touchEvent: MotionEvent): Layer? {
-        return hitTest.findNextTarget(touchEvent, AndroidView(parent))
+        return hitTest.findNextTarget(touchEvent, LayerFactory.create(parent))
     }
 }

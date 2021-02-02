@@ -13,7 +13,7 @@ import com.yy.mobile.whisper.Output
  * @author YvesCheung
  * 2021/1/8
  */
-class LottieViewPropertiesParser(private val animView: LottieAnimationView) :
+open class LottieViewPropertiesParser(private val animView: LottieAnimationView) :
     ImageViewPropertiesParser(animView) {
 
     override fun parse(@Output props: MutableMap<String, Any?>) {

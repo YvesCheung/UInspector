@@ -9,6 +9,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.annotation.MainThread
 import com.huya.mobile.uinspector.hierarchy.AndroidView
 import com.huya.mobile.uinspector.hierarchy.Layer
+import com.huya.mobile.uinspector.hierarchy.LayerFactory
 import com.huya.mobile.uinspector.hierarchy.ViewHierarchy
 import com.huya.mobile.uinspector.lifecycle.Disposable
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
@@ -34,7 +35,7 @@ internal class UInspectorPanelDelegate {
 
     @MainThread
     fun updateTargetView(view: View) {
-        updateTargetLayer(AndroidView(view))
+        updateTargetLayer(LayerFactory.create(view))
     }
 
     @MainThread

@@ -8,13 +8,15 @@ import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.target.ViewTarget
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
-import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService
+import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserPlugin
 
 /**
  * @author YvesCheung
- * 2021/1/7
+ * 2021/2/1
  */
-class GlidePropertiesParserService : ViewPropertiesParserService {
+open class GlidePropertiesParserPlugin : ViewPropertiesParserPlugin {
+
+    override val uniqueKey: String = "Glide"
 
     override fun tryCreate(v: View): ViewPropertiesParser<out View>? {
         var tag = v.getTag(customViewTargetId)

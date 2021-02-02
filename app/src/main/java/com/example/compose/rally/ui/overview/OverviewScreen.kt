@@ -79,7 +79,9 @@ private fun AlertCard() {
 @Composable
 private fun AlertHeader(onClickSeeAll: () -> Unit) {
     Row(
-        modifier = Modifier.padding(RallyDefaultPadding).fillMaxWidth(),
+        modifier = Modifier
+            .padding(RallyDefaultPadding)
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
@@ -115,7 +117,7 @@ private fun AlertItem(message: String) {
             onClick = {},
             modifier = Modifier.align(Alignment.Top)
         ) {
-            Icon(Icons.Filled.Sort)
+            Icon(imageVector = Icons.Filled.Sort, contentDescription = null)
         }
     }
 }
@@ -168,6 +170,7 @@ private fun <T> OverViewDivider(
         }
     }
 }
+
 /**
  * The Accounts card within the Rally Overview screen.
  */
@@ -192,6 +195,7 @@ private fun AccountsCard(onScreenChange: (RallyScreen) -> Unit) {
         )
     }
 }
+
 /**
  * The Bills card within the Rally Overview screen.
  */
@@ -221,7 +225,9 @@ private fun BillsCard(onScreenChange: (RallyScreen) -> Unit) {
 private fun SeeAllButton(onClick: () -> Unit) {
     TextButton(
         onClick = onClick,
-        modifier = Modifier.preferredHeight(44.dp).fillMaxWidth()
+        modifier = Modifier
+            .preferredHeight(44.dp)
+            .fillMaxWidth()
     ) {
         Text(stringResource(R.string.see_all))
     }

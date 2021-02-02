@@ -21,7 +21,7 @@ open class AndroidHitTest : HitTest {
         if (current is AndroidView) {
             val view = findFirstTouchTarget(current.view, event)
             if (view != null) {
-                return AndroidView(view)
+                return LayerFactory.create(view)
             }
         }
         return null

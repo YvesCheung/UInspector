@@ -93,15 +93,10 @@ private fun RallyTab(
             .preferredHeight(TabHeight)
             .selectable(
                 selected = selected,
-                onClick = onSelected,
-                indication = rememberRipple(
-                    bounded = false,
-                    radius = Dp.Unspecified,
-                    color = Color.Unspecified
-                )
+                onClick = onSelected
             )
     ) {
-        Icon(imageVector = icon, tint = tabTintColor)
+        Icon(imageVector = icon, contentDescription = null, tint = tabTintColor)
         if (selected) {
             Spacer(Modifier.preferredWidth(12.dp))
             Text(text, color = tabTintColor)

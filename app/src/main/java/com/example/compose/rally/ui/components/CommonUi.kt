@@ -105,6 +105,7 @@ private fun BaseRow(
         Providers(AmbientContentAlpha provides ContentAlpha.medium) {
             Icon(
                 imageVector = Icons.Filled.ChevronRight,
+                contentDescription = null,
                 modifier = Modifier
                     .padding(end = 12.dp)
                     .preferredSize(24.dp)
@@ -119,7 +120,10 @@ private fun BaseRow(
  */
 @Composable
 private fun AccountIndicator(color: Color, modifier: Modifier = Modifier) {
-    Spacer(modifier.preferredSize(4.dp, 36.dp).background(color = color))
+    Spacer(
+        modifier
+            .preferredSize(4.dp, 36.dp)
+            .background(color = color))
 }
 
 @Composable

@@ -2,20 +2,15 @@ package com.huya.mobile.uinspector.ui.decoration
 
 import android.graphics.*
 import android.os.Build
-import android.view.View
 import android.view.ViewGroup
 import com.huya.mobile.uinspector.hierarchy.AndroidView
 import com.huya.mobile.uinspector.hierarchy.Layer
-import com.yy.mobile.whisper.DeprecatedBy
 
 /**
  * @author YvesCheung
  * 2020/12/29
  */
 open class ViewDecoration(val layer: Layer) : UInspectorDecoration {
-
-    @DeprecatedBy(replaceWith = "ViewDecoration(com.huya.mobile.uinspector.hierarchy.AndroidView(%s))")
-    constructor(view: View) : this(AndroidView(view))
 
     override fun draw(canvas: Canvas) {
         val location = layer.getLocation()
@@ -56,6 +51,8 @@ open class ViewDecoration(val layer: Layer) : UInspectorDecoration {
             } else {
                 canvas.drawRect(viewBounds, boundPaint)
             }
+        } else {
+            canvas.drawRect(viewBounds, boundPaint)
         }
     }
 
@@ -87,16 +84,19 @@ open class ViewDecoration(val layer: Layer) : UInspectorDecoration {
     companion object {
 
         private val boundPaint = Paint().apply {
+            isAntiAlias = true
             style = Paint.Style.FILL
             color = Color.parseColor("#80FFED97")
         }
 
         private val paddingPaint = Paint().apply {
+            isAntiAlias = true
             style = Paint.Style.FILL
             color = Color.parseColor("#8066B3FF")
         }
 
         private val marginPaint = Paint().apply {
+            isAntiAlias = true
             style = Paint.Style.FILL
             color = Color.parseColor("#8093FF93")
         }

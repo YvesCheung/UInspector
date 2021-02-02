@@ -15,7 +15,7 @@ import com.yy.mobile.whisper.Output
  * @author YvesCheung
  * 2021/1/7
  */
-class DraweeViewPropertiesParser(
+open class DraweeViewPropertiesParser(
     private val draweeView: DraweeView<*>,
     private val request: ImageRequest
 ) : ImageViewPropertiesParser(draweeView) {

@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.optional.compose.hirarchy
+package com.huya.mobile.uinspector.optional.compose.touch
 
 import android.view.MotionEvent
 import androidx.compose.ui.geometry.Offset
@@ -6,6 +6,8 @@ import androidx.compose.ui.unit.IntBounds
 import com.huya.mobile.uinspector.hierarchy.AndroidView
 import com.huya.mobile.uinspector.hierarchy.HitTest
 import com.huya.mobile.uinspector.hierarchy.Layer
+import com.huya.mobile.uinspector.optional.compose.hirarchy.AndroidComposeView
+import com.huya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 
 /**
  * @author YvesCheung

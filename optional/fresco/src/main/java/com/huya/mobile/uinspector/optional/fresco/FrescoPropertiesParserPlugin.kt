@@ -7,13 +7,15 @@ import com.facebook.drawee.controller.AbstractDraweeController
 import com.facebook.drawee.view.DraweeView
 import com.facebook.imagepipeline.request.HasImageRequest
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
-import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService
+import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserPlugin
 
 /**
  * @author YvesCheung
- * 2021/1/7
+ * 2021/2/1
  */
-class FrescoPropertiesParserService : ViewPropertiesParserService {
+open class FrescoPropertiesParserPlugin : ViewPropertiesParserPlugin {
+
+    override val uniqueKey: String = "Fresco"
 
     override fun tryCreate(v: View): ViewPropertiesParser<out View>? {
         if (!noSuchMethod && v is DraweeView<*>) {

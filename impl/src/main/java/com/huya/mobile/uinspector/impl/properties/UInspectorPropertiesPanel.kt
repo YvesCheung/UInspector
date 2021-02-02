@@ -39,10 +39,10 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
 
         val targets =
             UInspector.currentState.withLifecycle?.lastTargetViews
-        val targetLayer = targets?.lastOrNull()
-        if (targetLayer != null) {
+        val targetView = targets?.lastView
+        if (targetView != null) {
 
-            root.view_props_list.adapter = ViewPropsAdapter(targetLayer).also {
+            root.view_props_list.adapter = ViewPropsAdapter(targetView).also {
                 adapter = it
                 targets.addOnDrawListener(it)
             }
@@ -52,7 +52,7 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
                 it.view_prop.text = "margin"
 
                 val lp =
-                    targetLayer.layoutParams as? ViewGroup.MarginLayoutParams
+                    targetView.layoutParams as? ViewGroup.MarginLayoutParams
                 it.view_top.text = lp?.topMargin?.dpStr ?: "0dp"
                 it.view_bottom.text = lp?.bottomMargin?.dpStr ?: "0dp"
                 it.view_left.text = lp?.leftMargin?.dpStr ?: "0dp"
@@ -63,16 +63,16 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
                 it.setBackgroundColor(Color.parseColor("#ACD6FF"))
                 it.view_prop.text = "padding"
 
-                it.view_top.text = targetLayer.paddingTop.dpStr
-                it.view_bottom.text = targetLayer.paddingBottom.dpStr
-                it.view_left.text = targetLayer.paddingLeft.dpStr
-                it.view_right.text = targetLayer.paddingRight.dpStr
+                it.view_top.text = targetView.paddingTop.dpStr
+                it.view_bottom.text = targetView.paddingBottom.dpStr
+                it.view_left.text = targetView.paddingLeft.dpStr
+                it.view_right.text = targetView.paddingRight.dpStr
             }
 
             root.uinspector_view_bound.let {
                 it.setBackgroundColor(Color.parseColor("#FFFFCE"))
                 it.view_top.text =
-                    targetLayer.width.dpStr + "\nX\n" + targetLayer.height.dpStr
+                    targetView.width.dpStr + "\nX\n" + targetView.height.dpStr
             }
         }
         return root

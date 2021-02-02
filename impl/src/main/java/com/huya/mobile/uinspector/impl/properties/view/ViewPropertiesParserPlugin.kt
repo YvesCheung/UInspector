@@ -1,6 +1,7 @@
 package com.huya.mobile.uinspector.impl.properties.view
 
 import android.view.View
+import com.huya.mobile.uinspector.plugins.UInspectorPlugin
 
 /**
  * Using Java SPI: To add your custom view's properties
@@ -8,7 +9,7 @@ import android.view.View
  * @author YvesCheung
  * 2021/1/3
  */
-interface ViewPropertiesParserService {
+interface ViewPropertiesParserPlugin : UInspectorPlugin {
 
     fun tryCreate(v: View): ViewPropertiesParser<out View>?
 }

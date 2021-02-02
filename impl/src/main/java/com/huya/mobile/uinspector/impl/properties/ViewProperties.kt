@@ -30,7 +30,7 @@ class ViewProperties(
     object ViewPropertiesParserFactory {
 
         private val parserFactory =
-            ServiceLoader.load(ViewPropertiesParserService::class.java)
+            ServiceLoader.load(ViewPropertiesParserPlugin::class.java)
 
         fun of(view: View): ViewPropertiesParser<out View> {
             for (service in parserFactory) {

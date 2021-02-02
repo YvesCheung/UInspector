@@ -8,7 +8,7 @@ import com.huya.mobile.uinspector.impl.properties.view.ImageViewPropertiesParser
  * @author YvesCheung
  * 2021/1/7
  */
-class GlideImageViewParser(view: ImageView, private val request: Request) :
+open class GlideImageViewParser(view: ImageView, private val request: Request) :
     ImageViewPropertiesParser(view) {
 
     override fun parse(props: MutableMap<String, Any?>) {

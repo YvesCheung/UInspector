@@ -13,13 +13,14 @@ import androidx.fragment.app.FragmentActivity
 import com.huya.mobile.uinspector.lifecycle.UInspectorLifecycle
 import com.huya.mobile.uinspector.notification.UInspectorNotificationService
 import com.huya.mobile.uinspector.notification.UInspectorNotificationService.Companion.PENDING_RUNNING
+import com.huya.mobile.uinspector.plugins.UInspectorPluginService
+import com.huya.mobile.uinspector.plugins.UInspectorPlugins
+import com.huya.mobile.uinspector.plugins.UInspectorPluginsImpl
 import com.huya.mobile.uinspector.state.UInspectorState
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorDialogFragment
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFragment
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorWindow
-import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
-import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelService
 import com.huya.mobile.uinspector.util.log
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -36,11 +37,15 @@ object UInspector {
     @JvmField
     val currentState = UInspectorState()
 
+    @JvmField
+    val plugins: UInspectorPlugins = UInspectorPluginsImpl()
+
     @JvmStatic
     @AnyThread
     fun create(context: Context) {
         if (init.compareAndSet(false, true)) {
             application = context.applicationContext as Application
+            installPlugins
             lifecycle.register(application)
             stop()
         }
@@ -146,13 +151,9 @@ object UInspector {
         }
     }
 
-    private val panelService by lazy(LazyThreadSafetyMode.NONE) {
-        ServiceLoader.load(UInspectorChildPanelService::class.java)
-    }
-
-    internal fun createChildPanels(): List<UInspectorChildPanel> {
-        return panelService
-            .flatMap { it.createPanels() }
-            .sortedBy { it.priority }
+    private val installPlugins by lazy(LazyThreadSafetyMode.NONE) {
+        ServiceLoader.load(UInspectorPluginService::class.java).forEach {
+            it.onCreate(application, plugins)
+        }
     }
 }

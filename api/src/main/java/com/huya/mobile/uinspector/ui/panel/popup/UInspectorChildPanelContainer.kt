@@ -14,7 +14,7 @@ import com.yy.mobile.whisper.DeprecatedBy
 @MainThread
 interface UInspectorChildPanelContainer {
 
-    @DeprecatedBy(replaceWith = "show(com.huya.mobile.uinspector.hierarchy.AndroidView(%s))")
+    @DeprecatedBy(replaceWith = "show(LayerFactory.create(%s))")
     fun show(anchorView: View)
 
     fun show(anchorView: Layer)

@@ -1,7 +1,7 @@
 package com.huya.mobile.uinspector.optional.compose.hirarchy
 
-import com.huya.mobile.uinspector.hierarchy.AndroidView
 import com.huya.mobile.uinspector.hierarchy.Layer
+import com.huya.mobile.uinspector.hierarchy.LayerFactory
 import com.huya.mobile.uinspector.optional.compose.inspect.ComposeLayoutInfo
 import java.util.*
 
@@ -17,7 +17,7 @@ open class ComposeView(override val parent: Layer?, val layoutInfo: ComposeLayou
 
     override val children: Sequence<Layer>
         get() = layoutInfo.children.map { ComposeView(this, it) } +
-            (layoutInfo.view?.let { sequenceOf(AndroidView(it)) } ?: emptySequence())
+            (layoutInfo.view?.let { sequenceOf(LayerFactory.create(it)) } ?: emptySequence())
 
     override val width: Int = layoutInfo.bounds.right - layoutInfo.bounds.left
 

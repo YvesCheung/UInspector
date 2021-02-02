@@ -17,10 +17,10 @@ open class AndroidView(val view: View) : Layer {
     override val id: CharSequence?
         get() = if (view.id > 0) "(${idToString(view.context, view.id)})" else null
 
-    override val parent: Layer? get() = (view.parent as? View)?.let { AndroidView(it) }
+    override val parent: Layer? get() = (view.parent as? View)?.let { LayerFactory.create(view) }
 
     override val children: Sequence<Layer>
-        get() = if (view is ViewGroup) view.children.map { AndroidView(it) }
+        get() = if (view is ViewGroup) view.children.map { LayerFactory.create(view) }
         else emptySequence()
 
     override val width: Int get() = view.measuredWidth
