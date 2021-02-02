@@ -138,15 +138,7 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
             holder.textView.gravity = Gravity.CENTER_VERTICAL or Gravity.START
             holder.textView.text = name
             holder.textView.setOnClickListener {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                    UInspector.currentState.withLifecycle?.panel?.updateTargetLayer(target)
-                } else {
-                    Toast.makeText(
-                        holder.itemView.context,
-                        "View has been detached!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                UInspector.currentState.withLifecycle?.panel?.updateTargetLayer(target)
             }
         }
     }
