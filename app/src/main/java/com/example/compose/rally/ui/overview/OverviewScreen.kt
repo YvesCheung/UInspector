@@ -16,32 +16,58 @@
 
 package com.example.compose.rally.ui.overview
 
-import androidx.compose.foundation.ScrollableColumn
+
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Sort
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.RallyScreen
 import com.example.compose.rally.data.UserData
-import com.example.compose.rally.ui.components.*
+import com.example.compose.rally.ui.components.AccountRow
+import com.example.compose.rally.ui.components.BillRow
+import com.example.compose.rally.ui.components.RallyAlertDialog
+import com.example.compose.rally.ui.components.RallyDivider
+import com.example.compose.rally.ui.components.formatAmount
 import com.huya.mobile.uinspector.demo.R
 
 @Composable
-@Preview
 fun OverviewBody(onScreenChange: (RallyScreen) -> Unit = {}) {
-    ScrollableColumn(contentPadding = PaddingValues(16.dp)) {
+    Column(
+        modifier = Modifier
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
         AlertCard()
-        Spacer(Modifier.preferredHeight(RallyDefaultPadding))
+        Spacer(Modifier.height(RallyDefaultPadding))
         AccountsCard(onScreenChange)
-        Spacer(Modifier.preferredHeight(RallyDefaultPadding))
+        Spacer(Modifier.height(RallyDefaultPadding))
         BillsCard(onScreenChange)
     }
 }
@@ -105,7 +131,13 @@ private fun AlertHeader(onClickSeeAll: () -> Unit) {
 @Composable
 private fun AlertItem(message: String) {
     Row(
-        modifier = Modifier.padding(RallyDefaultPadding),
+        modifier = Modifier
+            .padding(RallyDefaultPadding)
+            // Regard the whole row as one semantics node. This way each row will receive focus as
+            // a whole and the focus bounds will be around the whole row content. The semantics
+            // properties of the descendants will be merged. If we'd use clearAndSetSemantics instead,
+            // we'd have to define the semantics properties explicitly.
+            .semantics(mergeDescendants = true) {},
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
@@ -115,9 +147,11 @@ private fun AlertItem(message: String) {
         )
         IconButton(
             onClick = {},
-            modifier = Modifier.align(Alignment.Top)
+            modifier = Modifier
+                .align(Alignment.Top)
+                .clearAndSetSemantics {}
         ) {
-            Icon(imageVector = Icons.Filled.Sort, contentDescription = null)
+            Icon(Icons.Filled.Sort, contentDescription = null)
         }
     }
 }
@@ -164,7 +198,7 @@ private fun <T> OverViewDivider(
             Spacer(
                 modifier = Modifier
                     .weight(values(item))
-                    .preferredHeight(1.dp)
+                    .height(1.dp)
                     .background(colors(item))
             )
         }
@@ -226,7 +260,7 @@ private fun SeeAllButton(onClick: () -> Unit) {
     TextButton(
         onClick = onClick,
         modifier = Modifier
-            .preferredHeight(44.dp)
+            .height(44.dp)
             .fillMaxWidth()
     ) {
         Text(stringResource(R.string.see_all))

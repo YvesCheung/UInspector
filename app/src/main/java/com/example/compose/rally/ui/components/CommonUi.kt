@@ -16,17 +16,20 @@
 
 package com.example.compose.rally.ui.components
 
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Providers
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
 import com.huya.mobile.uinspector.demo.R
 import java.text.DecimalFormat
@@ -67,8 +70,15 @@ private fun BaseRow(
     amount: Float,
     negative: Boolean
 ) {
+    val dollarSign = if (negative) "–$ " else "$ "
+    val formattedAmount = formatAmount(amount)
     Row(
-        modifier = Modifier.preferredHeight(68.dp),
+        modifier = Modifier
+            .height(68.dp)
+            .clearAndSetSemantics {
+                contentDescription =
+                    "$title account ending in ${subtitle.takeLast(4)}, current balance $dollarSign$formattedAmount"
+            },
         verticalAlignment = Alignment.CenterVertically
     ) {
         val typography = MaterialTheme.typography
@@ -76,10 +86,10 @@ private fun BaseRow(
             color = color,
             modifier = Modifier
         )
-        Spacer(Modifier.preferredWidth(12.dp))
+        Spacer(Modifier.width(12.dp))
         Column(Modifier) {
             Text(text = title, style = typography.body1)
-            Providers(AmbientContentAlpha provides ContentAlpha.medium) {
+            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Text(text = subtitle, style = typography.subtitle1)
             }
         }
@@ -88,27 +98,25 @@ private fun BaseRow(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = if (negative) "–$ " else "$ ",
+                text = dollarSign,
                 style = typography.h6,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
             Text(
-                text = formatAmount(
-                    amount
-                ),
+                text = formattedAmount,
                 style = typography.h6,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
-        Spacer(Modifier.preferredWidth(16.dp))
+        Spacer(Modifier.width(16.dp))
 
-        Providers(AmbientContentAlpha provides ContentAlpha.medium) {
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Icon(
                 imageVector = Icons.Filled.ChevronRight,
                 contentDescription = null,
                 modifier = Modifier
                     .padding(end = 12.dp)
-                    .preferredSize(24.dp)
+                    .size(24.dp)
             )
         }
     }
@@ -120,10 +128,7 @@ private fun BaseRow(
  */
 @Composable
 private fun AccountIndicator(color: Color, modifier: Modifier = Modifier) {
-    Spacer(
-        modifier
-            .preferredSize(4.dp, 36.dp)
-            .background(color = color))
+    Spacer(modifier.size(4.dp, 36.dp).background(color = color))
 }
 
 @Composable

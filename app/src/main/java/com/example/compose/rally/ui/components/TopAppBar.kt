@@ -16,17 +16,19 @@
 
 package com.example.compose.rally.ui.components
 
-import androidx.compose.animation.animateAsState
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.preferredHeight
-import androidx.compose.foundation.layout.preferredWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -38,6 +40,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.compose.rally.RallyScreen
@@ -50,10 +54,10 @@ fun RallyTopAppBar(
 ) {
     Surface(
         Modifier
-            .preferredHeight(TabHeight)
+            .height(TabHeight)
             .fillMaxWidth()
     ) {
-        Row {
+        Row(Modifier.selectableGroup()) {
             allScreens.forEach { screen ->
                 RallyTab(
                     text = screen.name.toUpperCase(),
@@ -82,7 +86,7 @@ private fun RallyTab(
             delayMillis = TabFadeInAnimationDelay
         )
     }
-    val tabTintColor by animateAsState(
+    val tabTintColor by animateColorAsState(
         targetValue = if (selected) color else color.copy(alpha = InactiveTabOpacity),
         animationSpec = animSpec
     )
@@ -90,16 +94,23 @@ private fun RallyTab(
         modifier = Modifier
             .padding(16.dp)
             .animateContentSize()
-            .preferredHeight(TabHeight)
+            .height(TabHeight)
             .selectable(
                 selected = selected,
-                onClick = onSelected
+                onClick = onSelected,
+                role = Role.Tab,
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(
+                    bounded = false,
+                    radius = Dp.Unspecified,
+                    color = Color.Unspecified
+                )
             )
     ) {
-        Icon(imageVector = icon, contentDescription = null, tint = tabTintColor)
+        Icon(imageVector = icon, contentDescription = text, tint = tabTintColor)
         if (selected) {
-            Spacer(Modifier.preferredWidth(12.dp))
-            Text(text, color = tabTintColor)
+            Spacer(Modifier.width(12.dp))
+            Text(text, color = tabTintColor, modifier = Modifier.clearAndSetSemantics {})
         }
     }
 }
