@@ -1,6 +1,6 @@
 # 丢弃LayoutInspector
 
-![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/layoutinspector_no_device.jpg)
+![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/layoutinspector_no_device.jpg)
 
 自从AS升级到4.x后，你的LayoutInspector会不会经常和我一样
 
@@ -20,7 +20,7 @@
 
 |查看View的大小/边距/基本属性| 查找目标所在的Activity/Fragment，快速定位所在代码 | 
 | :---: | :---: |
-|![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/properties_preview.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/hierarchy_preview.jpeg)|
+|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/properties_preview.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/hierarchy_preview.jpeg)|
 
 ## 相比起LayoutInspector有什么优势？
 
@@ -29,13 +29,13 @@
   从手机的**通知栏**打开Inspector，直接**点击屏幕**就可以看到目标属性！
   <Br/>从通知栏点击关闭即可停止检阅，用完即走。
   
-  ![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/uinspector_preview.gif)
+  ![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/uinspector_preview.gif)
   
 ### 2. 追踪动画
 
 相比起幻灯片级的“Live Update”，`Uinspector` 直接运行在你的应用进程中，可以通过监听 `View` 的变化实时作出反馈，追踪布局/属性的变化，甚至是动画。
 
-![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/trace_animator.gif)
+![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/trace_animator.gif)
 
 ### 3. 支持添加你的自定义View和自定义属性
 
@@ -43,7 +43,7 @@
 
 |查看Glide的图片源|查看Fresco的图片源|查看Lottie的动画属性|
 | :----:|:-----:|:-----:|
-|<img src="https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/glide.jpg" alt="Inspect Glide" height="360"/>|<img src="https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/fresco.jpg" alt="Inspect Glide" height="360"/>|<img src="https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/lottie.jpg" alt="Inspect Glide" height="360"/>|
+|<img src="https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/glide.jpg" alt="Inspect Glide" height="360"/>|<img src="https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/fresco.jpg" alt="Inspect Glide" height="360"/>|<img src="https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/lottie.jpg" alt="Inspect Glide" height="360"/>|
 
 当图片资源加载异常时，你可以点击图片地址用浏览器打开，快速确认是客户端加载问题还是图片资源本身的问题！
 

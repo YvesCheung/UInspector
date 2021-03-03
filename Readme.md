@@ -1,6 +1,6 @@
 # Uinspector
 
-![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/uinspector.png)
+![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/uinspector.png)
 
 > A UI inspector to traverse a view hierarchy on Android
 
@@ -10,7 +10,7 @@
 
 |What are the properties| Where is the view | Select another view |
 | :---: | :---: | :---: |
-|![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/properties_preview.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/hierarchy_preview.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/targets_preview.jpeg)
+|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/properties_preview.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/hierarchy_preview.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/targets_preview.jpeg)
 
 
 ## Feature
@@ -21,7 +21,7 @@
 - **What's LayoutInspector can't do?**
     - Tracking animations
         
-        ![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/trace_animator.gif)
+        ![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/trace_animator.gif)
         
     - Support to add your custom panel or custom view properties
         
@@ -58,7 +58,7 @@ dependencies {
 2. Tap the view you want to inspect
 3. Now you can see the properties on the popup panel
 
-![](https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/uinspector_preview.gif)
+![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/uinspector_preview.gif)
 
 **4. Uinspector intercept the 'single tap' event, but you can perform click on a View by double tap instead!** And the scroll event/ key event can be dispatched as usual.
 
@@ -68,7 +68,7 @@ dependencies {
 
     If an image is loaded with [Glide](https://github.com/bumptech/glide), you can inspect the properties on the ImageView:
 
-    <img src="https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/glide.jpg" alt="Inspect ImageView with Glide" width="360">
+    <img src="https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/glide.jpg" alt="Inspect ImageView with Glide" width="360">
 
 
 

@@ -24,7 +24,7 @@ Uinspector-Optional-Fresco helps us to inspect the properties of `SimpleDraweeVi
 
 2. Run your app and turn on the Uinspector. Click the `SimpleDraweeView`
  
-    <img src="https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/fresco.jpg" alt="Inspect Fresco" width="360">
+    <img src="https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/fresco.jpg" alt="Inspect Fresco" width="360">
     
     Now you can see the properties listed in the popupPanel:
     

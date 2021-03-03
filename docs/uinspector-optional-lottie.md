@@ -24,7 +24,7 @@ Uinspector-Optional-Lottie helps us to inspect the properties of `LottieAnimatio
 
 2. Run your app and turn on the Uinspector. Click the `LottieAnimationView`
  
-    <img src="https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/lottie.jpg" alt="Inspect Lottie" width="360">
+    <img src="https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/lottie.jpg" alt="Inspect Lottie" width="360">
     
     Now you can see the properties listed in the popupPanel:
     

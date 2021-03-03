@@ -19,13 +19,13 @@ class ImageLoaderActivity : Activity() {
         setContentView(R.layout.activity_image_loader)
 
         Glide.with(this)
-            .load("https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/uinspector.png")
+            .load("https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/uinspector.png")
             .error(ColorDrawable(Color.GREEN))
             .placeholder(ColorDrawable(Color.parseColor("#ff0099cc")))
             .into(glide_imageview)
 
         fresco_imageview.setImageURI(
-            "https://raw.githubusercontent.com/YvesCheung/UInspector/master/art/uinspector.png"
+            "https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/uinspector.png"
         )
     }
 }

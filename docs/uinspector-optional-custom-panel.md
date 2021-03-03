@@ -2,20 +2,19 @@
 
 **Using Java SPI mechanism, You can develop your own panel and add it into `Uinspector`**
 
-1. Create your custom `UInspectorChildPanelService` and `UInspectorChildPanel` in your module:
+1. Create your custom `UInspectorChildPanelPlugin` and `UInspectorChildPanel` in your module:
 
     ```kotlin
-    package com.example
-    import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelService
     import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
+    import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelPlugin
 
-    class YourPanelService: UInspectorChildPanelService {
+    class YourPlugin: UInspectorChildPanelPlugin {
 
         override fun createPanels(): Set<UInspectorChildPanel> {
             return setOf(YourPanel())
         }
 
-        class YourPanel : UInspectorChildPanel{
+        class YourPanel : UInspectorChildPanel {
 
             override val title = "YourPanelName"
 
@@ -26,12 +25,29 @@
     }
     ```
 
-2. Create a file named `com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelService` in directory `src/main/resources/META-INF/services/`. Write down your class name in the file:
+2. Register your plugin to `UInspectorPluginService`
+
+       ```kotlin
+       package com.example
+       import com.pitaya.mobile.uinspector.plugins.UInspectorPluginService
+       import com.pitaya.mobile.uinspector.plugins.UInspectorPlugins
+       import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelPlugin
+
+       class YourPluginService : UInspectorPluginService {
+
+           override fun onCreate(context: Context, plugins: UInspectorPlugins) {
+               plugins.prepend(UInspectorChildPanelPlugin::class.java, YourPlugin())
+           }
+       }
+       ```
+
+3. Create a file named `com.pitaya.mobile.uinspector.plugins.UInspectorPluginService` in the directory `src/main/resources/META-INF/services`.
+Write down your service class name `YourPluginService` in the file.
 
     ```
-    com.example.YourPanelService
+    com.example.YourPluginService
     ```
+   
+    See the sample in [src/main/resources/META-INF/services](https://github.com/YvesCheung/UInspector/blob/2.x/impl/src/main/resources/META-INF/services/com.pitaya.mobile.uinspector.plugins.UInspectorPluginService)
 
-3. Ok! Now you can run your app and find `YourPanel` in the uinspector!
-
-See the sample in [src/main/resources/META-INF/services](https://github.com/YvesCheung/UInspector/blob/master/impl/src/main/resources/META-INF/services/com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelService)
+4. OK! Now run your app!
