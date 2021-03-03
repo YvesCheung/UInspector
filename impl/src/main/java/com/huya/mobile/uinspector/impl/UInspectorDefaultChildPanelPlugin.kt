@@ -1,5 +1,6 @@
 package com.huya.mobile.uinspector.impl
 
+import com.huya.mobile.uinspector.impl.UInspectorDefaultPluginService.Companion.PLUGIN_KEY
 import com.huya.mobile.uinspector.impl.accessibility.UInspectorAccessibilityPanel
 import com.huya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel
 import com.huya.mobile.uinspector.impl.properties.UInspectorPropertiesPanel
@@ -13,7 +14,7 @@ import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelPlugin
  */
 open class UInspectorDefaultChildPanelPlugin : UInspectorChildPanelPlugin {
 
-    override val uniqueKey: String = KEY
+    override val uniqueKey: String = PLUGIN_KEY
 
     override fun createPanels(): Set<UInspectorChildPanel> {
         return setOf(
@@ -25,8 +26,6 @@ open class UInspectorDefaultChildPanelPlugin : UInspectorChildPanelPlugin {
     }
 
     companion object {
-
-        const val KEY = "DefaultChildPanels"
 
         const val PROPERTIES_PRIORITY = 100
 

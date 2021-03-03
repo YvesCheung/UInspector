@@ -16,7 +16,7 @@ import androidx.viewpager.widget.ViewPager
 import com.huya.mobile.uinspector.R
 import com.huya.mobile.uinspector.UInspector
 import com.huya.mobile.uinspector.hierarchy.Layer
-import com.huya.mobile.uinspector.hierarchy.LayerFactory
+import com.huya.mobile.uinspector.hierarchy.LayerFactoryPlugin
 import com.huya.mobile.uinspector.util.dpTopx
 import com.huya.mobile.uinspector.util.log
 import com.yy.mobile.whisper.IntDef
@@ -32,7 +32,7 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
     private var popupPanel: UInspectorPopupPanel? = null
 
     override fun show(anchorView: View) {
-        show(LayerFactory.create(anchorView))
+        show(LayerFactoryPlugin.create(anchorView))
     }
 
     override fun show(anchorView: Layer) {

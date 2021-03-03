@@ -7,7 +7,7 @@ import com.huya.mobile.uinspector.util.idToString
 import com.yy.mobile.whisper.NeedError
 
 /**
- * @see LayerFactory.create
+ * @see LayerFactoryPlugin.create
  *
  * @author YvesCheung
  * 2021/1/29
@@ -22,10 +22,10 @@ constructor(val view: View) : Layer {
     override val id: CharSequence?
         get() = if (view.id > 0) idToString(view.context, view.id) else null
 
-    override val parent: Layer? get() = (view.parent as? View)?.let { LayerFactory.create(it) }
+    override val parent: Layer? get() = (view.parent as? View)?.let { LayerFactoryPlugin.create(it) }
 
     override val children: Sequence<Layer>
-        get() = if (view is ViewGroup) view.children.map { LayerFactory.create(it) }
+        get() = if (view is ViewGroup) view.children.map { LayerFactoryPlugin.create(it) }
         else emptySequence()
 
     override val width: Int get() = view.measuredWidth

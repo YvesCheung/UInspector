@@ -8,32 +8,32 @@ import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.target.ViewTarget
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
-import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserPlugin
+import com.huya.mobile.uinspector.properties.view.ViewPropertiesPlugin
 
 /**
  * @author YvesCheung
  * 2021/2/1
  */
-open class GlidePropertiesParserPlugin : ViewPropertiesParserPlugin {
+open class GlidePropertiesParserPlugin : ViewPropertiesPlugin {
 
     override val uniqueKey: String = "Glide"
 
-    override fun tryCreate(v: View): ViewPropertiesParser<out View>? {
-        var tag = v.getTag(customViewTargetId)
+    override fun tryCreate(view: View): ViewPropertiesParser<out View>? {
+        var tag = view.getTag(customViewTargetId)
         if (tag == null) {
             val oldId = getViewTargetId()
             if (oldId > 0) {
-                tag = v.getTag(oldId)
+                tag = view.getTag(oldId)
             }
         }
         if (tag == null) {
-            tag = v.tag
+            tag = view.tag
         }
         if (tag is Request) {
-            return if (v is ImageView) {
-                GlideImageViewParser(v, tag)
+            return if (view is ImageView) {
+                GlideImageViewParser(view, tag)
             } else {
-                GlideViewParser(v, tag)
+                GlideViewParser(view, tag)
             }
         }
         return null

@@ -2,7 +2,7 @@ package com.huya.mobile.uinspector.optional.compose.hirarchy
 
 import android.view.View
 import com.huya.mobile.uinspector.hierarchy.Layer
-import com.huya.mobile.uinspector.hierarchy.LayerFactory
+import com.huya.mobile.uinspector.hierarchy.LayerFactoryPlugin
 import com.huya.mobile.uinspector.optional.compose.UInspectorComposeService.Companion.PluginKey
 import com.huya.mobile.uinspector.optional.compose.inspect.mightBeComposeView
 
@@ -10,7 +10,7 @@ import com.huya.mobile.uinspector.optional.compose.inspect.mightBeComposeView
  * @author YvesCheung
  * 2021/1/29
  */
-class ComposeLayerFactory : LayerFactory {
+class ComposeLayerFactoryPlugin : LayerFactoryPlugin {
 
     override val uniqueKey: String = PluginKey
 

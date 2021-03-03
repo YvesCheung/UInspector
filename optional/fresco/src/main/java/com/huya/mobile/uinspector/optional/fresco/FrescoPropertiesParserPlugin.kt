@@ -7,26 +7,26 @@ import com.facebook.drawee.controller.AbstractDraweeController
 import com.facebook.drawee.view.DraweeView
 import com.facebook.imagepipeline.request.HasImageRequest
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
-import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserPlugin
+import com.huya.mobile.uinspector.properties.view.ViewPropertiesPlugin
 
 /**
  * @author YvesCheung
  * 2021/2/1
  */
-open class FrescoPropertiesParserPlugin : ViewPropertiesParserPlugin {
+open class FrescoPropertiesParserPlugin : ViewPropertiesPlugin {
 
     override val uniqueKey: String = "Fresco"
 
-    override fun tryCreate(v: View): ViewPropertiesParser<out View>? {
-        if (!noSuchMethod && v is DraweeView<*>) {
-            val c = v.controller
+    override fun tryCreate(view: View): ViewPropertiesParser<out View>? {
+        if (!noSuchMethod && view is DraweeView<*>) {
+            val c = view.controller
             if (c is AbstractDraweeController<*, *>) {
                 try {
                     val dataSource = getDataSourceMethod.invoke(c) as? DataSource<*>
                     if (dataSource is HasImageRequest) {
                         val request = dataSource.imageRequest
                         if (request != null) {
-                            return DraweeViewPropertiesParser(v, request)
+                            return DraweeViewPropertiesParser(view, request)
                         }
                     }
                 } catch (e: NoSuchMethodException) {

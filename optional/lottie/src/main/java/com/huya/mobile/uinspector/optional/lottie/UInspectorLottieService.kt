@@ -1,7 +1,7 @@
 package com.huya.mobile.uinspector.optional.lottie
 
 import android.content.Context
-import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserPlugin
+import com.huya.mobile.uinspector.properties.view.ViewPropertiesPlugin
 import com.huya.mobile.uinspector.plugins.UInspectorPluginService
 import com.huya.mobile.uinspector.plugins.UInspectorPlugins
 
@@ -12,6 +12,6 @@ import com.huya.mobile.uinspector.plugins.UInspectorPlugins
 class UInspectorLottieService : UInspectorPluginService {
 
     override fun onCreate(context: Context, plugins: UInspectorPlugins) {
-        plugins.append(ViewPropertiesParserPlugin::class.java, LottiePropertiesParserPlugin())
+        plugins.append(ViewPropertiesPlugin::class.java, LottiePropertiesParserPlugin())
     }
 }

@@ -137,7 +137,7 @@ internal class UInspectorMask(
     }
 
     fun updateTargetViews(views: List<View>) {
-        updateTargetLayers(views.map(LayerFactory::create))
+        updateTargetLayers(views.map(LayerFactoryPlugin::create))
     }
 
     fun updateTargetLayers(layers: List<Layer>) {

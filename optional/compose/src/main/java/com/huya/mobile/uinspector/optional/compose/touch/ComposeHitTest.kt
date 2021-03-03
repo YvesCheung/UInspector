@@ -2,7 +2,7 @@ package com.huya.mobile.uinspector.optional.compose.touch
 
 import android.view.MotionEvent
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.unit.IntBounds
+import androidx.compose.ui.tooling.inspector.InspectorNode
 import com.huya.mobile.uinspector.hierarchy.AndroidView
 import com.huya.mobile.uinspector.hierarchy.HitTest
 import com.huya.mobile.uinspector.hierarchy.Layer
@@ -29,16 +29,16 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
                         return childResult
                     }
                 } else if (child is ComposeView) {
-                    val bounds = child.layoutInfo.bounds
-                    if (event in bounds) {
+                    val node = child.layoutInfo
+                    if (event in node) {
                         return child
                     }
-                    if (bounds == EMPTY) {
-                        val continueFind = findNextTarget(event, child)
-                        if (continueFind != null) {
-                            return continueFind
-                        }
-                    }
+//                    if (node == EMPTY) {
+//                        val continueFind = findNextTarget(event, child)
+//                        if (continueFind != null) {
+//                            return continueFind
+//                        }
+//                    }
                 }
             }
         }
@@ -54,18 +54,14 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
         motionEvent.getPointerCoords(0, pointerCoords)
         return Offset(pointerCoords.x, pointerCoords.y)
     }
-
-    companion object {
-        private val EMPTY = IntBounds(0, 0, 0, 0)
-    }
 }
 
-operator fun IntBounds.contains(position: Offset): Boolean {
-    return position.x < this.right && position.x > this.left &&
-        position.y < this.bottom && position.y > this.top
+operator fun InspectorNode.contains(position: MotionEvent): Boolean {
+    return position.x < this.left + this.width && position.x > this.left &&
+        position.y < this.top - this.height && position.y > this.top
 }
 
-operator fun IntBounds.contains(position: MotionEvent): Boolean {
-    return position.x < this.right && position.x > this.left &&
-        position.y < this.bottom && position.y > this.top
-}
+//operator fun IntBounds.contains(position: MotionEvent): Boolean {
+//    return position.x < this.right && position.x > this.left &&
+//        position.y < this.bottom && position.y > this.top
+//}

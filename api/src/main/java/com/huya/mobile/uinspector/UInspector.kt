@@ -1,5 +1,6 @@
 package com.huya.mobile.uinspector
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -29,6 +30,8 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @author YvesCheung
  * 2020/12/28
  */
+//Field 'pendingInspectView' that is assigned to null immediately after the launch of service wouldn't leak the context!
+@SuppressLint("StaticFieldLeak")
 @Suppress("unused")
 object UInspector {
 

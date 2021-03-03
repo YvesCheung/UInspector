@@ -3,6 +3,7 @@ package com.huya.mobile.uinspector.impl.properties.view
 import android.graphics.Rect
 import android.os.Build
 import android.view.View
+import com.huya.mobile.uinspector.properties.PropertiesParser
 import com.huya.mobile.uinspector.util.*
 import com.yy.mobile.whisper.Output
 
@@ -12,9 +13,9 @@ import com.yy.mobile.whisper.Output
  * @author YvesCheung
  * 2020/12/31
  */
-open class ViewPropertiesParser<T : View>(protected val view: T) {
+open class ViewPropertiesParser<T : View>(protected val view: T) : PropertiesParser {
 
-    open fun parse(@Output props: MutableMap<String, Any?>) {
+    override fun parse(@Output props: MutableMap<String, Any?>) {
         //todo: Should I just analyze the @InspectableProperty annotation by reflection?
         props["class"] = view::class.java.simpleName
 

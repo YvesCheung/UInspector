@@ -3,7 +3,9 @@ package com.huya.mobile.uinspector.ui.panel.popup
 import com.huya.mobile.uinspector.plugins.UInspectorPlugin
 
 /**
- * Using Java SPI mechanism
+ * Plugins that used to create the panel that needs to be displayed on the popup window.
+ *
+ * @see UInspectorChildPanel
  *
  * @author YvesCheung
  * 2020/12/31

@@ -1,32 +1,30 @@
 package com.huya.mobile.uinspector.optional.compose.hirarchy
 
+import androidx.compose.ui.tooling.inspector.InspectorNode
 import com.huya.mobile.uinspector.hierarchy.Layer
-import com.huya.mobile.uinspector.hierarchy.LayerFactory
-import com.huya.mobile.uinspector.optional.compose.inspect.ComposeLayoutInfo
 import java.util.*
 
 /**
  * @author YvesCheung
  * 2021/1/29
  */
-open class ComposeView(override val parent: Layer?, val layoutInfo: ComposeLayoutInfo) : Layer {
+open class ComposeView(override val parent: Layer?, val layoutInfo: InspectorNode) : Layer {
 
     override val name: CharSequence get() = layoutInfo.name
 
     override val id: CharSequence? = null
 
     override val children: Sequence<Layer>
-        get() = layoutInfo.children.map { ComposeView(this, it) } +
-            (layoutInfo.view?.let { sequenceOf(LayerFactory.create(it)) } ?: emptySequence())
+        get() = layoutInfo.children.asSequence().map { ComposeView(this, it) }
 
-    override val width: Int = layoutInfo.bounds.right - layoutInfo.bounds.left
+    override val width: Int = layoutInfo.width
 
-    override val height: Int = layoutInfo.bounds.bottom - layoutInfo.bounds.top
+    override val height: Int = layoutInfo.height
 
     override fun getLocation(): IntArray {
         val array = IntArray(2)
-        array[0] = layoutInfo.bounds.left
-        array[1] = layoutInfo.bounds.top
+        array[0] = layoutInfo.left
+        array[1] = layoutInfo.top
         return array
     }
 
