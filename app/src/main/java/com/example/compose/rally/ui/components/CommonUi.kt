@@ -31,7 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.dp
-import com.huya.mobile.uinspector.demo.R
+import com.pitaya.mobile.uinspector.demo.R
 import java.text.DecimalFormat
 
 /**

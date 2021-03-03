@@ -59,7 +59,7 @@
 
 ```groovy
 dependencies {
-    debugImplementation 'com.huya.mobile:Uinspector:1.0.5'
+    debugImplementation 'com.pitaya.mobile:Uinspector:1.0.5'
 }
 ```
 
@@ -69,9 +69,9 @@ dependencies {
 
 ```groovy
 dependencies {
-    debugImplementation 'com.huya.mobile:Uinspector-optional-glide:1.0.5'
-    debugImplementation 'com.huya.mobile:Uinspector-optional-fresco:1.0.5'
-    debugImplementation 'com.huya.mobile:Uinspector-optional-lottie:1.0.5'
+    debugImplementation 'com.pitaya.mobile:Uinspector-optional-glide:1.0.5'
+    debugImplementation 'com.pitaya.mobile:Uinspector-optional-fresco:1.0.5'
+    debugImplementation 'com.pitaya.mobile:Uinspector-optional-lottie:1.0.5'
 }
 ```
 

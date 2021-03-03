@@ -7,8 +7,8 @@ Using Java SPI mechanism, You can intergrate your custom `view`/`LayoutParams` p
     ```kotlin
     package com.your.pack
     
-    import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
-    import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService
+    import com.pitaya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
+    import com.pitaya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService
 
     class YourService : ViewPropertiesParserService {
 
@@ -26,7 +26,7 @@ Using Java SPI mechanism, You can intergrate your custom `view`/`LayoutParams` p
 
     ```kotlin
     import android.view.View
-    import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
+    import com.pitaya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
     import com.yy.mobile.whisper.Output
 
     class YourCustomViewParser(view: YourCustomView) : ViewPropertiesParser<YourCustomView>(view) {
@@ -38,8 +38,8 @@ Using Java SPI mechanism, You can intergrate your custom `view`/`LayoutParams` p
     }
     ```
     
-3. Create a file named `com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService` in the directory `src/main/resources/META-INF/services`. Write down your service class name `YourService` in the file.
+3. Create a file named `com.pitaya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService` in the directory `src/main/resources/META-INF/services`. Write down your service class name `YourService` in the file.
 
-    [See the demo: /src/main/resources/META-INF/services/](https://github.com/YvesCheung/UInspector/blob/master/optional/glide/src/main/resources/META-INF/services/com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService)
+    [See the demo: /src/main/resources/META-INF/services/](https://github.com/YvesCheung/UInspector/blob/master/optional/glide/src/main/resources/META-INF/services/com.pitaya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService)
     
 4. OK! Now run your app and click the `YourCustomView` on screen. 

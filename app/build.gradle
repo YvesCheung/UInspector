@@ -3,7 +3,7 @@ apply from: '../gradle/android_extension.gradle'
 
 android {
     defaultConfig {
-        applicationId "com.huya.mobile.uinspector.demo"
+        applicationId "com.pitaya.mobile.uinspector.demo"
         minSdkVersion 21
         multiDexEnabled true
     }

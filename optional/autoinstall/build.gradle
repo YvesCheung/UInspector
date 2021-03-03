@@ -9,7 +9,7 @@ ext {
     bintrayRepo = 'maven'
     bintrayName = 'UInspector'
 
-    libraryGroupId = 'com.huya.mobile'
+    libraryGroupId = 'com.pitaya.mobile'
     libraryName = 'Uinspector-optional-autoinstall'
 
     libraryDescription = 'A UI inspector to traverse a view hierarchy on Android'

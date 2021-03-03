@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.rally.data.Bill
 import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.StatementBody
-import com.huya.mobile.uinspector.demo.R
+import com.pitaya.mobile.uinspector.demo.R
 
 /**
  * The Bills screen.

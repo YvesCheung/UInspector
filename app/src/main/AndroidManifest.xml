@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.huya.mobile.uinspector.demo">
+    package="com.pitaya.mobile.uinspector.demo">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.huya.mobile.uinspector.MainApplication"
+        android:name="com.pitaya.mobile.uinspector.MainApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.huya.mobile.uinspector.MainActivity"
+            android:name="com.pitaya.mobile.uinspector.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,8 +23,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.huya.mobile.uinspector.ui.optional.ImageLoaderActivity" />
-        <activity android:name="com.huya.mobile.uinspector.ui.optional.LottieActivity" />
+        <activity android:name="com.pitaya.mobile.uinspector.ui.optional.ImageLoaderActivity" />
+        <activity android:name="com.pitaya.mobile.uinspector.ui.optional.LottieActivity" />
         <activity android:name="com.example.compose.rally.RallyActivity" />
     </application>
 </manifest>

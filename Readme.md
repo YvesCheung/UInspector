@@ -45,7 +45,7 @@ Add dependency to your module-level `build.gradle`
 dependencies {
     ...
     // debugImplementation because Uinspector should only run in debug builds.
-    debugImplementation 'com.huya.mobile:Uinspector:x.y.z'
+    debugImplementation 'com.pitaya.mobile:Uinspector:x.y.z'
 }
 ```
 > x.y.z replace with [![Download](https://api.bintray.com/packages/yvescheung/maven/UInspector/images/download.svg)](https://bintray.com/yvescheung/maven/UInspector/_latestVersion)
@@ -82,7 +82,7 @@ dependencies {
     
     ```groovy
     dependencies {
-        debugImplementation 'com.huya.mobile:Uinspector-optional-glide:x.y.z'
+        debugImplementation 'com.pitaya.mobile:Uinspector-optional-glide:x.y.z'
     }
     ```
     > x.y.z replace with [![Download](https://api.bintray.com/packages/yvescheung/maven/UInspector/images/download.svg)](https://bintray.com/yvescheung/maven/UInspector/_latestVersion)
@@ -103,7 +103,7 @@ dependencies {
 
     ```groovy
     dependencies {
-         debugImplementation('com.huya.mobile:Uinspector:x.y.z') {
+         debugImplementation('com.pitaya.mobile:Uinspector:x.y.z') {
              // After excluding, UInspector won't launch until you invoke it's `create` method!
              exclude module: 'Uinspector-optional-autoinstall'
          }

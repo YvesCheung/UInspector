@@ -55,7 +55,7 @@ import com.example.compose.rally.ui.components.BillRow
 import com.example.compose.rally.ui.components.RallyAlertDialog
 import com.example.compose.rally.ui.components.RallyDivider
 import com.example.compose.rally.ui.components.formatAmount
-import com.huya.mobile.uinspector.demo.R
+import com.pitaya.mobile.uinspector.demo.R
 
 @Composable
 fun OverviewBody(onScreenChange: (RallyScreen) -> Unit = {}) {

@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.rally.data.Account
 import com.example.compose.rally.ui.components.AccountRow
 import com.example.compose.rally.ui.components.StatementBody
-import com.huya.mobile.uinspector.demo.R
+import com.pitaya.mobile.uinspector.demo.R
 
 /**
  * The Accounts screen.
