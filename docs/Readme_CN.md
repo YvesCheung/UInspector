@@ -49,9 +49,9 @@
 
 大部分的自定义 `View` 属性都非常丰富，使用 `LayoutInspector` 都是无法直接查看的。
 
-而利用 `Uinspector` 加上你自己的集成库，则可以方便的支持这些属性。[第三方集成库文档](https://github.com/YvesCheung/UInspector/blob/master/docs/uinspector-optional-custom-view.md)。
+而利用 `Uinspector` 加上你自己的集成库，则可以方便的支持这些属性。[第三方集成库文档](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-custom-view.md)。
 
-甚至这个弹出面板的样式和内容不满足你的需求，也可以[添加你自己开发的面板进去](https://github.com/YvesCheung/UInspector/blob/master/Readme.md#develop/)。
+甚至这个弹出面板的样式和内容不满足你的需求，也可以[添加你自己开发的面板进去](https://github.com/YvesCheung/UInspector/blob/2.x/Readme.md#develop/)。
 
 ## 如何使用Uinsepctor？
 

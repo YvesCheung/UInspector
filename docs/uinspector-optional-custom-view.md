@@ -1,6 +1,6 @@
 # Inspect custom view properties
 
-Using Java SPI mechanism, You can intergrate your custom `view`/`LayoutParams` properties into Uinspector. Such as [Uinspecor-Fresco](https://github.com/YvesCheung/UInspector/blob/master/docs/uinspector-optional-fresco.md) / [Uinspector-Lottie](https://github.com/YvesCheung/UInspector/blob/master/docs/uinspector-optional-lottie.md).
+Using Java SPI mechanism, You can intergrate your custom `view`/`LayoutParams` properties into Uinspector. Such as [Uinspecor-Fresco](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-fresco.md) / [Uinspector-Lottie](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-lottie.md).
 
 1. Create a class implements the `ViewPropertiesPlugin`
 

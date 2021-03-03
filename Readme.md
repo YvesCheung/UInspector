@@ -89,15 +89,15 @@ dependencies {
 
 #### To see more optional dependencies below:
 
-- [**Fresco**](https://github.com/YvesCheung/UInspector/blob/master/docs/uinspector-optional-fresco.md)
-- [**Lottie**](https://github.com/YvesCheung/UInspector/blob/master/docs/uinspector-optional-lottie.md)
-- [**Inspect your own custom view**](https://github.com/YvesCheung/UInspector/blob/master/docs/uinspector-optional-custom-view.md)
+- [**Fresco**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-fresco.md)
+- [**Lottie**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-lottie.md)
+- [**Inspect your own custom view**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-custom-view.md)
 
 ## Develop
 
 - You can develop your own panel and add it into `UInspector`:
 
-    [See Doc](https://github.com/YvesCheung/UInspector/blob/master/docs/uinspector-optional-custom-panel.md)
+    [See Doc](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-custom-panel.md)
 
 - `UInspector` will launch automatically when the application starts. You can disable this feature if you don't want this:
 
