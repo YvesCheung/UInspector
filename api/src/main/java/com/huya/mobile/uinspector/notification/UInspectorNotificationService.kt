@@ -93,6 +93,7 @@ class UInspectorNotificationService : Service() {
                 )
             )
             .setPriority(PRIORITY_HIGH)
+            .setNotificationSilent()
             .build()
     }
 
