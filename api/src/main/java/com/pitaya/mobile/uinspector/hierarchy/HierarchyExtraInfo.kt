@@ -1,4 +1,4 @@
-package com.pitaya.mobile.uinspector.impl.hierarchy.extra
+package com.pitaya.mobile.uinspector.hierarchy
 
 import android.text.SpannableStringBuilder
 import android.view.View
@@ -7,7 +7,7 @@ import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.yy.mobile.whisper.Output
 
 /**
- * @see HierarchyExtraInfoService
+ * @see HierarchyExtraInfoPlugin
  *
  * @author YvesCheung
  * 2021/1/6

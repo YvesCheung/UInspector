@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.SpannableStringBuilder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfo
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.withColor
 

@@ -13,6 +13,7 @@ class ViewProperties(
     private val actual: LinkedHashMap<String, Any?> = LinkedHashMap()
 ) : Map<String, Any?> by actual {
 
+
     init {
         ViewPropertiesPlugin.of(view)?.parse(actual)
         val lp = view.layoutParams

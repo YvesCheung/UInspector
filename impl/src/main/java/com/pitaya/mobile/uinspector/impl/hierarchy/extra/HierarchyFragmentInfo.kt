@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder
 import android.view.View
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfo
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.withColor
 import com.yy.mobile.whisper.Output

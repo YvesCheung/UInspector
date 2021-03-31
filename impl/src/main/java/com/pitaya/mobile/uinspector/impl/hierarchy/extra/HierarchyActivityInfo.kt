@@ -3,6 +3,7 @@ package com.pitaya.mobile.uinspector.impl.hierarchy.extra
 import android.app.Activity
 import android.text.SpannableStringBuilder
 import android.view.View
+import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfo
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.withColor
 

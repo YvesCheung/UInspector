@@ -1,6 +1,8 @@
 package com.pitaya.mobile.uinspector.impl
 
 import android.content.Context
+import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfoPlugin
+import com.pitaya.mobile.uinspector.impl.hierarchy.extra.DefaultHierarchyExtraInfoPlugin
 import com.pitaya.mobile.uinspector.impl.properties.layoutParam.UInspectorDefaultLayoutParamsPropertiesPlugin
 import com.pitaya.mobile.uinspector.impl.properties.view.UInspectorDefaultViewPropertiesPlugin
 import com.pitaya.mobile.uinspector.plugins.UInspectorPluginService
@@ -19,6 +21,7 @@ class UInspectorDefaultPluginService : UInspectorPluginService {
         plugins.append(UInspectorChildPanelPlugin::class.java, UInspectorDefaultChildPanelPlugin())
         plugins.append(ViewPropertiesPlugin::class.java, UInspectorDefaultViewPropertiesPlugin())
         plugins.append(LayoutParamsPropertiesPlugin::class.java, UInspectorDefaultLayoutParamsPropertiesPlugin())
+        plugins.append(HierarchyExtraInfoPlugin::class.java, DefaultHierarchyExtraInfoPlugin())
     }
 
     companion object {

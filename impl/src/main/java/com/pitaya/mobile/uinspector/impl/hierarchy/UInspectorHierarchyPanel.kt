@@ -7,21 +7,22 @@ import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import com.pitaya.mobile.uinspector.UInspector
+import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfoPlugin
 import com.pitaya.mobile.uinspector.impl.R
-import com.pitaya.mobile.uinspector.impl.hierarchy.extra.DefaultHierarchyExtraInfoService
-import com.pitaya.mobile.uinspector.impl.hierarchy.extra.HierarchyExtraInfoService
 import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.withBold
 import com.pitaya.mobile.uinspector.util.withColor
 import kotlinx.android.synthetic.main.uinspector_panel_hierarchy.view.*
-import java.util.*
 
 /**
  * @author YvesCheung
  * 2021/1/2
  */
 class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPanel {
+
+    private val extraInfoService: List<HierarchyExtraInfoPlugin>
+        get() = UInspector.plugins[HierarchyExtraInfoPlugin::class.java]
 
     override val title = "Hierarchy"
 
@@ -69,15 +70,5 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
             root.view_hierarchy.text = ssb
         }
         return root
-    }
-
-    companion object {
-
-        private val extraInfoService: List<HierarchyExtraInfoService> by lazy(LazyThreadSafetyMode.NONE) {
-            val services =
-                ServiceLoader.load(HierarchyExtraInfoService::class.java).toMutableList()
-            services.add(DefaultHierarchyExtraInfoService())
-            services
-        }
     }
 }
