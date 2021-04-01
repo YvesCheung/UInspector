@@ -59,7 +59,8 @@
 
 ```groovy
 dependencies {
-    debugImplementation 'com.pitaya.mobile:Uinspector:1.0.5'
+    // maven { url 'https://jitpack.io' }
+    debugImplementation 'com.github.YvesCheung.UInspector:Uinspector:2.0.1'
 }
 ```
 
@@ -69,9 +70,10 @@ dependencies {
 
 ```groovy
 dependencies {
-    debugImplementation 'com.pitaya.mobile:Uinspector-optional-glide:1.0.5'
-    debugImplementation 'com.pitaya.mobile:Uinspector-optional-fresco:1.0.5'
-    debugImplementation 'com.pitaya.mobile:Uinspector-optional-lottie:1.0.5'
+    debugImplementation 'com.github.YvesCheung.UInspector:Uinspector-optional-fresco:2.0.1'
+    debugImplementation 'com.github.YvesCheung.UInspector:Uinspector-optional-glide:2.0.1'
+    debugImplementation 'com.github.YvesCheung.UInspector:Uinspector-optional-lottie:2.0.1'
+    debugImplementation 'com.github.YvesCheung.UInspector:Uinspector-optional-multitype:2.0.1'
 }
 ```
 

@@ -13,9 +13,9 @@ Uinspector-Optional-Lottie helps us to inspect the properties of `LottieAnimatio
     ```groovy
     dependencies {
         //the framework of Uinspector
-        debugImplementation 'com.pitaya.mobile:Uinspector:x.y.z'
+        debugImplementation 'com.github.YvesCheung.UInspector:Uinspector:x.y.z'
         //the optional library to inspect properties of Lottie
-        debugImplementation 'com.pitaya.mobile:Uinspector-optional-lottie:x.y.z'
+        debugImplementation 'com.github.YvesCheung.UInspector:Uinspector-optional-lottie:x.y.z'
     }
     ```
     

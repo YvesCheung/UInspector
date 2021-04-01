@@ -13,9 +13,9 @@ Uinspector-Optional-Fresco helps us to inspect the properties of `SimpleDraweeVi
     ```groovy
     dependencies {
         //the framework of Uinspector
-        debugImplementation 'com.pitaya.mobile:Uinspector:x.y.z'
+        debugImplementation 'com.github.YvesCheung.UInspector:Uinspector:x.y.z'
         //the optional library to inspect properties of Fresco
-        debugImplementation 'com.pitaya.mobile:Uinspector-optional-fresco:x.y.z'
+        debugImplementation 'com.github.YvesCheung.UInspector:Uinspector-optional-fresco:x.y.z'
     }
     ```
     

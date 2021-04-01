@@ -92,6 +92,7 @@ dependencies {
 - [**Fresco**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-fresco.md)
 - [**Lottie**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-lottie.md)
 - [**Inspect your own custom view**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-custom-view.md)
+- **MultiType**
 
 ## Develop
 
