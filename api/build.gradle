@@ -4,8 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply from: '../gradle/android_extension.gradle'
 
 dependencies {
-    implementation 'androidx.lifecycle:lifecycle-process:2.2.0'
-    implementation "com.google.android.material:material:1.2.1"
+    implementation 'androidx.lifecycle:lifecycle-process:2.3.1'
+    implementation "com.google.android.material:material:1.3.0"
     api 'com.yy.mobile:whisper:1.0.2'
 }
 

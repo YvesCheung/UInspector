@@ -1,5 +1,6 @@
 package com.huya.mobile.uinspector
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.Intent
@@ -28,6 +29,7 @@ import java.util.concurrent.atomic.AtomicBoolean
  * @author YvesCheung
  * 2020/12/28
  */
+@SuppressLint("StaticFieldLeak") //pendingInspectView won't be leak!
 @Suppress("unused")
 object UInspector {
 
