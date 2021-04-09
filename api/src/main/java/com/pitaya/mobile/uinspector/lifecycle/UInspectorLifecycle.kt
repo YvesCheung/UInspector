@@ -3,22 +3,14 @@ package com.pitaya.mobile.uinspector.lifecycle
 import android.app.Activity
 import android.app.Application
 import android.app.Application.ActivityLifecycleCallbacks
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import androidx.annotation.MainThread
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.pitaya.mobile.uinspector.UInspector
 import com.pitaya.mobile.uinspector.state.UInspectorLifecycleState
-import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorDialogFragment
-import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFragment
 import com.pitaya.mobile.uinspector.util.log
 import com.yy.mobile.whisper.NotThreadSafe
 import com.yy.mobile.whisper.UseWith
@@ -92,43 +84,6 @@ internal class UInspectorLifecycle {
             }
             if (newActivity != null) {
                 UInspector.currentState.withLifecycle = UInspectorLifecycleState(newActivity)
-
-                if (newActivity is FragmentActivity) {
-                    newActivity.supportFragmentManager.registerFragmentLifecycleCallbacks(
-                        object : FragmentManager.FragmentLifecycleCallbacks() {
-
-                            override fun onFragmentAttached(
-                                fm: FragmentManager,
-                                f: Fragment,
-                                context: Context
-                            ) {
-                                log("onFragmentAttached $f")
-                                if (f is DialogFragment && f !is UInspectorDialogFragment) {
-                                    UInspector.syncState()
-                                }
-                            }
-                        }, true
-                    )
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    newActivity.fragmentManager
-                        .registerFragmentLifecycleCallbacks(
-                            object : android.app.FragmentManager.FragmentLifecycleCallbacks() {
-
-                                override fun onFragmentAttached(
-                                    fm: android.app.FragmentManager?,
-                                    f: android.app.Fragment?,
-                                    context: Context?
-                                ) {
-                                    log("onFragmentAttached $f")
-                                    if (f is android.app.DialogFragment && f !is UInspectorLegacyDialogFragment) {
-                                        UInspector.syncState()
-                                    }
-                                }
-                            },
-                            true
-                        )
-                }
                 UInspector.syncState()
             }
         }
