@@ -1,11 +1,17 @@
 package com.huya.mobile.uinspector.optional
 
+import android.app.ActivityManager
+import android.app.Application
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import android.os.Build
+import android.os.Process.myPid
 import androidx.annotation.RestrictTo
 import com.huya.mobile.uinspector.UInspector
+
 
 /**
  * Auto install the [UInspector].
@@ -28,7 +34,11 @@ import com.huya.mobile.uinspector.UInspector
 class UInspectorInstaller : ContentProvider() {
 
     override fun onCreate(): Boolean {
-        UInspector.create(requireNotNull(context))
+        val ctx = requireNotNull(context)
+        val processName = getCurrentProcessName(ctx)
+        if (processName == null /*unknown?*/ || processName == ctx.packageName /*main process*/) {
+            UInspector.create(ctx)
+        }
         return true
     }
 
@@ -50,5 +60,49 @@ class UInspectorInstaller : ContentProvider() {
 
     override fun update(uri: Uri, contentValues: ContentValues?, s: String?, strings: Array<String?>?): Int {
         return 0
+    }
+
+    /**
+     * @return 当前进程名
+     */
+    private fun getCurrentProcessName(context: Context): String? {
+
+        fun getCurrentProcessNameByActivityThread(): String? {
+            var processName: String? = null
+            try {
+                val declaredMethod = Class.forName(
+                    "android.app.ActivityThread",
+                    false,
+                    Application::class.java.classLoader
+                ).getDeclaredMethod("currentProcessName")
+                declaredMethod.isAccessible = true
+                processName = declaredMethod.invoke(null) as String
+            } catch (e: Throwable) {
+            }
+            return processName
+        }
+
+        fun getCurrentProcessNameByActivityManager(context: Context): String? {
+            val pid: Int = myPid()
+            val am = context.getSystemService(Context.ACTIVITY_SERVICE) as? ActivityManager
+            if (am != null) {
+                val runningAppList = am.runningAppProcesses
+                if (runningAppList != null) {
+                    for (processInfo in runningAppList) {
+                        if (processInfo.pid == pid) {
+                            return processInfo.processName
+                        }
+                    }
+                }
+            }
+            return null
+        }
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Application.getProcessName()
+        } else {
+            getCurrentProcessNameByActivityThread()
+                ?: getCurrentProcessNameByActivityManager(context)
+        }
     }
 }
