@@ -39,7 +39,7 @@ object UInspector {
     val currentState = UInspectorState()
 
     @JvmStatic
-    @AnyThread
+    @MainThread
     fun create(context: Context) {
         if (init.compareAndSet(false, true)) {
             application = context.applicationContext as Application
@@ -49,7 +49,7 @@ object UInspector {
     }
 
     @JvmStatic
-    @AnyThread
+    @MainThread
     fun destroy() {
         if (init.compareAndSet(true, false)) {
             changeStateInner(false)
@@ -132,6 +132,8 @@ object UInspector {
             currentLifecycle.clear()
 
             if (running) {
+                currentLifecycle.registerFragmentLifecycle()
+
                 val mask: UInspectorPanel =
                     when {
                         Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
