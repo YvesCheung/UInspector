@@ -20,6 +20,19 @@ android {
         jvmTarget = "1.8"
         useIR = true
     }
+
+    sourceSets {
+        main {
+            java {
+                include '**/*.java'
+                include '**/*.kt'
+            }
+        }
+    }
+
+    compileOptions {
+        kotlinOptions.freeCompilerArgs += ['-module-name', "${group}.${name}"]
+    }
 }
 
 dependencies {
