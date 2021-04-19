@@ -112,7 +112,7 @@ dependencies {
 
 ## Inspiration
 
-- [FELX](https://github.com/FLEXTool/FLEX)
+- [FLEX](https://github.com/FLEXTool/FLEX)
 
 ## License
 
