@@ -61,8 +61,8 @@ class UInspectorNotificationService : Service() {
                 NotificationCompat.Builder(this)
             }
 
-        val app = packageManager.getApplicationInfo(packageName, 0)
-        val appName = getString(app.labelRes)
+        val app = applicationInfo
+        val appName = packageManager.getApplicationLabel(applicationInfo)
         val title = getString(
             if (isRunning) R.string.uinspector_notification_channel_stop_title
             else R.string.uinspector_notification_channel_start_title,
