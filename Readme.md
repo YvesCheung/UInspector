@@ -85,7 +85,8 @@ dependencies {
         debugImplementation 'com.huya.mobile:Uinspector-optional-glide:x.y.z'
     }
     ```
-    > x.y.z replace with [![Download](https://api.bintray.com/packages/yvescheung/maven/UInspector/images/download.svg)](https://bintray.com/yvescheung/maven/UInspector/_latestVersion)
+
+    > x.y.z replace with [![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector)
 
 #### To see more optional dependencies below:
 
