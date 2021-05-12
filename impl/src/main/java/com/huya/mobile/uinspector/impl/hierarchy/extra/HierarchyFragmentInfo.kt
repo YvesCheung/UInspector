@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Build
 import android.text.SpannableStringBuilder
 import android.view.View
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import com.huya.mobile.uinspector.util.newLine
@@ -44,6 +45,11 @@ open class HierarchyFragmentInfo(val activity: Activity) : HierarchyExtraInfo {
             val v = fragment.view
             if (v != null) {
                 records[v] = fragment
+            } else if (fragment is DialogFragment) {
+                val dv = fragment.dialog?.window?.decorView
+                if (dv != null) {
+                    records[dv] = fragment
+                }
             }
             record(fragment.childFragmentManager, records)
         }
@@ -55,6 +61,11 @@ open class HierarchyFragmentInfo(val activity: Activity) : HierarchyExtraInfo {
                 val v = fragment.view
                 if (v != null) {
                     records[v] = fragment
+                } else if (fragment is android.app.DialogFragment) {
+                    val dv = fragment.dialog?.window?.decorView
+                    if (dv != null) {
+                        records[dv] = fragment
+                    }
                 }
                 record(fragment.childFragmentManager, records)
             }
