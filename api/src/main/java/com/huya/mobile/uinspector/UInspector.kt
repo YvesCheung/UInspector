@@ -21,6 +21,7 @@ import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
 import com.huya.mobile.uinspector.ui.panel.fullscreen.UInspectorWindow
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelService
+import com.huya.mobile.uinspector.util.loadService
 import com.huya.mobile.uinspector.util.log
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -151,7 +152,7 @@ object UInspector {
     }
 
     private val panelService by lazy(LazyThreadSafetyMode.NONE) {
-        ServiceLoader.load(UInspectorChildPanelService::class.java)
+        loadService(UInspectorChildPanelService::class.java)
     }
 
     internal fun createChildPanels(): List<UInspectorChildPanel> {

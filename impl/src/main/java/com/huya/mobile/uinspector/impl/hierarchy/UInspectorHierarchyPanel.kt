@@ -11,10 +11,7 @@ import com.huya.mobile.uinspector.impl.R
 import com.huya.mobile.uinspector.impl.hierarchy.extra.DefaultHierarchyExtraInfoService
 import com.huya.mobile.uinspector.impl.hierarchy.extra.HierarchyExtraInfoService
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
-import com.huya.mobile.uinspector.util.idToString
-import com.huya.mobile.uinspector.util.newLine
-import com.huya.mobile.uinspector.util.withBold
-import com.huya.mobile.uinspector.util.withColor
+import com.huya.mobile.uinspector.util.*
 import kotlinx.android.synthetic.main.uinspector_panel_hierarchy.view.*
 import java.util.*
 
@@ -80,7 +77,7 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
 
         private val extraInfoService: List<HierarchyExtraInfoService> by lazy(LazyThreadSafetyMode.NONE) {
             val services =
-                ServiceLoader.load(HierarchyExtraInfoService::class.java).toMutableList()
+                loadService(HierarchyExtraInfoService::class.java).toMutableList()
             services.add(DefaultHierarchyExtraInfoService())
             services
         }
