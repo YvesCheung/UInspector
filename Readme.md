@@ -110,6 +110,11 @@ dependencies {
          }
     }
     ```
+  
+- Development environment
+
+  Branch 2.x : Require Jdk11, [Android Studio Canary (Preview)](https://developer.android.com/studio/preview), Jetpack Compose Feature (Developing).
+  Branch 1.x : Require Jdk8, Android Studio 4.x (Stable).
 
 ## Inspiration
 
