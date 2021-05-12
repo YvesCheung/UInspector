@@ -6,6 +6,7 @@ import com.facebook.datasource.DataSource
 import com.facebook.drawee.controller.AbstractDraweeController
 import com.facebook.drawee.view.DraweeView
 import com.facebook.imagepipeline.request.HasImageRequest
+import com.google.auto.service.AutoService
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService
 
@@ -13,6 +14,7 @@ import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserServi
  * @author YvesCheung
  * 2021/1/7
  */
+@AutoService(ViewPropertiesParserService::class)
 class FrescoPropertiesParserService : ViewPropertiesParserService {
 
     override fun tryCreate(v: View): ViewPropertiesParser<out View>? {

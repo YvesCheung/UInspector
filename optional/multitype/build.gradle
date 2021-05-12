@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply from: '../../gradle/android_extension.gradle'
 
@@ -7,6 +8,8 @@ dependencies {
     api project(":Uinspector")
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'me.drakeet.multitype:multitype:3.4.4'
+    implementation "com.google.auto.service:auto-service:1.0-rc7"
+    kapt "com.google.auto.service:auto-service:1.0-rc7"
 }
 
 ext {

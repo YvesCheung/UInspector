@@ -1,12 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 apply from: '../gradle/android_extension.gradle'
 
 dependencies {
     implementation "com.github.lzyzsd.randomcolor:library:1.0.0"
     api project(":Uinspector-optional-autoinstall")
     api project(":Uinspector-api")
+    implementation "com.google.auto.service:auto-service:1.0-rc7"
+    kapt "com.google.auto.service:auto-service:1.0-rc7"
 }
 
 ext {

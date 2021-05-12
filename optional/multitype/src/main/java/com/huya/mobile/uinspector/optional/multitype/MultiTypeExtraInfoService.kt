@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.SpannableStringBuilder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.google.auto.service.AutoService
 import com.huya.mobile.uinspector.impl.hierarchy.extra.HierarchyExtraInfo
 import com.huya.mobile.uinspector.impl.hierarchy.extra.HierarchyExtraInfoService
 import com.huya.mobile.uinspector.util.newLine
@@ -16,6 +17,7 @@ import me.drakeet.multitype.MultiTypeAdapter
  * @author YvesCheung
  * 2021/4/1
  */
+@AutoService(HierarchyExtraInfoService::class)
 class MultiTypeExtraInfoService : HierarchyExtraInfoService {
 
     override fun create(activity: Activity, targetView: View): Set<HierarchyExtraInfo> {

@@ -1,5 +1,6 @@
 package com.huya.mobile.uinspector.impl
 
+import com.google.auto.service.AutoService
 import com.huya.mobile.uinspector.impl.accessibility.UInspectorAccessibilityPanel
 import com.huya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel
 import com.huya.mobile.uinspector.impl.properties.UInspectorPropertiesPanel
@@ -11,6 +12,7 @@ import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelService
  * @author YvesCheung
  * 2021/1/2
  */
+@AutoService(UInspectorChildPanelService::class)
 class UInspectorDefaultPanelService : UInspectorChildPanelService {
 
     override fun createPanels(): Set<UInspectorChildPanel> {

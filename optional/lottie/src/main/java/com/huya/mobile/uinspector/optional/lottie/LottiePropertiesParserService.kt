@@ -2,6 +2,7 @@ package com.huya.mobile.uinspector.optional.lottie
 
 import android.view.View
 import com.airbnb.lottie.LottieAnimationView
+import com.google.auto.service.AutoService
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService
 
@@ -9,6 +10,7 @@ import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserServi
  * @author YvesCheung
  * 2021/1/8
  */
+@AutoService(ViewPropertiesParserService::class)
 class LottiePropertiesParserService : ViewPropertiesParserService {
 
     override fun tryCreate(v: View): ViewPropertiesParser<out View>? {

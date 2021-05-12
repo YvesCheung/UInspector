@@ -7,6 +7,7 @@ import com.bumptech.glide.R
 import com.bumptech.glide.request.Request
 import com.bumptech.glide.request.target.CustomViewTarget
 import com.bumptech.glide.request.target.ViewTarget
+import com.google.auto.service.AutoService
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
 import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserService
 
@@ -14,6 +15,7 @@ import com.huya.mobile.uinspector.impl.properties.view.ViewPropertiesParserServi
  * @author YvesCheung
  * 2021/1/7
  */
+@AutoService(ViewPropertiesParserService::class)
 class GlidePropertiesParserService : ViewPropertiesParserService {
 
     override fun tryCreate(v: View): ViewPropertiesParser<out View>? {
