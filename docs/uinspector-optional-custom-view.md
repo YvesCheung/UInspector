@@ -36,13 +36,15 @@ Using Java SPI mechanism, You can intergrate your custom `view`/`LayoutParams` p
     }
     ```
 
-4. Register your plugin to `UInspectorPluginService`
+4. Register your plugin to `UInspectorPluginService`, which is annotated with `@AutoService`
 
     ```kotlin
+    import com.google.auto.service.AutoService
     import com.pitaya.mobile.uinspector.plugins.UInspectorPluginService
     import com.pitaya.mobile.uinspector.plugins.UInspectorPlugins
     import com.pitaya.mobile.uinspector.properties.view.ViewPropertiesPlugin
 
+    @AutoService(UInspectorPluginService::class)
     class YourPluginService : UInspectorPluginService {
 
         override fun onCreate(context: Context, plugins: UInspectorPlugins) {
@@ -51,8 +53,4 @@ Using Java SPI mechanism, You can intergrate your custom `view`/`LayoutParams` p
     }
     ```
 
-4. Create a file named `com.pitaya.mobile.uinspector.plugins.UInspectorPluginService` in the directory `src/main/resources/META-INF/services`. Write down your service class name `YourPluginService` in the file.
-
-    [See the demo: /src/main/resources/META-INF/services/](https://github.com/YvesCheung/UInspector/blob/2.x/optional/glide/src/main/resources/META-INF/services/com.pitaya.mobile.uinspector.plugins.UInspectorPluginService)
-
-5. OK! Now run your app and click the `YourCustomView` on screen.
+4. OK! Now run your app and click the `YourCustomView` on screen.

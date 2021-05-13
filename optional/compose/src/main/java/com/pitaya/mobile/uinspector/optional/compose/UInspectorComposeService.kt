@@ -1,6 +1,7 @@
 package com.pitaya.mobile.uinspector.optional.compose
 
 import android.content.Context
+import com.google.auto.service.AutoService
 import com.pitaya.mobile.uinspector.hierarchy.HitTestFactoryPlugin
 import com.pitaya.mobile.uinspector.hierarchy.LayerFactoryPlugin
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeLayerFactoryPlugin
@@ -16,6 +17,7 @@ import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelPlugin
  * @author YvesCheung
  * 2021/2/1
  */
+@AutoService(UInspectorPluginService::class)
 class UInspectorComposeService : UInspectorPluginService {
 
     override fun onCreate(context: Context, plugins: UInspectorPlugins) {
