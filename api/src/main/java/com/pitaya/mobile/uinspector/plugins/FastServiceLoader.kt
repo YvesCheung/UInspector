@@ -1,0 +1,119 @@
+package com.pitaya.mobile.uinspector.plugins
+
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.URL
+import java.util.*
+import java.util.jar.JarFile
+import java.util.zip.ZipEntry
+
+/**
+ * A simplified version of [ServiceLoader].
+ * FastServiceLoader locates and instantiates all service providers named in configuration
+ * files placed in the resource directory <tt>META-INF/services</tt>.
+ *
+ * The main difference between this class and classic service loader is in skipping
+ * verification JARs. A verification requires reading the whole JAR (and it causes problems and ANRs on Android devices)
+ * and prevents only trivial checksum issues. See #878.
+ *
+ * If any error occurs during loading, it fallbacks to [ServiceLoader], mostly to prevent R8 issues.
+ *
+ * Copy Right: [kotlinx.coroutines.internal.FastServiceLoader]
+ */
+internal object FastServiceLoader {
+
+    private const val PREFIX: String = "META-INF/services/"
+
+    internal fun <S> load(service: Class<S>, loader: ClassLoader): List<S> {
+        return try {
+            loadProviders(service, loader)
+        } catch (e: Throwable) {
+            // Fallback to default service loader
+            ServiceLoader.load(service, loader).toList()
+        }
+    }
+
+    // Visible for tests
+    private fun <S> loadProviders(service: Class<S>, loader: ClassLoader): List<S> {
+        val fullServiceName = PREFIX + service.name
+        // Filter out situations when both JAR and regular files are in the classpath (e.g. IDEA)
+        val urls = loader.getResources(fullServiceName)
+        val providers = urls.toList().flatMap { parse(it) }.toSet()
+        require(providers.isNotEmpty()) { "No providers were loaded with FastServiceLoader" }
+        return providers.map { getProviderInstance(it, loader, service) }
+    }
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    private fun <S> getProviderInstance(name: String, loader: ClassLoader, service: Class<S>): S {
+        val clazz = Class.forName(name, false, loader)
+        require(service.isAssignableFrom(clazz)) { "Expected service of class $service, but found $clazz" }
+        return service.cast(clazz.getDeclaredConstructor().newInstance())!!
+    }
+
+    private fun parse(url: URL): List<String> {
+        val path = url.toString()
+        // Fast-path for JARs
+        if (path.startsWith("jar")) {
+            val pathToJar = path.substringAfter("jar:file:").substringBefore('!')
+            val entry = path.substringAfter("!/")
+            // mind the verify = false flag!
+            (JarFile(pathToJar, false)).use { file ->
+                BufferedReader(
+                    InputStreamReader(
+                        file.getInputStream(ZipEntry(entry)),
+                        "UTF-8"
+                    )
+                ).use { r ->
+                    return parseFile(r)
+                }
+            }
+        }
+        // Regular path for everything else
+        return BufferedReader(InputStreamReader(url.openStream())).use { reader ->
+            parseFile(reader)
+        }
+    }
+
+    // JarFile does no implement Closesable on Java 1.6
+    private inline fun <R> JarFile.use(block: (JarFile) -> R): R {
+        var cause: Throwable? = null
+        try {
+            return block(this)
+        } catch (e: Throwable) {
+            cause = e
+            throw e
+        } finally {
+            try {
+                close()
+            } catch (closeException: Throwable) {
+                if (cause === null) throw closeException
+                cause.addSuppressed(closeException)
+                throw cause
+            }
+        }
+    }
+
+    private fun parseFile(r: BufferedReader): List<String> {
+        val names = mutableSetOf<String>()
+        while (true) {
+            val line = r.readLine() ?: break
+            val serviceName = line.substringBefore("#").trim()
+            require(serviceName.all { it == '.' || Character.isJavaIdentifierPart(it) }) { "Illegal service provider class name: $serviceName" }
+            if (serviceName.isNotEmpty()) {
+                names.add(serviceName)
+            }
+        }
+        return names.toList()
+    }
+}
+
+//Disable if runs R8
+private const val ENABLE_FAST_SPI = true
+
+fun <S> loadService(service: Class<S>): List<S> {
+    return if (ENABLE_FAST_SPI) {
+        FastServiceLoader.load(service, service.classLoader!!)
+    } else {
+        ServiceLoader.load(service, service.classLoader).toList()
+    }
+}

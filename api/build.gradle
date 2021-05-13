@@ -1,6 +1,12 @@
 apply plugin: 'com.android.library'
 apply from: '../gradle/android_extension.gradle'
 
+android {
+    defaultConfig {
+        consumerProguardFiles file('./proguard.pro')
+    }
+}
+
 dependencies {
     implementation 'androidx.lifecycle:lifecycle-process:2.2.0'
     implementation "com.google.android.material:material:1.2.1"

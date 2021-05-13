@@ -17,6 +17,7 @@ import com.pitaya.mobile.uinspector.notification.UInspectorNotificationService.C
 import com.pitaya.mobile.uinspector.plugins.UInspectorPluginService
 import com.pitaya.mobile.uinspector.plugins.UInspectorPlugins
 import com.pitaya.mobile.uinspector.plugins.UInspectorPluginsImpl
+import com.pitaya.mobile.uinspector.plugins.loadService
 import com.pitaya.mobile.uinspector.state.UInspectorState
 import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorDialogFragment
 import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFragment
@@ -157,7 +158,7 @@ object UInspector {
     }
 
     private val installPlugins by lazy(LazyThreadSafetyMode.NONE) {
-        ServiceLoader.load(UInspectorPluginService::class.java).forEach {
+        loadService(UInspectorPluginService::class.java).forEach {
             it.onCreate(application, plugins)
         }
     }
