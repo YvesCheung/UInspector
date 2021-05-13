@@ -42,14 +42,17 @@ object UInspector {
     val currentState = UInspectorState()
 
     @JvmField
-    val plugins: UInspectorPlugins = UInspectorPluginsImpl()
+    val plugins: UInspectorPlugins = UInspectorPluginsImpl { plugins ->
+        loadService(UInspectorPluginService::class.java).forEach { service ->
+            service.onCreate(application, plugins)
+        }
+    }
 
     @JvmStatic
     @MainThread
     fun create(context: Context) {
         if (init.compareAndSet(false, true)) {
             application = context.applicationContext as Application
-            installPlugins
             lifecycle.register(application)
             stop()
         }
@@ -154,12 +157,6 @@ object UInspector {
                 pendingInspectView?.let { mask.updateTargetView(it) }
                 pendingInspectView = null
             }
-        }
-    }
-
-    private val installPlugins by lazy(LazyThreadSafetyMode.NONE) {
-        loadService(UInspectorPluginService::class.java).forEach {
-            it.onCreate(application, plugins)
         }
     }
 }
