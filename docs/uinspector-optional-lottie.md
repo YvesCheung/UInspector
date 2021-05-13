@@ -19,8 +19,7 @@ Uinspector-Optional-Lottie helps us to inspect the properties of `LottieAnimatio
     }
     ```
     
-    > x.y.z replace with [![Download](https://api.bintray.com/packages/yvescheung/maven/UInspector/images/download.svg)](https://bintray.com/yvescheung/maven/UInspector/_latestVersion)
-
+    > x.y.z replace with [![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector)
 
 2. Run your app and turn on the Uinspector. Click the `LottieAnimationView`
  
