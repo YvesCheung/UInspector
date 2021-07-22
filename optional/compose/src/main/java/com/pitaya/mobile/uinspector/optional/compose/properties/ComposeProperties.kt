@@ -1,14 +1,14 @@
 package com.pitaya.mobile.uinspector.optional.compose.properties
 
-import androidx.compose.ui.tooling.inspector.InspectorNode
 import com.pitaya.mobile.uinspector.UInspector
+import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 
 /**
  * @author YvesCheung
  * 2021/2/2
  */
 class ComposeProperties(
-    info: InspectorNode,
+    view: ComposeView,
     private val actual: LinkedHashMap<String, Any?> = LinkedHashMap()
 ) : Map<String, Any?> by actual {
 

@@ -1,19 +1,12 @@
 package com.pitaya.mobile.uinspector.optional.compose.inspect
 
 import android.view.View
-import androidx.compose.ui.tooling.inspector.InspectorNode
-import androidx.compose.ui.tooling.inspector.LayoutInspectorTree
 
 /**
- * Why [LayoutInspectorTree] not work?
- *
  * @see [https://github.com/square/radiography/blob/main/radiography/src/main/java/radiography/internal/ComposeLayoutInfo.kt]
  */
 internal object ComposeInspector {
 
-    fun tryGetLayoutInfos(composeView: View): Sequence<InspectorNode>? {
-        return LayoutInspectorTree().convert(composeView).asSequence()
-    }
 }
 
 /**

@@ -45,11 +45,11 @@ class UInspectorComposePropertiesPanel(override val priority: Int) : UInspectorC
     private class ComposePropsAdapter(val target: ComposeView) :
         RecyclerView.Adapter<ViewPropsHolder>(), UInspectorTargetViews.Listener {
 
-        private var props: List<Pair<String, Any?>> = ComposeProperties(target.layoutInfo).toList()
+        private var props: List<Pair<String, Any?>> = ComposeProperties(target).toList()
 
         override fun onChange() {
             val oldProps = props
-            props = ComposeProperties(target.layoutInfo).toList()
+            props = ComposeProperties(target).toList()
             DiffUtil.calculateDiff(object : DiffUtil.Callback() {
 
                 override fun getOldListSize(): Int = oldProps.size

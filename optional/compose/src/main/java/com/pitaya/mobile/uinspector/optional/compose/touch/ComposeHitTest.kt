@@ -2,7 +2,6 @@ package com.pitaya.mobile.uinspector.optional.compose.touch
 
 import android.view.MotionEvent
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.tooling.inspector.InspectorNode
 import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.HitTest
 import com.pitaya.mobile.uinspector.hierarchy.Layer
@@ -29,10 +28,11 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
                         return childResult
                     }
                 } else if (child is ComposeView) {
-                    val node = child.layoutInfo
-                    if (event in node) {
-                        return child
-                    }
+//                    val node = child.layoutInfo
+//                    if (event in node) {
+//                        return child
+//                    }
+
 //                    if (node == EMPTY) {
 //                        val continueFind = findNextTarget(event, child)
 //                        if (continueFind != null) {
@@ -56,10 +56,10 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
     }
 }
 
-operator fun InspectorNode.contains(position: MotionEvent): Boolean {
-    return position.x < this.left + this.width && position.x > this.left &&
-        position.y < this.top - this.height && position.y > this.top
-}
+//operator fun InspectorNode.contains(position: MotionEvent): Boolean {
+//    return position.x < this.left + this.width && position.x > this.left &&
+//        position.y < this.top - this.height && position.y > this.top
+//}
 
 //operator fun IntBounds.contains(position: MotionEvent): Boolean {
 //    return position.x < this.right && position.x > this.left &&

@@ -12,8 +12,8 @@ import com.pitaya.mobile.uinspector.optional.compose.inspect.ComposeInspector
 open class AndroidComposeView(view: View) : AndroidView(view) {
 
     override val children: Sequence<Layer>
-        get() = super.children +
-            (ComposeInspector.tryGetLayoutInfos(view)
-                ?.map { ComposeView(this, it) }
-                ?: emptySequence())
+        get() = super.children
+//    + (ComposeInspector.tryGetLayoutInfos(view)
+//                ?.map { ComposeView(this, it) }
+//                ?: emptySequence())
 }

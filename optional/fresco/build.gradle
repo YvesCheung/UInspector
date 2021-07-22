@@ -3,7 +3,7 @@ apply from: '../../gradle/android_extension.gradle'
 
 dependencies {
     api project(":Uinspector")
-    implementation "com.facebook.fresco:fresco:2.1.0"
+    implementation "com.facebook.fresco:fresco:2.3.0"
 }
 
 ext {
