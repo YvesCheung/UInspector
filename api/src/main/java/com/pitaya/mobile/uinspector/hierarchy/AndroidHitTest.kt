@@ -101,7 +101,7 @@ open class AndroidHitTest : HitTest {
          * Some device can't found method [ViewGroup.getChildDrawingOrder]?
          */
         protected fun getChildDrawingOrder(parent: ViewGroup, idx: Int): Int {
-            if (!getChildDrawingOrderNotFound) {
+            if (!getChildDrawingOrderNotFound && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 try {
                     //todo: check isChildrenDrawingOrderEnabled
                     val childIndex = parent.getChildDrawingOrder(idx)
