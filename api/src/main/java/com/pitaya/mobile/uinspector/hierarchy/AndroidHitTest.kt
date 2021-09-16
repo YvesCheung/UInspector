@@ -14,7 +14,7 @@ import java.lang.reflect.Field
  * @author YvesCheung
  * 2021/1/29
  */
-@SuppressLint("PrivateApi")
+@SuppressLint("PrivateApi", "DiscouragedPrivateApi")
 open class AndroidHitTest : HitTest {
 
     override fun findNextTarget(event: MotionEvent, current: Layer): Layer? {
