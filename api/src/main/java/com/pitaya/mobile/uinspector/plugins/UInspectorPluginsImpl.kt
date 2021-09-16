@@ -30,7 +30,7 @@ internal class UInspectorPluginsImpl(
     override fun <Plugin : UInspectorPlugin> prepend(cls: Class<Plugin>, plugin: Plugin) {
         synchronized(plugins) {
             val pluginList = plugins.getOrPut(cls) { mutableListOf() }
-            pluginList.removeIf { it.uniqueKey == plugin.uniqueKey }
+            pluginList.removeAll { it.uniqueKey == plugin.uniqueKey }
             pluginList.add(0, plugin)
         }
     }
