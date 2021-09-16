@@ -14,6 +14,6 @@ import com.pitaya.mobile.uinspector.plugins.UInspectorPlugins
 class UInspectorGlideService : UInspectorPluginService {
 
     override fun onCreate(context: Context, plugins: UInspectorPlugins) {
-        plugins.append(ViewPropertiesPlugin::class.java, GlidePropertiesParserPlugin())
+        plugins.prepend(ViewPropertiesPlugin::class.java, GlidePropertiesParserPlugin())
     }
 }
