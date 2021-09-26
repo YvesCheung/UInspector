@@ -10,6 +10,7 @@ import android.text.Spanned
 import android.text.style.BackgroundColorSpan
 import android.view.Gravity
 import android.view.View
+import androidx.annotation.AnyRes
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import com.yy.mobile.whisper.IntDef
@@ -70,6 +71,14 @@ fun drawableToString(drawable: Drawable): CharSequence {
     return when (drawable) {
         is ColorDrawable -> colorToString(drawable.color)
         else -> drawable::class.java.simpleName
+    }
+}
+
+fun resToString(context: Context, @AnyRes id: Int): String {
+    return try {
+        "@+${context.resources.getResourceTypeName(id)}/${context.resources.getResourceEntryName(id)}"
+    } catch (e: Resources.NotFoundException) {
+        hexToString(id)
     }
 }
 
