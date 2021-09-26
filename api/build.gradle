@@ -4,7 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply from: '../gradle/android_extension.gradle'
 
 android {
+    compileSdkVersion 31
+
     defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 31
         consumerProguardFiles file('./proguard.pro')
     }
 }

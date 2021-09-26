@@ -4,6 +4,15 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply from: '../../gradle/android_extension.gradle'
 
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 31
+    }
+}
+
 dependencies {
     api project(":Uinspector")
     implementation "com.facebook.fresco:fresco:2.1.0"
