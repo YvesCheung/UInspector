@@ -1,6 +1,15 @@
 apply plugin: 'com.android.library'
 apply from: '../../gradle/android_extension.gradle'
 
+android {
+    compileSdkVersion 31
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 31
+    }
+}
+
 dependencies {
     api "androidx.startup:startup-runtime:1.1.0"
     api project(":Uinspector-api")

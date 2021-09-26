@@ -2,9 +2,15 @@ apply plugin: 'com.android.application'
 apply from: '../gradle/android_extension.gradle'
 
 android {
+    compileSdkVersion 31
+
     defaultConfig {
         applicationId "com.pitaya.mobile.uinspector.demo"
         minSdkVersion 21
+        targetSdkVersion 31
+        versionCode 1
+        versionName "1.0"
+
         multiDexEnabled true
     }
 
@@ -19,10 +25,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
 
-    composeOptions {
         kotlinCompilerVersion kotlin_version
         kotlinCompilerExtensionVersion compose_version
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 
