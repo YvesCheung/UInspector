@@ -3,11 +3,13 @@ package com.pitaya.mobile.uinspector.hierarchy
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.pitaya.mobile.uinspector.util.LibName
 import com.pitaya.mobile.uinspector.util.tryGetActivity
+import android.view.inspector.WindowInspector
 
 /**
  * @author YvesCheung
@@ -53,11 +55,20 @@ internal object WindowManager {
         return listOf(activity.window.decorView)
     }
 
+    private var tryWindowInspector = true
+
     /**
      * Find all DecorViews from [android.view.WindowManagerGlobal]
      */
     @Suppress("KDocUnresolvedReference")
     fun findAllDecorViews(): List<View>? {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && tryWindowInspector) {
+            try {
+                return WindowInspector.getGlobalWindowViews()
+            } catch (e: Throwable) {
+                tryWindowInspector = false
+            }
+        }
         try {
             @Suppress("UNCHECKED_CAST")
             return getWindowViews.get(windowManagerGlobal) as List<View>
