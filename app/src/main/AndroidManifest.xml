@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.pitaya.mobile.uinspector.MainActivity"
+            android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -23,8 +24,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.pitaya.mobile.uinspector.ui.optional.ImageLoaderActivity" />
-        <activity android:name="com.pitaya.mobile.uinspector.ui.optional.LottieActivity" />
-        <activity android:name="com.example.compose.rally.RallyActivity" />
+        <activity
+            android:name="com.pitaya.mobile.uinspector.ui.optional.ImageLoaderActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.pitaya.mobile.uinspector.ui.optional.LottieActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.compose.rally.RallyActivity"
+            android:exported="false" />
     </application>
 </manifest>
