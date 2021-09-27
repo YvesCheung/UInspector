@@ -76,7 +76,7 @@ fun drawableToString(drawable: Drawable): CharSequence {
 
 fun resToString(context: Context, @AnyRes id: Int): String {
     return try {
-        "@+${context.resources.getResourceTypeName(id)}/${context.resources.getResourceEntryName(id)}"
+        "@${context.resources.getResourceTypeName(id)}/${context.resources.getResourceEntryName(id)}"
     } catch (e: Resources.NotFoundException) {
         hexToString(id)
     }

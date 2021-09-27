@@ -149,5 +149,15 @@ open class ViewPropertiesParser<T : View>(protected val view: T) : PropertiesPar
             props["pivotX"] = view.pivotX.dpStr
             props["pivotY"] = view.pivotY.dpStr
         }
+
+        if (view.alpha != 1f) {
+            props["alpha"] = view.alpha
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (!view.hasOverlappingRendering) {
+                props["overlappingRendering"] = view.hasOverlappingRendering
+            }
+        }
     }
 }
