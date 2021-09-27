@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.annotation.MainThread
@@ -84,5 +85,9 @@ internal class UInspectorPanelDelegate {
     @MainThread
     fun onStart(dialog: Dialog?) {
         dialog?.window?.setLayout(MATCH_PARENT, MATCH_PARENT)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            dialog?.window?.decorView?.systemUiVisibility =
+                View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_VISIBLE
+        }
     }
 }
