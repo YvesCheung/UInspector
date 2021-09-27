@@ -19,7 +19,7 @@ import com.pitaya.mobile.uinspector.util.withColor
 open class TargetViewSourceLayoutIdInfo(private val context: Context, private val target: View) : HierarchyExtraInfo {
 
     override fun beforeHierarchy(index: Int, view: View, s: SpannableStringBuilder) {
-        if (target === view) {
+        if (target === view && view.sourceLayoutResId > 0) {
             s.withColor(context, R.color.uinspector_view_layout_source_color) {
                 newLine(index) {
                     append(resToString(context, view.sourceLayoutResId))

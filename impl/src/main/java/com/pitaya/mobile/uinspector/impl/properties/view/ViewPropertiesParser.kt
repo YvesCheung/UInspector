@@ -23,10 +23,8 @@ open class ViewPropertiesParser<T : View>(protected val view: T) : PropertiesPar
             if (view.id <= 0) "NO_ID"
             else idToString(view.context, view.id)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            props["source"] =
-                if (view.sourceLayoutResId <= 0) "ID_NULL"
-                else resToString(view.context, view.sourceLayoutResId)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && view.sourceLayoutResId > 0) {
+            props["source"] = resToString(view.context, view.sourceLayoutResId)
         }
 
         props["rect"] = Rect(view.left, view.top, view.right, view.bottom)
