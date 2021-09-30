@@ -9,8 +9,8 @@ import com.yy.mobile.whisper.Output
  * @author YvesCheung
  * 2021/1/4
  */
-open class FrameLayoutParamsPropertiesParser(lp: FrameLayout.LayoutParams) :
-    LayoutParamsPropertiesParser<FrameLayout.LayoutParams>(lp) {
+open class FrameLayoutParamsPropertiesParser<P : FrameLayout.LayoutParams>(lp: P) :
+    MarginLayoutParamsPropertiesParser<P>(lp) {
 
     override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)

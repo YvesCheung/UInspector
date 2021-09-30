@@ -6,6 +6,8 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.appbar.AppBarLayout
 import com.pitaya.mobile.uinspector.impl.UInspectorDefaultPluginService.Companion.PLUGIN_KEY
 import com.pitaya.mobile.uinspector.properties.PropertiesParser
 import com.pitaya.mobile.uinspector.properties.layoutParam.LayoutParamsPropertiesPlugin
@@ -26,6 +28,10 @@ class UInspectorDefaultLayoutParamsPropertiesPlugin : LayoutParamsPropertiesPlug
                 FrameLayoutParamsPropertiesParser(lp)
             is RelativeLayout.LayoutParams ->
                 RelativeLayoutParamsPropertiesParser(view, lp)
+            is CoordinatorLayout.LayoutParams ->
+                CoordinatorLayoutParamsPropertiesParser(view, lp)
+            is AppBarLayout.LayoutParams ->
+                AppBarLayoutParamsPropertiesParser(view, lp)
             else -> LayoutParamsPropertiesParser(lp)
         }
     }
