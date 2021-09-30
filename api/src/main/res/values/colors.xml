@@ -2,5 +2,7 @@
 <resources>
     <color name="uinspector_primary_color">#66B3FF</color>
 
+    <color name="uinspector_error_color">@android:color/holo_red_light</color>
+
     <color name="uinspector_view_layout_source_color">	#97FFFF</color>
 </resources>

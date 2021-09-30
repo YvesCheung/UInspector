@@ -1,6 +1,5 @@
 package com.huya.mobile.uinspector.ui.panel.popup
 
-import android.graphics.Color
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.Gravity.BOTTOM
@@ -11,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.huya.mobile.uinspector.R
@@ -121,7 +121,12 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
                     } catch (e: Throwable) {
                         TextView(container.context).apply {
                             textSize = 16f
-                            setTextColor(Color.RED)
+                            setTextColor(
+                                ContextCompat.getColor(
+                                    container.context,
+                                    R.color.uinspector_error_color
+                                )
+                            )
                             setPadding(8.dpTopx, 8.dpTopx, 8.dpTopx, 0)
                             isSingleLine = false
                             movementMethod = ScrollingMovementMethod()
