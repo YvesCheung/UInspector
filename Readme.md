@@ -46,6 +46,13 @@ dependencies {
     ...
     // debugImplementation because Uinspector should only run in debug builds.
     debugImplementation 'com.github.YvesCheung.UInspector:Uinspector:x.y.z'
+    
+    // optional integration library
+    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-viewmodel:x.y.z"
+    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-fresco:x.y.z"
+    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-glide:x.y.z"
+    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-multitype:x.y.z"
+    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-lottie:x.y.z"
 }
 ```
 > x.y.z replace with [![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector)
