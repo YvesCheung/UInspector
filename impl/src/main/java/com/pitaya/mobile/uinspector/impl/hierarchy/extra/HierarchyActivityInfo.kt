@@ -4,6 +4,7 @@ import android.app.Activity
 import android.text.SpannableStringBuilder
 import android.view.View
 import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfo
+import com.pitaya.mobile.uinspector.util.canonicalName
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.withColor
 
@@ -17,7 +18,7 @@ open class HierarchyActivityInfo(private val activity: Activity) : HierarchyExtr
         if (index == 0) {
             s.withColor(activity) {
                 newLine(0) {
-                    append(activity::class.java.canonicalName ?: activity::class.java.name)
+                    append(activity.canonicalName)
                 }
             }
         }

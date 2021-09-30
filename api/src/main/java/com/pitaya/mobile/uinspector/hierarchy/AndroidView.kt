@@ -4,6 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
 import com.pitaya.mobile.uinspector.util.idToString
+import com.pitaya.mobile.uinspector.util.simpleName
 import com.yy.mobile.whisper.NeedError
 
 /**
@@ -17,7 +18,7 @@ open class AndroidView
 constructor(val view: View) : Layer {
 
     override val name: CharSequence
-        get() = view::class.java.simpleName.ifBlank { view::class.java.name }
+        get() = view.simpleName
 
     override val id: CharSequence?
         get() = if (view.id > 0) idToString(view.context, view.id) else null

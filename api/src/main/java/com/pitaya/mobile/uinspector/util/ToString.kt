@@ -155,3 +155,25 @@ fun gravityToString(gravity: Int): String {
 fun CharSequence?.quote(): CharSequence? {
     return if (this != null) "\"$this\"" else this
 }
+
+val Any?.canonicalName: String
+    get() =
+        if (this == null) "null" else {
+            val cn = this::class.java.canonicalName
+            if (cn.isNullOrBlank()) {
+                this::class.java.name
+            } else {
+                cn
+            }
+        }
+
+val Any?.simpleName: String
+    get() =
+        if (this == null) "null" else {
+            val cn = this::class.java.simpleName
+            if (cn.isNullOrBlank()) {
+                this::class.java.name
+            } else {
+                cn
+            }
+        }

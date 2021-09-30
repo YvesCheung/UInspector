@@ -7,6 +7,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
 import com.pitaya.mobile.uinspector.util.gravityToString
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.linkToView
+import com.pitaya.mobile.uinspector.util.canonicalName
 import com.yy.mobile.whisper.Output
 
 /**
@@ -21,8 +22,7 @@ open class CoordinatorLayoutParamsPropertiesParser<P : LayoutParams>(val view: V
 
         val behavior = lp.behavior
         if (behavior != null) {
-            props["behavior"] =
-                behavior::class.java.canonicalName ?: behavior::class.java.name
+            props["behavior"] = behavior.canonicalName
         }
 
         if (lp.gravity != NO_GRAVITY) {

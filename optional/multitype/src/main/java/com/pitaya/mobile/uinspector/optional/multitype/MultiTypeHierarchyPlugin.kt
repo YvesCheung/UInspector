@@ -11,6 +11,7 @@ import com.pitaya.mobile.uinspector.optional.multitype.UInspectorMultiTypeServic
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.withBold
 import com.pitaya.mobile.uinspector.util.withColor
+import com.pitaya.mobile.uinspector.util.canonicalName
 import me.drakeet.multitype.MultiTypeAdapter
 
 /**
@@ -39,10 +40,7 @@ class MultiTypeHierarchyPlugin(val context: Context) : HierarchyExtraInfoPlugin 
                     s.withColor(context) {
                         withBold {
                             newLine(index) {
-                                append(
-                                    viewBinder::class.java.canonicalName
-                                        ?: viewBinder::class.java.name
-                                )
+                                append(viewBinder.canonicalName)
                             }
                         }
                     }

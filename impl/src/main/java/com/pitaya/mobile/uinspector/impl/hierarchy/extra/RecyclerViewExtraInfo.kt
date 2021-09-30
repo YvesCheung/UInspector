@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfo
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.withColor
+import com.pitaya.mobile.uinspector.util.canonicalName
 
 /**
  * @author YvesCheung
@@ -20,7 +21,7 @@ open class RecyclerViewExtraInfo(private val context: Context) : HierarchyExtraI
             if (adapter != null) {
                 s.withColor(context) {
                     newLine(index) {
-                        append(adapter::class.java.canonicalName ?: adapter::class.java.name)
+                        append(adapter.canonicalName)
                     }
                 }
             }
