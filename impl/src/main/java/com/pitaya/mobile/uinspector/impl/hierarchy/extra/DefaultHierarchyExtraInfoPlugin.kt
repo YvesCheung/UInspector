@@ -20,7 +20,7 @@ class DefaultHierarchyExtraInfoPlugin : HierarchyExtraInfoPlugin {
             RecyclerViewExtraInfo(activity)
         )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            extraInfo += TargetViewSourceLayoutIdInfo(activity, targetView)
+            extraInfo += TargetViewSourceLayoutIdInfo(activity)
         }
         return extraInfo
     }
