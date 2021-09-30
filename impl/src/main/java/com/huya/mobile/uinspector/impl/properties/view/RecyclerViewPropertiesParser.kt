@@ -1,6 +1,8 @@
 package com.huya.mobile.uinspector.impl.properties.view
 
 import androidx.recyclerview.widget.RecyclerView
+import com.huya.mobile.uinspector.util.canonicalName
+import com.huya.mobile.uinspector.util.simpleName
 import com.yy.mobile.whisper.Output
 
 /**
@@ -15,19 +17,18 @@ open class RecyclerViewPropertiesParser(view: RecyclerView) :
 
         val lm = view.layoutManager
         if (lm != null) {
-            props["layoutManager"] = lm::class.java.simpleName.ifBlank { lm::class.java.name }
+            props["layoutManager"] = lm.simpleName
         }
 
         val adapter = view.adapter
         if (adapter != null) {
-            props["adapter"] = adapter::class.java.canonicalName ?: adapter::class.java.name
+            props["adapter"] = adapter.canonicalName
         }
 
         if (view.itemDecorationCount > 0) {
             props["itemDecoration"] =
                 (0 until view.itemDecorationCount).joinToString { index ->
-                    val decoration = view.getItemDecorationAt(index)
-                    decoration::class.java.canonicalName ?: decoration::class.java.name
+                    view.getItemDecorationAt(index).canonicalName
                 }
         }
     }

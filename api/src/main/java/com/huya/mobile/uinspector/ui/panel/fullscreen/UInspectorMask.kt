@@ -21,10 +21,7 @@ import com.huya.mobile.uinspector.state.UInspectorTargetViews
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.decoration.ViewDecoration
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorPopupPanelContainerImpl
-import com.huya.mobile.uinspector.util.findRootParent
-import com.huya.mobile.uinspector.util.fromLocation
-import com.huya.mobile.uinspector.util.log
-import com.huya.mobile.uinspector.util.tryGetActivity
+import com.huya.mobile.uinspector.util.*
 
 /**
  * @author YvesCheung
@@ -140,7 +137,7 @@ internal class UInspectorMask(
 
     fun updateTargetViews(views: List<View>) {
         val dumpViews =
-            views.joinToString(" -> ") { view -> view::class.java.simpleName }
+            views.joinToString(" -> ") { view -> view.simpleName }
         log("Targets = $dumpViews")
 
         val state = UInspector.currentState.withLifecycle ?: return

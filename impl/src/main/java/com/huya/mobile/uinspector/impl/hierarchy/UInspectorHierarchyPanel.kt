@@ -47,7 +47,7 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
                     ssb.withBold {
                         withColor(context) {
                             ssb.newLine(index) {
-                                append(view::class.java.simpleName.ifBlank { view::class.java.name })
+                                append(view.simpleName)
                                 if (view.id > 0) {
                                     append("(${idToString(view.context, view.id)})")
                                 }
@@ -56,7 +56,7 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
                     }
                 } else {
                     ssb.newLine(index) {
-                        append(view::class.java.simpleName.ifBlank { view::class.java.name })
+                        append(view.simpleName)
                         if (view.id > 0) {
                             append("(${idToString(view.context, view.id)})")
                         }

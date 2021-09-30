@@ -16,7 +16,7 @@ open class ViewPropertiesParser<T : View>(protected val view: T) {
 
     open fun parse(@Output props: MutableMap<String, Any?>) {
         //todo: Should I just analyze the @InspectableProperty annotation by reflection?
-        props["class"] = view::class.java.simpleName
+        props["class"] = view.simpleName
 
         props["id"] =
             if (view.id <= 0) "NO_ID"

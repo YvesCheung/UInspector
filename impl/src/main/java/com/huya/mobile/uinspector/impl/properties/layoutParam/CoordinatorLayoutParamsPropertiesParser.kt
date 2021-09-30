@@ -4,6 +4,7 @@ import android.view.Gravity.NO_GRAVITY
 import android.view.View
 import android.view.View.NO_ID
 import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
+import com.huya.mobile.uinspector.util.canonicalName
 import com.huya.mobile.uinspector.util.gravityToString
 import com.huya.mobile.uinspector.util.idToString
 import com.huya.mobile.uinspector.util.linkToView
@@ -21,8 +22,7 @@ open class CoordinatorLayoutParamsPropertiesParser<P : LayoutParams>(val view: V
 
         val behavior = lp.behavior
         if (behavior != null) {
-            props["behavior"] =
-                behavior::class.java.canonicalName ?: behavior::class.java.name
+            props["behavior"] = behavior.canonicalName
         }
 
         if (lp.gravity != NO_GRAVITY) {

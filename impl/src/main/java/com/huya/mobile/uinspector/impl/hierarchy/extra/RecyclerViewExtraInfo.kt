@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.SpannableStringBuilder
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.huya.mobile.uinspector.util.canonicalName
 import com.huya.mobile.uinspector.util.newLine
 import com.huya.mobile.uinspector.util.withColor
 
@@ -19,7 +20,7 @@ open class RecyclerViewExtraInfo(private val context: Context) : HierarchyExtraI
             if (adapter != null) {
                 s.withColor(context) {
                     newLine(index) {
-                        append(adapter::class.java.canonicalName ?: adapter::class.java.name)
+                        append(adapter.canonicalName)
                     }
                 }
             }

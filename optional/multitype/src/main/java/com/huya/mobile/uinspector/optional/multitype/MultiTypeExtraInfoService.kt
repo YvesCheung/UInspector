@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.auto.service.AutoService
 import com.huya.mobile.uinspector.impl.hierarchy.extra.HierarchyExtraInfo
 import com.huya.mobile.uinspector.impl.hierarchy.extra.HierarchyExtraInfoService
+import com.huya.mobile.uinspector.util.canonicalName
 import com.huya.mobile.uinspector.util.newLine
 import com.huya.mobile.uinspector.util.withBold
 import com.huya.mobile.uinspector.util.withColor
@@ -38,10 +39,7 @@ class MultiTypeExtraInfoService : HierarchyExtraInfoService {
                     s.withColor(context) {
                         withBold {
                             newLine(index) {
-                                append(
-                                    viewBinder::class.java.canonicalName
-                                        ?: viewBinder::class.java.name
-                                )
+                                append(viewBinder.canonicalName)
                             }
                         }
                     }

@@ -22,6 +22,7 @@ import com.huya.mobile.uinspector.impl.utils.dpToPx
 import com.huya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.huya.mobile.uinspector.util.idToString
+import com.huya.mobile.uinspector.util.simpleName
 import com.huya.mobile.uinspector.util.visibilityToString
 import kotlinx.android.synthetic.main.uinspector_panel_targets.view.*
 import kotlinx.android.synthetic.main.uinspector_view_list_item.view.*
@@ -121,7 +122,7 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
         override fun onBindViewHolder(holder: VH, position: Int) {
             val ctx = holder.itemView.context
             val (target, index, color) = views[position]
-            val name = StringBuilder(target::class.java.simpleName)
+            val name = StringBuilder(target.simpleName)
             if (target.id > 0) {
                 name.append("(${idToString(ctx, target.id)})")
             }

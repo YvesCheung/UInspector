@@ -3,6 +3,7 @@ package com.huya.mobile.uinspector.impl.properties.layoutParam
 import android.view.View
 import com.google.android.material.appbar.AppBarLayout.LayoutParams
 import com.google.android.material.appbar.AppBarLayout.LayoutParams.*
+import com.huya.mobile.uinspector.util.canonicalName
 import com.yy.mobile.whisper.Output
 
 /**
@@ -31,8 +32,7 @@ open class AppBarLayoutParamsPropertiesParser<P : LayoutParams>(val view: View, 
 
         val interpolator = lp.scrollInterpolator
         if (interpolator != null) {
-            props["scrollInterpolator"] =
-                interpolator::class.java.canonicalName ?: interpolator::class.java.name
+            props["scrollInterpolator"] = interpolator.canonicalName
         }
     }
 
