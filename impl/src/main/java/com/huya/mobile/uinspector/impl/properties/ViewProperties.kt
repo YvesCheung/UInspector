@@ -4,12 +4,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.AppBarLayout
 import com.huya.mobile.uinspector.impl.properties.layoutParam.*
 import com.huya.mobile.uinspector.impl.properties.view.*
 import com.huya.mobile.uinspector.util.loadService
-import java.util.*
-import kotlin.collections.LinkedHashMap
 
 /**
  * @author YvesCheung
@@ -75,6 +75,10 @@ class ViewProperties(
                     FrameLayoutParamsPropertiesParser(lp)
                 is RelativeLayout.LayoutParams ->
                     RelativeLayoutParamsPropertiesParser(view, lp)
+                is CoordinatorLayout.LayoutParams ->
+                    CoordinatorLayoutParamsPropertiesParser(view, lp)
+                is AppBarLayout.LayoutParams ->
+                    AppBarLayoutParamsPropertiesParser(view, lp)
                 else -> LayoutParamsPropertiesParser(lp)
             }
         }

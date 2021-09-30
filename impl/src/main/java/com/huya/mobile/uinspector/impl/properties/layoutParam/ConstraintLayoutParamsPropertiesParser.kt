@@ -12,8 +12,8 @@ import com.yy.mobile.whisper.Output
  * @author YvesCheung
  * 2021/1/4
  */
-open class ConstraintLayoutParamsPropertiesParser(val view: View, lp: LayoutParams) :
-    LayoutParamsPropertiesParser<LayoutParams>(lp) {
+open class ConstraintLayoutParamsPropertiesParser<P : LayoutParams>(val view: View, lp: P) :
+    MarginLayoutParamsPropertiesParser<P>(lp) {
 
     override fun parse(@Output props: MutableMap<String, Any?>) {
         super.parse(props)
