@@ -38,7 +38,8 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
     override fun show(anchorView: Layer) {
         dismiss()
         val childrenPanel: List<UInspectorChildPanel> =
-            UInspector.plugins[UInspectorChildPanelPlugin::class.java].flatMap { it.createPanels() }
+            UInspector.plugins[UInspectorChildPanelPlugin::class.java]
+                .flatMap { it.createPanels() }.sortedBy { it.priority }
         if (childrenPanel.isNotEmpty()) {
             popupPanel = UInspectorPopupPanel(
                 LayoutInflater.from(parent.context)
