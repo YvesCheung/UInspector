@@ -1,4 +1,4 @@
-package com.huya.mobile.uinspector.optional.viewmodel
+package com.pitaya.mobile.uinspector.optional.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,13 +8,14 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreAccessor
 import androidx.lifecycle.ViewModelStoreOwner
-import com.huya.mobile.uinspector.UInspector
-import com.huya.mobile.uinspector.hierarchy.FragmentsFinder
-import com.huya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
-import com.huya.mobile.uinspector.util.canonicalName
-import com.huya.mobile.uinspector.util.newLine
-import com.huya.mobile.uinspector.util.withBold
-import com.huya.mobile.uinspector.util.withColor
+import com.pitaya.mobile.uinspector.UInspector
+import com.pitaya.mobile.uinspector.hierarchy.AndroidView
+import com.pitaya.mobile.uinspector.hierarchy.FragmentsFinder
+import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
+import com.pitaya.mobile.uinspector.util.canonicalName
+import com.pitaya.mobile.uinspector.util.newLine
+import com.pitaya.mobile.uinspector.util.withBold
+import com.pitaya.mobile.uinspector.util.withColor
 import kotlinx.android.synthetic.main.uinspector_panel_viewmodel.view.*
 
 /**
@@ -57,7 +58,8 @@ class UInspectorViewModelPanel(override val priority: Int) : UInspectorChildPane
             }
 
             val fragments = FragmentsFinder.findFragments(activity)
-            for (view in hierarchy) {
+            for (layer in hierarchy) {
+                val view = (layer as? AndroidView)?.view ?: continue
                 val fragment = fragments[view] ?: continue
                 val viewModels = tryGetViewModels(fragment)
                 if (viewModels.isNotEmpty()) {
