@@ -51,4 +51,5 @@ dependencies {
     debugImplementation project(':Uinspector-optional-fresco')
     debugImplementation project(':Uinspector-optional-lottie')
     debugImplementation project(':Uinspector-optional-multitype')
+    debugImplementation project(':Uinspector-optional-viewmodel')
 }

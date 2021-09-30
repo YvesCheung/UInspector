@@ -3,7 +3,7 @@ project(":Uinspector").projectDir = file("./impl")
 include ':Uinspector-api'
 project(":Uinspector-api").projectDir = file("./api")
 
-def optionalProjects = ['autoinstall', 'glide', 'fresco', 'lottie', 'multitype']
+def optionalProjects = ['autoinstall', 'viewmodel', 'glide', 'fresco', 'lottie', 'multitype']
 optionalProjects.forEach { path ->
     include ":Uinspector-optional-$path"
     project(":Uinspector-optional-$path").projectDir = file("./optional/$path")
