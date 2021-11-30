@@ -2,8 +2,8 @@ package com.pitaya.mobile.uinspector.ui.panel.popup
 
 import android.view.View
 import androidx.annotation.MainThread
+import com.github.yvescheung.whisper.DeprecatedBy
 import com.pitaya.mobile.uinspector.hierarchy.Layer
-import com.yy.mobile.whisper.DeprecatedBy
 
 /**
  * The container of [UInspectorChildPanel]

@@ -1,7 +1,7 @@
 package com.pitaya.mobile.uinspector.impl.properties.view
 
 import android.widget.FrameLayout
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

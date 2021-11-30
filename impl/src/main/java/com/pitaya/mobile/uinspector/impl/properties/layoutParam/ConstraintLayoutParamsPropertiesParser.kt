@@ -6,7 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout.LayoutParams.PARENT_ID
 import com.pitaya.mobile.uinspector.util.dpStr
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.linkToView
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

@@ -7,7 +7,7 @@ import com.airbnb.lottie.LottieDrawable.RESTART
 import com.pitaya.mobile.uinspector.impl.properties.view.ImageViewPropertiesParser
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.quote
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

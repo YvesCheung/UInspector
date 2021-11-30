@@ -6,7 +6,7 @@ import android.widget.RelativeLayout.*
 import androidx.annotation.RequiresApi
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.linkToView
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

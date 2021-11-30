@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.Layer
-import com.yy.mobile.whisper.UseWith
+import com.github.yvescheung.whisper.UseWith
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**

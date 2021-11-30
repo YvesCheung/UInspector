@@ -2,7 +2,7 @@ package com.pitaya.mobile.uinspector.optional.compose.properties
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.InspectableValue
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

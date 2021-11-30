@@ -9,7 +9,7 @@ import com.bumptech.glide.request.*
 import com.pitaya.mobile.uinspector.util.drawableToString
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.link
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 import java.io.File
 import java.net.URI
 import java.net.URL

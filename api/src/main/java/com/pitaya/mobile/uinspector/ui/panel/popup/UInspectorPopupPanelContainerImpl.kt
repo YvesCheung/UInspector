@@ -19,7 +19,7 @@ import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.hierarchy.LayerFactoryPlugin
 import com.pitaya.mobile.uinspector.util.dpTopx
 import com.pitaya.mobile.uinspector.util.log
-import com.yy.mobile.whisper.IntDef
+import com.github.yvescheung.whisper.IntDef
 import kotlinx.android.synthetic.main.uinspector_popup_panel_container.view.*
 
 /**

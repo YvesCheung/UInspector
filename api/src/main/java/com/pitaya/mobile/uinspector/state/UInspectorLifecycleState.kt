@@ -12,8 +12,8 @@ import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorDialogFragment
 import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFragment
 import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
 import com.pitaya.mobile.uinspector.util.log
-import com.yy.mobile.whisper.NotThreadSafe
-import com.yy.mobile.whisper.UseWith
+import com.github.yvescheung.whisper.NotThreadSafe
+import com.github.yvescheung.whisper.UseWith
 
 /**
  * Store the information which is bound to the lifecycle of [activity]

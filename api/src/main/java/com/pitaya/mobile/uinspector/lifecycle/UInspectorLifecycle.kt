@@ -12,8 +12,8 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.pitaya.mobile.uinspector.UInspector
 import com.pitaya.mobile.uinspector.state.UInspectorLifecycleState
 import com.pitaya.mobile.uinspector.util.log
-import com.yy.mobile.whisper.NotThreadSafe
-import com.yy.mobile.whisper.UseWith
+import com.github.yvescheung.whisper.NotThreadSafe
+import com.github.yvescheung.whisper.UseWith
 
 
 @Suppress("MemberVisibilityCanBePrivate")

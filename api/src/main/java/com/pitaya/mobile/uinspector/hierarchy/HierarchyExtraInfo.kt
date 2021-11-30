@@ -4,7 +4,7 @@ import android.text.SpannableStringBuilder
 import android.view.View
 import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.Layer
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @see HierarchyExtraInfoPlugin

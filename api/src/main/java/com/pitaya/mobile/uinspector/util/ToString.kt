@@ -13,7 +13,7 @@ import android.view.View
 import androidx.annotation.AnyRes
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
-import com.yy.mobile.whisper.IntDef
+import com.github.yvescheung.whisper.IntDef
 import kotlin.math.roundToInt
 
 /**

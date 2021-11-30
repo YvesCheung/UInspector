@@ -3,7 +3,7 @@ package com.pitaya.mobile.uinspector.impl.properties.layoutParam
 import android.widget.FrameLayout
 import android.widget.FrameLayout.LayoutParams.UNSPECIFIED_GRAVITY
 import com.pitaya.mobile.uinspector.util.gravityToString
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

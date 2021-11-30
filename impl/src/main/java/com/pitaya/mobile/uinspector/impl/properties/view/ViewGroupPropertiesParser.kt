@@ -2,7 +2,7 @@ package com.pitaya.mobile.uinspector.impl.properties.view
 
 import android.os.Build
 import android.view.ViewGroup
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

@@ -25,7 +25,7 @@ Using Java SPI mechanism, You can intergrate your custom `view`/`LayoutParams` p
     ```kotlin
     import android.view.View
     import com.pitaya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
-    import com.yy.mobile.whisper.Output
+    import com.github.yvescheung.whisper.Output
 
     class YourCustomViewParser(view: YourCustomView) : ViewPropertiesParser<YourCustomView>(view) {
 

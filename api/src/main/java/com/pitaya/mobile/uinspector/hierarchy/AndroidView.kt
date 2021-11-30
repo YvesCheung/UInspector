@@ -3,9 +3,9 @@ package com.pitaya.mobile.uinspector.hierarchy
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
+import com.github.yvescheung.whisper.NeedError
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.simpleName
-import com.yy.mobile.whisper.NeedError
 
 /**
  * @see LayerFactoryPlugin.create

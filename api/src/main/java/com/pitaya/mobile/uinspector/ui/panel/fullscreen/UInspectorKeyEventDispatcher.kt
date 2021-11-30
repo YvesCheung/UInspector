@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.view.KeyEvent
 import androidx.annotation.StyleRes
-import com.yy.mobile.whisper.Input
+import com.github.yvescheung.whisper.Input
 
 /**
  * @author YvesCheung

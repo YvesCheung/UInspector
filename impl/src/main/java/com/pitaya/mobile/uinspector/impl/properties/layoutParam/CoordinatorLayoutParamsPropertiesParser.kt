@@ -8,7 +8,7 @@ import com.pitaya.mobile.uinspector.util.gravityToString
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.linkToView
 import com.pitaya.mobile.uinspector.util.canonicalName
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

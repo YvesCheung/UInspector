@@ -4,7 +4,7 @@ import android.view.View
 import com.google.android.material.appbar.AppBarLayout.LayoutParams
 import com.google.android.material.appbar.AppBarLayout.LayoutParams.*
 import com.pitaya.mobile.uinspector.util.canonicalName
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

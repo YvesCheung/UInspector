@@ -4,7 +4,7 @@ import android.os.Build
 import android.view.Gravity
 import android.widget.RelativeLayout
 import com.pitaya.mobile.uinspector.util.gravityToString
-import com.yy.mobile.whisper.Output
+import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung
