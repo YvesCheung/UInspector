@@ -8,5 +8,10 @@ import com.github.yvescheung.whisper.Output
  */
 interface ComposePropertiesParser {
 
+    /**
+     * The higher the priority, the earlier to parse
+     */
+    val priority: Int
+
     fun parse(@Output props: MutableMap<String, Any?>)
 }

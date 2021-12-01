@@ -14,14 +14,11 @@ class ComposeProperties(
 
     init {
         val factories = UInspector.plugins[ComposePropertiesParserFactory::class.java]
-//        info.modifiers.forEach { modifier ->
-//            for (factory in factories) {
-//                val parser = factory.tryCreate(modifier)
-//                if (parser != null) {
-//                    parser.parse(actual)
-//                    break
-//                }
-//            }
-//        }
+        val parsers = factories
+            .flatMap { it.tryCreate(view) }
+            .sortedByDescending { it.priority }
+        for (parser in parsers) {
+            parser.parse(actual)
+        }
     }
 }

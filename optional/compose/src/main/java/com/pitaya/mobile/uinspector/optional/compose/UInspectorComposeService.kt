@@ -6,8 +6,8 @@ import com.pitaya.mobile.uinspector.hierarchy.HitTestFactoryPlugin
 import com.pitaya.mobile.uinspector.hierarchy.LayerFactoryPlugin
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeLayerFactoryPlugin
 import com.pitaya.mobile.uinspector.optional.compose.properties.ComposePropertiesParserFactory
-import com.pitaya.mobile.uinspector.optional.compose.properties.DefaultComposePropertiesParserFactory
-import com.pitaya.mobile.uinspector.optional.compose.properties.UInspectorComposeChildPanelPlugin
+import com.pitaya.mobile.uinspector.optional.compose.properties.DefaultComposeModifiersParserFactory
+import com.pitaya.mobile.uinspector.optional.compose.panel.UInspectorComposeChildPanelPlugin
 import com.pitaya.mobile.uinspector.optional.compose.touch.ComposeHitTestFactoryPlugin
 import com.pitaya.mobile.uinspector.plugins.UInspectorPluginService
 import com.pitaya.mobile.uinspector.plugins.UInspectorPlugins
@@ -24,7 +24,8 @@ class UInspectorComposeService : UInspectorPluginService {
         plugins.prepend(UInspectorChildPanelPlugin::class.java, UInspectorComposeChildPanelPlugin())
         plugins.prepend(LayerFactoryPlugin::class.java, ComposeLayerFactoryPlugin())
         plugins.prepend(HitTestFactoryPlugin::class.java, ComposeHitTestFactoryPlugin())
-        plugins.append(ComposePropertiesParserFactory::class.java, DefaultComposePropertiesParserFactory())
+
+        plugins.append(ComposePropertiesParserFactory::class.java, DefaultComposeModifiersParserFactory())
     }
 
     companion object {

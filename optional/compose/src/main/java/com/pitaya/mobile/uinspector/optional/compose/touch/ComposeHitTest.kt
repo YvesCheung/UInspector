@@ -28,9 +28,14 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
                         return childResult
                     }
                 } else if (child is ComposeView) {
-                    if (child.isSubComposition || event in child) {
+                    if (child.isSubComposition) {
                         val continueFind = findNextTarget(event, child)
-                        return continueFind ?: child
+                        if (continueFind != null) {
+                            return continueFind
+                        }
+                    }
+                    if (event in child) {
+                        return child
                     }
                 }
             }

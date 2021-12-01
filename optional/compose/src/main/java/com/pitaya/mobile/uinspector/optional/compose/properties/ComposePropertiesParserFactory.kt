@@ -1,6 +1,6 @@
 package com.pitaya.mobile.uinspector.optional.compose.properties
 
-import androidx.compose.ui.Modifier
+import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 import com.pitaya.mobile.uinspector.plugins.UInspectorPlugin
 
 /**
@@ -9,5 +9,5 @@ import com.pitaya.mobile.uinspector.plugins.UInspectorPlugin
  */
 interface ComposePropertiesParserFactory : UInspectorPlugin {
 
-    fun tryCreate(modifier: Modifier): ComposePropertiesParser?
+    fun tryCreate(view: ComposeView): List<ComposePropertiesParser>
 }
