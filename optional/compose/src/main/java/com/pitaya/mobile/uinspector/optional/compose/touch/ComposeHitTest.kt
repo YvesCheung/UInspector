@@ -28,17 +28,10 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
                         return childResult
                     }
                 } else if (child is ComposeView) {
-//                    val node = child.layoutInfo
-//                    if (event in node) {
-//                        return child
-//                    }
-
-//                    if (node == EMPTY) {
-//                        val continueFind = findNextTarget(event, child)
-//                        if (continueFind != null) {
-//                            return continueFind
-//                        }
-//                    }
+                    if (child.isSubComposition || event in child) {
+                        val continueFind = findNextTarget(event, child)
+                        return continueFind ?: child
+                    }
                 }
             }
         }
@@ -54,9 +47,13 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
         motionEvent.getPointerCoords(0, pointerCoords)
         return Offset(pointerCoords.x, pointerCoords.y)
     }
-}
 
-//operator fun InspectorNode.contains(position: MotionEvent): Boolean {
+    operator fun ComposeView.contains(position: MotionEvent): Boolean {
+        return position.x < this.bounds.left + this.width && position.x > this.bounds.left &&
+            position.y > this.bounds.top && position.y < this.bounds.top + this.height
+    }
+
+    //operator fun InspectorNode.contains(position: MotionEvent): Boolean {
 //    return position.x < this.left + this.width && position.x > this.left &&
 //        position.y < this.top - this.height && position.y > this.top
 //}
@@ -65,3 +62,5 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
 //    return position.x < this.right && position.x > this.left &&
 //        position.y < this.bottom && position.y > this.top
 //}
+}
+
