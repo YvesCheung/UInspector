@@ -2,9 +2,9 @@ package com.pitaya.mobile.uinspector.impl.hierarchy.extra
 
 import android.app.Activity
 import android.os.Build
-import android.view.View
 import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfo
 import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfoPlugin
+import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.impl.UInspectorDefaultPluginService.Companion.PLUGIN_KEY
 
 /**
@@ -13,7 +13,7 @@ import com.pitaya.mobile.uinspector.impl.UInspectorDefaultPluginService.Companio
  */
 class DefaultHierarchyExtraInfoPlugin : HierarchyExtraInfoPlugin {
 
-    override fun create(activity: Activity, targetView: View): Set<HierarchyExtraInfo> {
+    override fun create(activity: Activity, targetLayer: Layer): Set<HierarchyExtraInfo> {
         val extraInfo = mutableSetOf(
             HierarchyActivityInfo(activity),
             HierarchyFragmentInfo(activity),
