@@ -1,4 +1,4 @@
-package com.pitaya.mobile.uinspector.optional.compose.properties
+package com.pitaya.mobile.uinspector.optional.compose.panel
 
 import com.pitaya.mobile.uinspector.UInspector
 import com.pitaya.mobile.uinspector.hierarchy.Layer
@@ -6,6 +6,7 @@ import com.pitaya.mobile.uinspector.impl.UInspectorDefaultChildPanelPlugin
 import com.pitaya.mobile.uinspector.impl.hierarchy.UInspectorHierarchyPanel
 import com.pitaya.mobile.uinspector.impl.targets.UInspectorTargetsPanel
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
+import com.pitaya.mobile.uinspector.optional.compose.properties.UInspectorComposePropertiesPanel
 import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 
 /**
