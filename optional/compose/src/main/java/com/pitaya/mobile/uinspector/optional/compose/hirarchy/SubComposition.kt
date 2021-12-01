@@ -1,8 +1,5 @@
 package com.pitaya.mobile.uinspector.optional.compose.hirarchy
 
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.data.SourceLocation
-import androidx.compose.ui.tooling.data.UiToolingDataApi
 import androidx.compose.ui.unit.IntRect
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 
@@ -10,15 +7,12 @@ import com.pitaya.mobile.uinspector.hierarchy.Layer
  * @author YvesCheung
  * 2021/1/29
  */
-@OptIn(UiToolingDataApi::class)
-data class ComposeView(
+data class SubComposition(
     override val parent: Layer?,
     override val id: CharSequence,
     override val name: CharSequence,
-    override val children: Sequence<Layer>,
     val bounds: IntRect,
-    val modifiers: List<Modifier>,
-    val location: SourceLocation?
+    override val children: Sequence<Layer>,
 ) : Layer {
 
     override val width = bounds.run { right - left }

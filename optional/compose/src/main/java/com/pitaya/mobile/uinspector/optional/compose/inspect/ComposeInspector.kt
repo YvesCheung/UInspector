@@ -42,27 +42,6 @@ internal object ComposeInspector {
         }
     }
 
-    private fun toScannableView(info: ComposeLayoutInfo): Layer =
-        when (info) {
-            is ComposeLayoutInfo.LayoutNodeInfo -> ComposeView(
-                parent = null,
-                name = info.name,
-                bounds = info.bounds,
-                modifiers = info.modifiers,
-                children = info.children.map(::toScannableView),
-                isSubComposition = false
-            )
-            is ComposeLayoutInfo.SubcompositionInfo -> ComposeView(
-                parent = null,
-                name = info.name,
-                bounds = info.bounds,
-                children = info.children.map(::toScannableView),
-                modifiers = emptyList(),
-                isSubComposition = true
-            )
-            is ComposeLayoutInfo.AndroidViewInfo -> AndroidView(info.view)
-        }
-
     /**
      * Tries to extract a list of [ComposeView]s from [composeView], which must be a view for which
      * [mightBeComposeView] is true. Returns the list of views and a boolean indicating whether the
@@ -75,9 +54,7 @@ internal object ComposeInspector {
     private fun getComposeScannableViews(composeView: View): Pair<List<Layer>, Boolean> {
         var linkageError: LinkageError? = null
         val scannableViews = try {
-            tryGetLayoutInfos(composeView)
-                ?.map(::toScannableView)
-                ?.toList()
+            tryGetLayoutInfos(composeView)?.toList()
         } catch (e: LinkageError) {
             // The view looks like an AndroidComposeView, but the Compose code on the classpath is
             // not what we expected – the app is probably using a newer (or older) version of Compose than
@@ -114,7 +91,7 @@ internal object ComposeInspector {
      * Uses reflection to try to pull a `SlotTable` out of [composeView] and render it. If any of the
      * reflection fails, returns false.
      */
-    private fun tryGetLayoutInfos(composeView: View): Sequence<ComposeLayoutInfo>? {
+    private fun tryGetLayoutInfos(composeView: View): Sequence<Layer>? {
         // Any of this reflection code can fail if running with an unsupported version of Compose.
         // Compose doesn't provide a public API for this (yet) because they don't want it to be used in
         // production.
