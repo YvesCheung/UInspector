@@ -24,7 +24,6 @@ class UInspectorComposeService : UInspectorPluginService {
         plugins.prepend(UInspectorChildPanelPlugin::class.java, UInspectorComposeChildPanelPlugin())
         plugins.prepend(LayerFactoryPlugin::class.java, ComposeLayerFactoryPlugin())
         plugins.prepend(HitTestFactoryPlugin::class.java, ComposeHitTestFactoryPlugin())
-
         plugins.append(ComposePropertiesParserFactory::class.java, DefaultComposeModifiersParserFactory())
     }
 

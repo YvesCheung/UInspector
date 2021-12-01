@@ -17,6 +17,37 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/uinspector_compose_padding"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/uinspector_primary_color" />
+
+    <include
+        android:id="@+id/uinspector_compose_padding"
+        layout="@layout/uinspector_view_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/compose_props_list"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        android:id="@+id/uinspector_compose_bound"
+        layout="@layout/uinspector_view_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@+id/uinspector_compose_padding"
+        app:layout_constraintEnd_toEndOf="@+id/uinspector_compose_padding"
+        app:layout_constraintStart_toStartOf="@+id/uinspector_compose_padding"
+        app:layout_constraintTop_toTopOf="@+id/uinspector_compose_padding" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,9 +2,9 @@ package com.pitaya.mobile.uinspector.state
 
 import android.view.View
 import android.view.ViewTreeObserver
+import com.github.yvescheung.whisper.UseWith
 import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.Layer
-import com.github.yvescheung.whisper.UseWith
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
@@ -26,9 +26,7 @@ class UInspectorTargetViews private constructor(
 
     private val onScroll = CopyOnWriteArrayList<Listener>()
 
-    private val target = views.lastOrNull()
-
-    val lastView: View? = (target as? AndroidView)?.view
+    val target: Layer? = views.lastOrNull()
 
     private val onPreDrawDispatcher = ViewTreeObserver.OnPreDrawListener {
         val view = target as? AndroidView

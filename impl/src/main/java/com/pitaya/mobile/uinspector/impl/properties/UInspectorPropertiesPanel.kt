@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pitaya.mobile.uinspector.UInspector
+import com.pitaya.mobile.uinspector.hierarchy.AndroidView
+import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.impl.R
 import com.pitaya.mobile.uinspector.properties.ViewProperties
 import com.pitaya.mobile.uinspector.state.UInspectorTargetViews
@@ -40,7 +42,8 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
 
         val targets =
             UInspector.currentState.withLifecycle?.lastTargetViews
-        val targetView = targets?.lastView
+        val targetLayer: Layer? = targets?.target
+        val targetView = (targetLayer as? AndroidView)?.view
         if (targetView != null) {
 
             root.view_props_list.adapter = ViewPropsAdapter(targetView).also {

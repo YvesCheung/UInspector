@@ -5,6 +5,7 @@ import androidx.compose.ui.tooling.data.SourceLocation
 import androidx.compose.ui.tooling.data.UiToolingDataApi
 import androidx.compose.ui.unit.IntRect
 import com.pitaya.mobile.uinspector.hierarchy.Layer
+import com.pitaya.mobile.uinspector.optional.compose.properties.PaddingModifierParser
 
 /**
  * @author YvesCheung
@@ -20,6 +21,8 @@ data class ComposeView(
     val modifiers: List<Modifier>,
     val location: SourceLocation?
 ) : Layer {
+
+    val padding by lazy(LazyThreadSafetyMode.NONE) { PaddingModifierParser.parse(this) }
 
     override val width = bounds.run { right - left }
 

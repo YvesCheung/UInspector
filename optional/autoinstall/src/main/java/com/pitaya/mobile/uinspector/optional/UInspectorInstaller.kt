@@ -1,5 +1,6 @@
 package com.pitaya.mobile.uinspector.optional
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
@@ -43,6 +44,7 @@ class UInspectorInstaller : Initializer<UInspector> {
     /**
      * @return 当前进程名
      */
+    @SuppressLint("DiscouragedPrivateApi", "PrivateApi")
     private fun getCurrentProcessName(context: Context): String? {
 
         fun getCurrentProcessNameByActivityThread(): String? {

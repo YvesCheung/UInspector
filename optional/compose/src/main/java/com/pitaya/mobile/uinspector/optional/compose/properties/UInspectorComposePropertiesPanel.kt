@@ -19,7 +19,9 @@ import com.pitaya.mobile.uinspector.optional.compose.R
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 import com.pitaya.mobile.uinspector.state.UInspectorTargetViews
 import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
+import com.pitaya.mobile.uinspector.util.dpStr
 import kotlinx.android.synthetic.main.uinspector_panel_compose_properties.view.*
+import kotlin.math.roundToInt
 
 /**
  * @author YvesCheung
@@ -29,17 +31,38 @@ class UInspectorComposePropertiesPanel(override val priority: Int) : UInspectorC
 
     override val title = "Properties"
 
+    @SuppressLint("InflateParams", "SetTextI18n")
     override fun onCreateView(context: Context): View {
         val target =
             UInspector.currentState.withLifecycle?.lastTargetViews?.lastOrNull()
+        val root = LayoutInflater.from(context)
+            .inflate(R.layout.uinspector_panel_compose_properties, null)
         if (target is ComposeView) {
-            val root = LayoutInflater.from(context)
-                .inflate(R.layout.uinspector_panel_compose_properties, null)
             root.compose_props_list.adapter = ComposePropsAdapter(target)
-            return root
-        } else {
-            throw AssertionError("Target must be ComposeView!")
+
+            root.uinspector_compose_padding.let {
+                it.setBackgroundColor(Color.parseColor("#ACD6FF"))
+                it.findViewById<TextView>(R.id.view_prop).text = "padding"
+
+                it.findViewById<TextView>(R.id.view_top).text =
+                    "${target.padding.top.roundToInt()}dp"
+                it.findViewById<TextView>(R.id.view_bottom).text =
+                    "${target.padding.bottom.roundToInt()}dp"
+                it.findViewById<TextView>(R.id.view_left).text =
+                    if (target.padding.rtlAware) "${target.padding.end.roundToInt()}dp"
+                    else "${target.padding.start.roundToInt()}dp"
+                it.findViewById<TextView>(R.id.view_right).text =
+                    if (target.padding.rtlAware) "${target.padding.start.roundToInt()}dp"
+                    else "${target.padding.end.roundToInt()}dp"
+            }
+
+            root.uinspector_compose_bound.let {
+                it.setBackgroundColor(Color.parseColor("#FFFFCE"))
+                it.findViewById<TextView>(R.id.view_top).text =
+                    target.width.dpStr + "\nX\n" + target.height.dpStr
+            }
         }
+        return root
     }
 
     private class ComposePropsAdapter(val target: ComposeView) :
