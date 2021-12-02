@@ -116,7 +116,9 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
             val ctx = holder.itemView.context
             val (target, index, color) = views[position]
             val name = StringBuilder(target.name)
-            target.id?.let { id -> name.append("(").append(id).append(")") }
+            if (!target.id.isNullOrBlank()) {
+                name.append("(").append(target.id).append(")")
+            }
             if (index >= 0) {
                 name.append("(index $index)")
             }

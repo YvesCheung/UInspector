@@ -2,9 +2,11 @@ package com.pitaya.mobile.uinspector.optional.compose
 
 import android.content.Context
 import com.google.auto.service.AutoService
+import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfoPlugin
 import com.pitaya.mobile.uinspector.hierarchy.HitTestFactoryPlugin
 import com.pitaya.mobile.uinspector.hierarchy.LayerFactoryPlugin
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeLayerFactoryPlugin
+import com.pitaya.mobile.uinspector.optional.compose.hirarchy.extra.ComposeHierarchyExtraInfoPlugin
 import com.pitaya.mobile.uinspector.optional.compose.properties.ComposePropertiesParserFactory
 import com.pitaya.mobile.uinspector.optional.compose.properties.DefaultComposeModifiersParserFactory
 import com.pitaya.mobile.uinspector.optional.compose.panel.UInspectorComposeChildPanelPlugin
@@ -22,9 +24,10 @@ class UInspectorComposeService : UInspectorPluginService {
 
     override fun onCreate(context: Context, plugins: UInspectorPlugins) {
         plugins.prepend(UInspectorChildPanelPlugin::class.java, UInspectorComposeChildPanelPlugin())
-        plugins.prepend(LayerFactoryPlugin::class.java, ComposeLayerFactoryPlugin())
-        plugins.prepend(HitTestFactoryPlugin::class.java, ComposeHitTestFactoryPlugin())
+        plugins.append(LayerFactoryPlugin::class.java, ComposeLayerFactoryPlugin())
+        plugins.append(HitTestFactoryPlugin::class.java, ComposeHitTestFactoryPlugin())
         plugins.append(ComposePropertiesParserFactory::class.java, DefaultComposeModifiersParserFactory())
+        plugins.append(HierarchyExtraInfoPlugin::class.java, ComposeHierarchyExtraInfoPlugin())
     }
 
     companion object {

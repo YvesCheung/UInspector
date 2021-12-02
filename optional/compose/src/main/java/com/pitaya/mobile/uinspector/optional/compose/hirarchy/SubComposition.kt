@@ -12,14 +12,18 @@ import com.pitaya.mobile.uinspector.optional.compose.inspect.parseGroupToLayer
  * @author YvesCheung
  * 2021/1/29
  */
-@OptIn(InternalComposeApi::class)
-data class SubComposition(
-    override val parent: Layer?,
-    override val id: CharSequence,
-    override val name: CharSequence,
+@OptIn(UiToolingDataApi::class)
+class SubComposition(
+    override val id: CharSequence?,
     val bounds: IntRect,
     private val composer: Composer
 ) : Layer {
+
+    override var parent: Layer? = null
+        internal set
+
+    override var name: CharSequence = "SubComposition"
+        internal set
 
     override val width = bounds.run { right - left }
 
@@ -27,7 +31,10 @@ data class SubComposition(
 
     override fun getLocation(): IntArray = intArrayOf(bounds.left, bounds.top)
 
-    @OptIn(UiToolingDataApi::class)
+    @OptIn(InternalComposeApi::class)
     override val children: Sequence<Layer>
         get() = parseGroupToLayer(composer.compositionData.asTree(), this)
+
+    override fun toString(): String = "SubComposition($name)"
+
 }

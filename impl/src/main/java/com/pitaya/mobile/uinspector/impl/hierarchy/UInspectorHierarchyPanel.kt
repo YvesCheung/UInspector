@@ -51,14 +51,18 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
                         withColor(context) {
                             ssb.newLine(index) {
                                 append(view.name)
-                                view.id?.let { id -> append("(").append(id).append(")") }
+                                if (!view.id.isNullOrBlank()) {
+                                    append("(").append(view.id).append(")")
+                                }
                             }
                         }
                     }
                 } else {
                     ssb.newLine(index) {
                         append(view.name)
-                        view.id?.let { id -> append("(").append(id).append(")") }
+                        if (!view.id.isNullOrBlank()) {
+                            append("(").append(view.id).append(")")
+                        }
                     }
                 }
 
