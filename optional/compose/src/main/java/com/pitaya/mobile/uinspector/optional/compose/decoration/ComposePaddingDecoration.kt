@@ -16,8 +16,9 @@ import kotlin.math.roundToInt
 class ComposePaddingDecoration(val view: ComposeView) : UInspectorDecoration {
 
     override fun draw(canvas: Canvas) {
+        val location = view.getLocation()
         val viewBounds =
-            Rect(view.bounds.left, view.bounds.top, view.bounds.right, view.bounds.bottom)
+            Rect(location[0], location[1], location[0] + view.width, location[1] + view.height)
         val paddingBound = Rect(
             (viewBounds.left - view.padding.left.dpToPx).roundToInt(),
             (viewBounds.top - view.padding.top.dpToPx).roundToInt(),

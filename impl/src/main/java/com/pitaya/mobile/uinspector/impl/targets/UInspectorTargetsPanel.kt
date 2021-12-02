@@ -55,7 +55,7 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
 
             val brothers: List<ViewInfo> =
                 parent?.children?.mapIndexedNotNullTo(mutableListOf()) { index, view ->
-                    if (view !== targetView) ViewInfo(view, index)
+                    if (view != targetView) ViewInfo(view, index)
                     else null
                 } ?: emptyList()
             setupList(root.view_targets_brother_title, root.view_targets_brother, brothers)

@@ -38,7 +38,7 @@ fun parseGroupToLayer(
         // aggregate them somewhat before reporting.
         val subComposition = group.tryParseSubcomposition(parent, name)
         if (subComposition != null) {
-            Log.i("YvesIrr", "parse subComposition $name ${subComposition.toList()}")
+            Log.i("YvesIrr", "parse subComposition $name $codeLocation ${subComposition.toList()}")
             yieldAll(subComposition)
             return@sequence
         }
@@ -60,14 +60,7 @@ fun parseGroupToLayer(
                     "source=${currentLocation?.sourceFile}:${currentLocation?.lineNumber}"
             )
 
-            val location =
-                if (codeLocation == null && !group.name.isNullOrBlank() && currentLocation != null) {
-                    SourceCodeLocation(
-                        currentLocation.sourceFile.orEmpty(),
-                        currentLocation.lineNumber,
-                        currentLocation.offset,
-                    )
-                } else codeLocation
+            val location = codeLocation ?: createCodeLocation(group)
             yieldAll(
                 group.children.asSequence()
                     .flatMap { parseGroupToLayer(it, parent, name, location) } +
@@ -137,7 +130,7 @@ internal fun Group.androidViewChildren(): List<AndroidView> =
  */
 private fun Group.tryParseSubcomposition(
     parent: Layer,
-    name: String,
+    name: String
 ): Sequence<Layer>? {
     if (this.name != "SubcomposeLayout") return null
 
@@ -160,7 +153,7 @@ private fun Group.tryParseSubcomposition(
 
     // We can be pretty confident at this point that this is an actual SubcomposeLayout, so
     // expose its layout node as the parent of all its subcompositions.
-    val subcompositionName = "<subcomposition of ${name}>"
+    val subcompositionName = "$name(SubComposition)"
     subCompositions.forEach { subComposition ->
         subComposition.name = subcompositionName
         subComposition.parent = mainNode

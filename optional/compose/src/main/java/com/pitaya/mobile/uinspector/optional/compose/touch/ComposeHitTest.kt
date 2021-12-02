@@ -35,7 +35,7 @@ class ComposeHitTest(private val delegate: HitTest) : HitTest {
                 } else if (child is SubComposition) {
                     val continueFind = findNextTarget(event, child)
                     if (continueFind != null) {
-                        return continueFind
+                        return child
                     }
                 }
             }
