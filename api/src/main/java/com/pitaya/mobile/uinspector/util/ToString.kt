@@ -20,16 +20,19 @@ import kotlin.math.roundToInt
  * @author YvesCheung
  * 2021/1/11
  */
-internal val Int.dpTopx: Int
+val Int.dpToPx: Int
     get() = (this.toFloat() * Resources.getSystem().displayMetrics.density).toInt()
 
-internal val Int.pxToDp: Int
+val Number.dpToPx: Float
+    get() = this.toFloat() * Resources.getSystem().displayMetrics.density
+
+val Int.pxToDp: Int
     get() = (this.toFloat() / Resources.getSystem().displayMetrics.density).toInt()
 
-internal val Number.pxToDp: Float
+val Number.pxToDp: Float
     get() = this.toFloat() / Resources.getSystem().displayMetrics.density
 
-internal val Int.dpStr: String
+val Int.dpStr: String
     get() = "${pxToDp}dp"
 
 val Number.dpStr: String
@@ -38,7 +41,7 @@ val Number.dpStr: String
 val Int.pxToSp: Int
     get() = (this.toFloat() / Resources.getSystem().displayMetrics.scaledDensity).toInt()
 
-internal val Number.pxToSp: Float
+val Number.pxToSp: Float
     get() = this.toFloat() / Resources.getSystem().displayMetrics.scaledDensity
 
 val Int.spStr: String

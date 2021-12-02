@@ -28,13 +28,19 @@ object PaddingModifierParser {
         return PaddingModifier()
     }
 
+    /**
+     * value in dp
+     */
     data class PaddingModifier(
         val start: Float = 0f,
         val top: Float = 0f,
         val end: Float = 0f,
         val bottom: Float = 0f,
         val rtlAware: Boolean = false
-    )
+    ) {
+        val left: Float = if (rtlAware) end else start
+        val right: Float = if (rtlAware) start else end
+    }
 
     private val PaddingModifierClass by lazy(LazyThreadSafetyMode.NONE) {
         Class.forName("androidx.compose.foundation.layout.PaddingModifier")

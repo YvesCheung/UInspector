@@ -1,10 +1,13 @@
 package com.pitaya.mobile.uinspector.ui.decoration
 
-import android.graphics.*
-import android.os.Build
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
 import android.view.ViewGroup
 import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.Layer
+import com.pitaya.mobile.uinspector.util.difference
 
 /**
  * @author YvesCheung
@@ -56,46 +59,25 @@ open class ViewDecoration(val layer: Layer) : UInspectorDecoration {
         }
     }
 
-    private inline fun Canvas.difference(
-        outRect: Rect,
-        inRect: Rect,
-        operation: Canvas.() -> Unit
-    ) {
-        val c = save()
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                clipRect(outRect)
-                clipOutRect(inRect)
-                operation()
-            } else {
-                clipRect(outRect)
-                clipRect(inRect, Region.Op.DIFFERENCE)
-                operation()
-            }
-        } finally {
-            restoreToCount(c)
-        }
-    }
-
     override fun hashCode(): Int = layer.hashCode()
 
     override fun equals(other: Any?): Boolean = other is ViewDecoration && layer === other.layer
 
     companion object {
 
-        private val boundPaint = Paint().apply {
+        val boundPaint = Paint().apply {
             isAntiAlias = true
             style = Paint.Style.FILL
             color = Color.parseColor("#80FFED97")
         }
 
-        private val paddingPaint = Paint().apply {
+        val paddingPaint = Paint().apply {
             isAntiAlias = true
             style = Paint.Style.FILL
             color = Color.parseColor("#8066B3FF")
         }
 
-        private val marginPaint = Paint().apply {
+        val marginPaint = Paint().apply {
             isAntiAlias = true
             style = Paint.Style.FILL
             color = Color.parseColor("#8093FF93")

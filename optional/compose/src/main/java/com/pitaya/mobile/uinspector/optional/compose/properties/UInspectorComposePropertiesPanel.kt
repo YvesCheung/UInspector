@@ -15,7 +15,9 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.pitaya.mobile.uinspector.UInspector
+import com.pitaya.mobile.uinspector.lifecycle.Disposable
 import com.pitaya.mobile.uinspector.optional.compose.R
+import com.pitaya.mobile.uinspector.optional.compose.decoration.ComposePaddingDecoration
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 import com.pitaya.mobile.uinspector.state.UInspectorTargetViews
 import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
@@ -30,6 +32,8 @@ import kotlin.math.roundToInt
 class UInspectorComposePropertiesPanel(override val priority: Int) : UInspectorChildPanel {
 
     override val title = "Properties"
+
+    private var decorationDisposable: Disposable? = null
 
     @SuppressLint("InflateParams", "SetTextI18n")
     override fun onCreateView(context: Context): View {
@@ -49,11 +53,9 @@ class UInspectorComposePropertiesPanel(override val priority: Int) : UInspectorC
                 it.findViewById<TextView>(R.id.view_bottom).text =
                     "${target.padding.bottom.roundToInt()}dp"
                 it.findViewById<TextView>(R.id.view_left).text =
-                    if (target.padding.rtlAware) "${target.padding.end.roundToInt()}dp"
-                    else "${target.padding.start.roundToInt()}dp"
+                    "${target.padding.left.roundToInt()}dp"
                 it.findViewById<TextView>(R.id.view_right).text =
-                    if (target.padding.rtlAware) "${target.padding.start.roundToInt()}dp"
-                    else "${target.padding.end.roundToInt()}dp"
+                    "${target.padding.right.roundToInt()}dp"
             }
 
             root.uinspector_compose_bound.let {
@@ -61,8 +63,17 @@ class UInspectorComposePropertiesPanel(override val priority: Int) : UInspectorC
                 it.findViewById<TextView>(R.id.view_top).text =
                     target.width.dpStr + "\nX\n" + target.height.dpStr
             }
+
+            decorationDisposable =
+                UInspector.currentState.withLifecycle?.panel
+                    ?.addDecoration(ComposePaddingDecoration(target))
         }
         return root
+    }
+
+    override fun onDestroyView() {
+        decorationDisposable?.dispose()
+        super.onDestroyView()
     }
 
     private class ComposePropsAdapter(val target: ComposeView) :

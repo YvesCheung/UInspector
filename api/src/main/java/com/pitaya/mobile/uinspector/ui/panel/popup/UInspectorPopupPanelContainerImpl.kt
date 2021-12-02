@@ -17,7 +17,7 @@ import com.pitaya.mobile.uinspector.R
 import com.pitaya.mobile.uinspector.UInspector
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.hierarchy.LayerFactoryPlugin
-import com.pitaya.mobile.uinspector.util.dpTopx
+import com.pitaya.mobile.uinspector.util.dpToPx
 import com.pitaya.mobile.uinspector.util.log
 import com.github.yvescheung.whisper.IntDef
 import kotlinx.android.synthetic.main.uinspector_popup_panel_container.view.*
@@ -134,7 +134,7 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
                                     R.color.uinspector_error_color
                                 )
                             )
-                            setPadding(8.dpTopx, 8.dpTopx, 8.dpTopx, 0)
+                            setPadding(8.dpToPx, 8.dpToPx, 8.dpToPx, 0)
                             isSingleLine = false
                             movementMethod = ScrollingMovementMethod()
                             text = Log.getStackTraceString(e)
