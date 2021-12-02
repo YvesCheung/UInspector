@@ -2,6 +2,7 @@
 
 package com.pitaya.mobile.uinspector.optional.compose.inspect
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.compose.runtime.InternalComposeApi
 import androidx.compose.ui.node.Ref
@@ -10,11 +11,7 @@ import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.SubComposition
-
-/**
- * A sequence that lazily parses [Layer]s from a [Group] tree.
- */
-internal val Group.layoutInfos: Sequence<Layer> get() = computeLayoutInfos()
+import com.pitaya.mobile.uinspector.util.simpleName
 
 /**
  * Recursively parses [Layer]s from a [Group]. Groups form a tree and can contain different
@@ -28,43 +25,54 @@ internal val Group.layoutInfos: Sequence<Layer> get() = computeLayoutInfos()
  * to derive the "name" of the [Layer]. The other [Layer] properties come directly off
  * [NodeGroup] values.
  */
-private fun Group.computeLayoutInfos(
-    parentName: String = ""
+fun parseGroupToLayer(
+    group: Group,
+    parent: Layer,
+    parentName: String = "",
 ): Sequence<Layer> {
-    val name = parentName.ifBlank { this.name }.orEmpty()
-    // Things that we want to consider children of the current node, but aren't actually child nodes
-    // as reported by Group.children.
-    val irregularChildren = subComposedChildren(name) + androidViewChildren()
+    return sequence {
+        val name = parentName.ifBlank { group.name }.orEmpty()
+        val thisNode = ComposeView(
+            name = name,
+            parent = parent,
+            group = group
+        )
+        // Things that we want to consider children of the current node, but aren't actually child nodes
+        // as reported by Group.children.
+        val irregularChildren =
+            group.subComposedChildren(thisNode, name) + group.androidViewChildren()
 
-    // Certain composables produce an internal structure that is hard to read if we report it exactly.
-    // Instead, we use heuristics to recognize subtrees that match certain expected structures and
-    // aggregate them somewhat before reporting.
-    tryParseSubcomposition(name, irregularChildren)
-        ?.let { return it }
-    tryParseAndroidView(name, irregularChildren)
-        ?.let { return it }
+        // Certain composables produce an internal structure that is hard to read if we report it exactly.
+        // Instead, we use heuristics to recognize subtrees that match certain expected structures and
+        // aggregate them somewhat before reporting.
+        val subComposition = group.tryParseSubcomposition(parent, irregularChildren)
+        if (subComposition != null) {
+            Log.i("Yves", "parse subComposition $subComposition")
+            yieldAll(subComposition)
+            return@sequence
+        }
 
-    // This is an intermediate group that doesn't represent a LayoutNode, so we flatten by just
-    // reporting its children without reporting a new subtree.
-    if (this !is NodeGroup) {
-        return children.asSequence()
-            .flatMap { it.computeLayoutInfos(name) } + irregularChildren
+        val androidView = group.tryParseAndroidView(parent, irregularChildren)
+        if (androidView != null) {
+            Log.i("Yves", "parse androidView $androidView")
+            yieldAll(androidView)
+            return@sequence
+        }
+
+        // This is an intermediate group that doesn't represent a LayoutNode, so we flatten by just
+        // reporting its children without reporting a new subtree.
+        if (group !is NodeGroup) {
+            Log.i("Yves", "parse $name ${parent.name} flatmapGroup ${group.simpleName} ${group.name}")
+            yieldAll(
+                group.children.asSequence()
+                    .flatMap { parseGroupToLayer(it, parent, name) } + irregularChildren
+            )
+            return@sequence
+        }
+
+        Log.i("Yves", "parse thisNode $name")
+        yield(thisNode)
     }
-
-    val children = children.asSequence()
-        // This node will "consume" the name, so reset it name to empty for children.
-        .flatMap { it.computeLayoutInfos() }
-
-    val layoutInfo = ComposeView(
-        parent = null,
-        name = name,
-        id = position ?: "",
-        bounds = box,
-        modifiers = modifierInfo.map { it.modifier },
-        location = location,
-        children = children + irregularChildren
-    )
-    return sequenceOf(layoutInfo)
 }
 
 /**
@@ -74,16 +82,16 @@ private fun Group.computeLayoutInfos(
  * The returned [SubcompositionInfo]s should be collated by [tryParseSubcomposition].
  */
 @OptIn(InternalComposeApi::class)
-private fun Group.subComposedChildren(name: String): Sequence<Layer> =
+internal fun Group.subComposedChildren(parent: Layer, name: CharSequence): Sequence<Layer> =
     getCompositionContexts()
         .flatMap { it.tryGetComposers().asSequence() }
         .map { subcomposer ->
             SubComposition(
-                parent = null,
+                parent = parent,
                 id = position ?: "",
                 name = name,
                 bounds = box,
-                children = subcomposer.compositionData.asTree().layoutInfos
+                composer = subcomposer
             )
         }
 
@@ -96,7 +104,7 @@ private fun Group.subComposedChildren(name: String): Sequence<Layer> =
  * view, and it would be reported by this function. That would almost certainly be a code smell for
  * a number of reasons though, so we don't try to ignore those cases.
  */
-private fun Group.androidViewChildren(): List<Layer> =
+internal fun Group.androidViewChildren(): List<Layer> =
     data.mapNotNull { datum ->
         (datum as? Ref<*>)
             ?.value
@@ -123,13 +131,14 @@ private fun Group.androidViewChildren(): List<Layer> =
  * - That LayoutNode has no children of its own.
  */
 private fun Group.tryParseSubcomposition(
-    name: String,
+    parent: Layer,
     irregularChildren: Sequence<Layer>
 ): Sequence<Layer>? {
     if (this.name != "SubcomposeLayout") return null
 
     val (subcompositions: List<SubComposition>, regularChildren: List<Layer>) =
-        (children.asSequence().flatMap { it.computeLayoutInfos(name) } + irregularChildren)
+        (children.asSequence()
+            .flatMap { group -> parseGroupToLayer(group, parent) } + irregularChildren)
             .partition { it is SubComposition }
             .let {
                 // There's no type-safe partition operator so we just cast.
@@ -149,7 +158,7 @@ private fun Group.tryParseSubcomposition(
     val subcompositionName = "<subcomposition of ${mainNode.name}>"
     return sequenceOf(
         mainNode.copy(
-            children = subcompositions.asSequence().map { it.copy(name = subcompositionName) }
+            childrenFixed = subcompositions.asSequence().map { it.copy(name = subcompositionName) }
         )
     )
 }
@@ -177,14 +186,14 @@ private fun Group.tryParseSubcomposition(
  * the logic of both if that happens if they're completely independent.
  */
 private fun Group.tryParseAndroidView(
-    name: String,
+    parent: Layer,
     irregularChildren: Sequence<Layer>
 ): Sequence<Layer>? {
     if (this.name != "AndroidView") return null
     if (this !is CallGroup) return null
 
     val (androidViews, regularChildren) =
-        (children.asSequence().flatMap { it.computeLayoutInfos(name) } + irregularChildren)
+        (children.asSequence().flatMap { parseGroupToLayer(it, parent) } + irregularChildren)
             .partition { it is AndroidView }
             .let {
                 // There's no type-safe partition operator so we just cast.
@@ -200,7 +209,7 @@ private fun Group.tryParseAndroidView(
 
     // We can be pretty confident at this point that this is an actual AndroidView composable,
     // so expose its layout node as the parent of its actual view.
-    return sequenceOf(mainNode.copy(children = mainNode.children + androidViews))
+    return sequenceOf(mainNode.copy(childrenFixed = mainNode.children + androidViews))
 }
 
 private fun Sequence<*>.isEmpty(): Boolean = !iterator().hasNext()

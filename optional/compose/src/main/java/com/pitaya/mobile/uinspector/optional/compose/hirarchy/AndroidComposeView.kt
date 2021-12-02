@@ -12,5 +12,5 @@ import com.pitaya.mobile.uinspector.optional.compose.inspect.ComposeInspector.pa
 open class AndroidComposeView(view: View) : AndroidView(view) {
 
     override val children: Sequence<Layer>
-        get() = parseChildren(view)
+        get() = parseChildren(this)
 }

@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.data.asTree
 import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.ErrorLayer
 import com.pitaya.mobile.uinspector.hierarchy.Layer
+import com.pitaya.mobile.uinspector.optional.compose.hirarchy.AndroidComposeView
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 import java.lang.reflect.Field
 
@@ -21,17 +22,16 @@ import java.lang.reflect.Field
 @SuppressLint("DiscouragedPrivateApi")
 internal object ComposeInspector {
 
-    fun parseChildren(view: View): Sequence<Layer> = sequence {
-        if (view.mightBeComposeView) {
-            val (composableViews, parsedComposables) = getComposeScannableViews(view)
-            // If unsuccessful, the list will contain a RenderError, so yield it anyway.
-            yieldAll(composableViews)
-            if (parsedComposables) {
-                // Don't visit children ourselves, the compose renderer will have done that.
-                return@sequence
-            }
+    fun parseChildren(androidCompose: AndroidComposeView): Sequence<Layer> = sequence {
+        val (composableViews, parsedComposables) = getComposeScannableViews(androidCompose)
+        // If unsuccessful, the list will contain a RenderError, so yield it anyway.
+        yieldAll(composableViews)
+        if (parsedComposables) {
+            // Don't visit children ourselves, the compose renderer will have done that.
+            return@sequence
         }
 
+        val view = androidCompose.view
         if (view !is ViewGroup) return@sequence
 
         for (i in 0 until view.childCount) {
@@ -43,7 +43,7 @@ internal object ComposeInspector {
     }
 
     /**
-     * Tries to extract a list of [ComposeView]s from [composeView], which must be a view for which
+     * Tries to extract a list of [ComposeView]s from [androidCompose], which must be a view for which
      * [mightBeComposeView] is true. Returns the list of views and a boolean indicating whether the
      * extraction was successful.
      *
@@ -51,10 +51,10 @@ internal object ComposeInspector {
      * the right Compose artifacts aren't on the classpath, or the runtime Compose version is
      * unsupported, this function will return a [ChildRenderingError] and false.
      */
-    private fun getComposeScannableViews(composeView: View): Pair<List<Layer>, Boolean> {
+    private fun getComposeScannableViews(androidCompose: AndroidComposeView): Pair<List<Layer>, Boolean> {
         var linkageError: LinkageError? = null
         val scannableViews = try {
-            tryGetLayoutInfos(composeView)?.toList()
+            tryGetLayoutInfos(androidCompose)?.toList()
         } catch (e: LinkageError) {
             // The view looks like an AndroidComposeView, but the Compose code on the classpath is
             // not what we expected – the app is probably using a newer (or older) version of Compose than
@@ -91,12 +91,12 @@ internal object ComposeInspector {
      * Uses reflection to try to pull a `SlotTable` out of [composeView] and render it. If any of the
      * reflection fails, returns false.
      */
-    private fun tryGetLayoutInfos(composeView: View): Sequence<Layer>? {
+    private fun tryGetLayoutInfos(androidCompose: AndroidComposeView): Sequence<Layer>? {
         // Any of this reflection code can fail if running with an unsupported version of Compose.
         // Compose doesn't provide a public API for this (yet) because they don't want it to be used in
         // production.
         // See this slack thread: https://kotlinlang.slack.com/archives/CJLTWPH7S/p1596749016388100?thread_ts=1596749016.388100&cid=CJLTWPH7S
-        val keyedTags = composeView.getKeyedTags()
+        val keyedTags = androidCompose.view.getKeyedTags()
         val composition = keyedTags.first { it is Composition } as Composition? ?: return null
         val composer = composition.unwrap()
             .getComposerOrNull() ?: return null
@@ -114,7 +114,7 @@ internal object ComposeInspector {
         // since then we could drop the requirement for the Tooling library to be on the classpath.
         @OptIn(InternalComposeApi::class, UiToolingDataApi::class)
         val rootGroup = composer.compositionData.asTree()
-        return rootGroup.layoutInfos
+        return parseGroupToLayer(rootGroup, androidCompose)
     }
 
     private val viewKeyedTagsField: Field? by lazy(LazyThreadSafetyMode.PUBLICATION) {
