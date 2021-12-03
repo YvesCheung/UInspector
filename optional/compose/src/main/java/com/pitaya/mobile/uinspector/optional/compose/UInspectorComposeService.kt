@@ -1,6 +1,7 @@
 package com.pitaya.mobile.uinspector.optional.compose
 
 import android.content.Context
+import androidx.compose.ui.platform.isDebugInspectorInfoEnabled
 import com.google.auto.service.AutoService
 import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfoPlugin
 import com.pitaya.mobile.uinspector.hierarchy.HitTestFactoryPlugin
@@ -23,6 +24,7 @@ import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelPlugin
 class UInspectorComposeService : UInspectorPluginService {
 
     override fun onCreate(context: Context, plugins: UInspectorPlugins) {
+        isDebugInspectorInfoEnabled = true
         plugins.prepend(UInspectorChildPanelPlugin::class.java, UInspectorComposeChildPanelPlugin())
         plugins.append(LayerFactoryPlugin::class.java, ComposeLayerFactoryPlugin())
         plugins.append(HitTestFactoryPlugin::class.java, ComposeHitTestFactoryPlugin())
