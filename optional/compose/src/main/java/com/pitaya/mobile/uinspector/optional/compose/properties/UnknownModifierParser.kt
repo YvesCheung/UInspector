@@ -15,7 +15,9 @@ class UnknownModifierParser(val modifier: Modifier) : ComposePropertiesParser {
 
     override fun parse(@Output props: MutableMap<String, Any?>) {
         if (modifier is InspectableValue) {
-            props[modifier.simpleName] = ""
+            val inspectorName = modifier.nameFallback
+            if (inspectorName != null) props["Modifier.$inspectorName"] = modifier.simpleName
+            else props["Modifier.${modifier.simpleName}"] = ""
             modifier.inspectableElements.forEach {
                 props[it.name] = it.value
             }

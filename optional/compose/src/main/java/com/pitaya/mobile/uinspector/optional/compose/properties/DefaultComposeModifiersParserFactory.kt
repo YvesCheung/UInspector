@@ -20,9 +20,11 @@ class DefaultComposeModifiersParserFactory : ComposePropertiesParserFactory {
                     SimpleGraphicsLayerModifierParser(modifier)
                 BlockGraphicsLayerModifierParser.accept(modifier) ->
                     BlockGraphicsLayerModifierParser(modifier)
+                PaddingModifierParser.accept(modifier)->
+                    IgnoreProperty
                 else ->
                     UnknownModifierParser(modifier)
             }
-        }
+        } + BasicParser(view)
     }
 }

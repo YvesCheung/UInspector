@@ -1,21 +1,26 @@
 package com.pitaya.mobile.uinspector.optional.compose.properties
 
+import androidx.compose.ui.Modifier
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 import com.pitaya.mobile.uinspector.util.canonicalName
 
 /**
  * @see androidx.compose.foundation.layout.PaddingModifier
  *
+ * fixme: handle PaddingValuesModifier
+ *
  * @author YvesCheung
  * 2021/12/1
  */
 object PaddingModifierParser {
 
+    fun accept(modifier: Modifier): Boolean {
+        return modifier.canonicalName.contains("PaddingModifier") &&
+            PaddingModifierClass.isInstance(modifier)
+    }
+
     fun parse(view: ComposeView): PaddingModifier {
-        val modifier = view.modifiers.find {
-            it.canonicalName.contains("PaddingModifier") &&
-                PaddingModifierClass.isInstance(it)
-        }
+        val modifier = view.modifiers.find(::accept)
         if (modifier != null) {
             return PaddingModifier(
                 start = startField.getFloat(modifier),
