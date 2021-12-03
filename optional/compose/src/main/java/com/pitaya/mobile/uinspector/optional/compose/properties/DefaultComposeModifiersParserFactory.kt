@@ -13,9 +13,15 @@ class DefaultComposeModifiersParserFactory : ComposePropertiesParserFactory {
 
     override fun tryCreate(view: ComposeView): List<ComposePropertiesParser> {
         return view.modifiers.map { modifier ->
-            when (modifier) {
-                is SemanticsModifier -> SemanticsModifierParser(modifier)
-                else -> UnknownModifierParser(modifier)
+            when {
+                modifier is SemanticsModifier ->
+                    SemanticsModifierParser(modifier)
+                SimpleGraphicsLayerModifierParser.accept(modifier) ->
+                    SimpleGraphicsLayerModifierParser(modifier)
+                BlockGraphicsLayerModifierParser.accept(modifier) ->
+                    BlockGraphicsLayerModifierParser(modifier)
+                else ->
+                    UnknownModifierParser(modifier)
             }
         }
     }

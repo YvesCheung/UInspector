@@ -65,6 +65,9 @@ class ComposeView(
             val composeView = findAndroidComposeView()
             if (composeView != null) {
                 val container = composeView.parent
+                /**
+                 * [androidx.compose.ui.window.DialogLayout]
+                 */
                 if (container != null && container.name == "DialogLayout") {
                     return composeView.getLocation()
                 }
