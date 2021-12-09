@@ -4,7 +4,10 @@
 
 > A UI inspector to traverse a view hierarchy on Android
 
-![Build](https://github.com/YvesCheung/UInspector/workflows/Build/badge.svg) [![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector) [![hackmd-github-sync-badge](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ/badge)](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ)
+![Build](https://github.com/YvesCheung/UInspector/workflows/Build/badge.svg) 
+[![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector) 
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.yvescheung/Uinspector/badge.svg)](https://search.maven.org/artifact/io.github.yvescheung/Uinspector)
+[![hackmd-github-sync-badge](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ/badge)](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ)
 
 ## Preview
 
@@ -34,7 +37,7 @@ Add jitpack to your project-level `build.gradle`
 ```groovy
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
+        mavenCentral()
     }
 }
 ```
@@ -45,17 +48,20 @@ Add dependency to your module-level `build.gradle`
 dependencies {
     ...
     // debugImplementation because Uinspector should only run in debug builds.
-    debugImplementation 'com.github.YvesCheung.UInspector:Uinspector:x.y.z'
+    debugImplementation "io.github.yvescheung:Uinspector:x.y.z"
     
     // optional integration library
-    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-viewmodel:x.y.z"
-    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-fresco:x.y.z"
-    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-glide:x.y.z"
-    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-multitype:x.y.z"
-    debugImplementation "com.github.YvesCheung.UInspector:Uinspector-optional-lottie:x.y.z"
+    debugImplementation "io.github.yvescheung:Uinspector-optional-viewmodel:x.y.z"
+    debugImplementation "io.github.yvescheung:Uinspector-optional-fresco:x.y.z"
+    debugImplementation "io.github.yvescheung:Uinspector-optional-glide:x.y.z"
+    debugImplementation "io.github.yvescheung:Uinspector-optional-multitype:x.y.z"
+    debugImplementation "io.github.yvescheung:Uinspector-optional-lottie:x.y.z"
+    
+    // optional integration library for Jetpack Compose!
+    debugImplementation "io.github.yvescheung:Uinspector-optional-compose:x.y.z"
 }
 ```
-> x.y.z replace with [![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector)
+> x.y.z replace with [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.yvescheung/Uinspector/badge.svg)](https://search.maven.org/artifact/io.github.yvescheung/Uinspector)
 
 **That’s it, there is no code change needed!**
 
@@ -121,7 +127,7 @@ dependencies {
   
 - Development environment
     
-    * Branch 2.x : Require jdk11, [Android Studio Canary (Preview)](https://developer.android.com/studio/preview), enable `Jetpack Compose` feature (Developing).
+    * Branch 2.x : Require jdk11, enable `Jetpack Compose` feature.
     * Branch 1.x : Require jdk8, Android Studio 4.x (Stable).
 
 ## Inspiration
