@@ -54,7 +54,7 @@ class ComposeView(
             var q: Layer? = this
             while (p != null) {
                 q = p
-                p = p?.parent
+                p = p.parent
             }
             return q
         }
