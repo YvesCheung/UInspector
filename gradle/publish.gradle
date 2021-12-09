@@ -31,39 +31,39 @@ if (project.hasProperty("android")) { // Android libraries
 }
 println("artifect: $libraryOutputFile")
 
-try {
-    ext['ossrhUsername'] = ""
-    ext['ossrhPassword'] = ""
-    ext['signing.keyId'] = ""
-    ext['signing.password'] = ""
-    ext['signing.secretKeyRingFile'] = ""
-    //Override these ext.variable by local.properties
-    File localProperties = project.rootProject.file('local.properties')
-    if (localProperties.exists()) {
-        Properties properties = new Properties()
-        properties.load(localProperties.newDataInputStream())
-        for (Map.Entry<String, String> entry : properties.entrySet()) {
-            ext[entry.key] = entry.value
-        }
+File localProperties = project.rootProject.file('local.properties')
+if (localProperties.exists()) {
+    Properties properties = new Properties()
+    properties.load(localProperties.newDataInputStream())
+    /**
+     * ossrhUsername
+     * ossrhPassword
+     * signing.keyId
+     * signing.password
+     * signing.secretKeyRingFile
+     * Variables defined in local.properties
+     */
+    for (Map.Entry<String, String> entry : properties.entrySet()) {
+        ext[entry.key] = entry.value
     }
-} catch (Throwable ignore) {
 }
-
 
 afterEvaluate {
     publishing {
-        repositories {
-            maven {
-                // You only need this if you want to publish snapshots, otherwise just set the URL
-                // to the release repo directly
-                url = version.endsWith('SNAPSHOT')
-                        ? "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-                        : "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+        if (ext.find('ossrhUsername') != null) {
+            repositories {
+                maven {
+                    // You only need this if you want to publish snapshots, otherwise just set the URL
+                    // to the release repo directly
+                    url = version.endsWith('SNAPSHOT')
+                            ? "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                            : "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
 
-                // The username and password we've fetched earlier
-                credentials {
-                    username ossrhUsername
-                    password ossrhPassword
+                    // The username and password we've fetched earlier
+                    credentials {
+                        username ossrhUsername
+                        password ossrhPassword
+                    }
                 }
             }
         }
@@ -104,8 +104,10 @@ afterEvaluate {
             }
         }
     }
-}
 
-signing {
-    sign publishing.publications
+    if (ext.find('signing.keyId') != null) {
+        signing {
+            sign publishing.publications
+        }
+    }
 }
