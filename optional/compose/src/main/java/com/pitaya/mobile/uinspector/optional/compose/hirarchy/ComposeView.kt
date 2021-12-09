@@ -6,14 +6,12 @@ import androidx.compose.ui.tooling.data.Group
 import androidx.compose.ui.tooling.data.UiToolingDataApi
 import androidx.compose.ui.tooling.data.position
 import androidx.compose.ui.unit.IntRect
-import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.optional.compose.inspect.SourceCodeLocation
 import com.pitaya.mobile.uinspector.optional.compose.inspect.androidViewChildren
 import com.pitaya.mobile.uinspector.optional.compose.inspect.parseGroupToLayer
 import com.pitaya.mobile.uinspector.optional.compose.inspect.subComposedChildren
 import com.pitaya.mobile.uinspector.optional.compose.properties.PaddingModifierParser
-import com.pitaya.mobile.uinspector.util.simpleName
 
 /**
  * @author YvesCheung
@@ -45,35 +43,25 @@ class ComposeView(
     private var androidComposeViewLocation: IntArray? = null
 
     /**
-     * 如果ComposeView是在Dialog上，[bounds]会缺少[AndroidComposeView]本身的偏移。
-     * 但如果不在Dialog上就不会，连状态栏的偏移都包括在内了，不知道为什么。
+     * If DecorView is not fullscreen (such as Dialog),
+     * Make an offset of the DecorView's location.
      */
     @Size(2)
     fun dialogLocationOffset(): IntArray {
 
-        fun findAndroidComposeView(): Layer? {
-            var p = parent
+        fun findDecorView(): Layer? {
+            var p: Layer? = parent
+            var q: Layer? = this
             while (p != null) {
-                if (p is AndroidComposeView) return p
-                if (p is AndroidView) break
-                p = p.parent
+                q = p
+                p = p?.parent
             }
-            return null
+            return q
         }
 
         fun dialogOffset(): IntArray {
-            val composeView = findAndroidComposeView()
-            if (composeView != null) {
-                val container = composeView.parent
-                /**
-                 * [androidx.compose.ui.window.DialogLayout]
-                 */
-                if (container != null && container.name == "DialogLayout") {
-                    return composeView.getLocation()
-                }
-            }
-            //不在Dialog上
-            return intArrayOf(0, 0)
+            val decorView = findDecorView()
+            return decorView?.getLocation() ?: intArrayOf(0, 0)
         }
 
         return androidComposeViewLocation
