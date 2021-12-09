@@ -49,7 +49,7 @@ abstract class GraphicsLayerModifier : ComposePropertiesParser {
                 props["translationY"] = config.translationY
             }
             if (config.shadowElevation != Default.shadowElevation) {
-                props["scaleY"] = config.scaleY
+                props["shadowElevation"] = config.shadowElevation
             }
             if (config.shape != Default.shape) {
                 props["shape"] = config.shape
