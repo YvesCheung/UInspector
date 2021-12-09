@@ -31,26 +31,23 @@ if (project.hasProperty("android")) { // Android libraries
 }
 println("artifect: $libraryOutputFile")
 
+/**
+ * ossrhUsername
+ * ossrhPassword
+ * signing.keyId
+ * signing.password
+ * signing.secretKeyRingFile
+ * Variables defined in local.properties
+ */
+Properties properties = new Properties()
 File localProperties = project.rootProject.file('local.properties')
 if (localProperties.exists()) {
-    Properties properties = new Properties()
     properties.load(localProperties.newDataInputStream())
-    /**
-     * ossrhUsername
-     * ossrhPassword
-     * signing.keyId
-     * signing.password
-     * signing.secretKeyRingFile
-     * Variables defined in local.properties
-     */
-    for (Map.Entry<String, String> entry : properties.entrySet()) {
-        ext[entry.key] = entry.value
-    }
 }
 
 afterEvaluate {
     publishing {
-        if (ext.find('ossrhUsername') != null) {
+        if (properties['ossrhUsername'] != null) {
             repositories {
                 maven {
                     // You only need this if you want to publish snapshots, otherwise just set the URL
@@ -61,8 +58,8 @@ afterEvaluate {
 
                     // The username and password we've fetched earlier
                     credentials {
-                        username ossrhUsername
-                        password ossrhPassword
+                        username properties['ossrhUsername']
+                        password properties['ossrhPassword']
                     }
                 }
             }
@@ -105,9 +102,13 @@ afterEvaluate {
         }
     }
 
-    if (ext.find('signing.keyId') != null) {
+    if (properties['signing.keyId'] != null) {
+        ext['signing.keyId'] = properties['signing.keyId']
+        ext['signing.password'] = properties['signing.password']
+        ext['signing.secretKeyRingFile'] = properties['signing.secretKeyRingFile']
         signing {
             sign publishing.publications
         }
     }
 }
+
