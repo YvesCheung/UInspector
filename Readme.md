@@ -6,8 +6,7 @@
 
 ![Build](https://github.com/YvesCheung/UInspector/workflows/Build/badge.svg) 
 [![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector) 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.yvescheung/Uinspector/badge.svg)](https://search.maven.org/artifact/io.github.yvescheung/Uinspector)
-[![hackmd-github-sync-badge](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ/badge)](https://hackmd.io/VtIqR5l1TEOCkU137kvRoQ)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.yvescheung/Uinspector.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.yvescheung%22%20AND%20a:%22Uinspector%22)
 
 ## Preview
 
@@ -61,7 +60,7 @@ dependencies {
     debugImplementation "io.github.yvescheung:Uinspector-optional-compose:x.y.z"
 }
 ```
-> x.y.z replace with [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.yvescheung/Uinspector/badge.svg)](https://search.maven.org/artifact/io.github.yvescheung/Uinspector)
+> x.y.z replace with [![Maven Central](https://img.shields.io/maven-central/v/io.github.yvescheung/Uinspector.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.yvescheung%22%20AND%20a:%22Uinspector%22)
 
 **That’s it, there is no code change needed!**
 
