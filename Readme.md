@@ -8,44 +8,47 @@
 [![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector) 
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.yvescheung/Uinspector.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.yvescheung%22%20AND%20a:%22Uinspector%22)
 
+[中文版Readme](https://github.com/YvesCheung/UInspector/blob/2.x/Readme-CN.md)
+
 ## Preview
 
-|What are the properties| Where is the view | Select another view |
+|What are the properties| Where is the source code | Show the layout boundary |
 | :---: | :---: | :---: |
-|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/properties_preview.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/hierarchy_preview.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/targets_preview.jpeg)
+|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/properties_preview.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/hierarchy_preview_new.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/targets_preview_new.jpeg)
 
+
+|After selecting the view, you can see the line number of source code| Line 59 in the corresponding file is the source code where `Text` is located |
+| :---: | :---: |
+|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/inspectJetpackCompose.jpeg)|![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/composeSourceCodeLineNumber.jpg)|
 
 ## Feature
 
-- Low intrusive, no code change required
-- Turn on/off inspector throught the **notification**
-- Select the target view by clicking on it
-- **What's LayoutInspector can't do?**
-    - Tracking animations
-        
-        ![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/trace_animator.gif)
-        
-    - Support to add your custom panel or custom view properties
-        
-        [See more](#Develop)
+- Don't have to endure the long loading with `Layoutinspector`
+    ![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/response_time.jpg)
+- Support extensions:
+  - [X] Glide
+  - [X] Fresco
+  - [x] MultiType
+  - [X] Lottie
+  - [X] Jetpack compose
+
+## Usage 
+
+1. Start the inspector through the notification
+2. Tap the view you want to inspect
+3. Now you can see the properties on the popup panel
+4.  **Uinspector intercept the 'single tap' event, but you can perform click on a View by double tap instead!** And the scroll event/ key event can be dispatched as usual.
+
+![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/uinspector_preview.gif)
 
 ## Get Started
 
-Add jitpack to your project-level `build.gradle`
-
 ```groovy
-allprojects {
-    repositories {
-        mavenCentral()
-    }
+repositories {
+    mavenCentral()
 }
-```
 
-Add dependency to your module-level `build.gradle`
-
-```groovy
 dependencies {
-    ...
     // debugImplementation because Uinspector should only run in debug builds.
     debugImplementation "io.github.yvescheung:Uinspector:x.y.z"
     
@@ -63,16 +66,6 @@ dependencies {
 > x.y.z replace with [![Maven Central](https://img.shields.io/maven-central/v/io.github.yvescheung/Uinspector.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.yvescheung%22%20AND%20a:%22Uinspector%22)
 
 **That’s it, there is no code change needed!**
-
-## Usage 
-
-1. Start the inspector through the notification
-2. Tap the view you want to inspect
-3. Now you can see the properties on the popup panel
-
-![](https://raw.githubusercontent.com/YvesCheung/UInspector/2.x/art/uinspector_preview.gif)
-
-**4. Uinspector intercept the 'single tap' event, but you can perform click on a View by double tap instead!** And the scroll event/ key event can be dispatched as usual.
 
 ## Optional Dependencies
 
@@ -94,18 +87,17 @@ dependencies {
     
     ```groovy
     dependencies {
-    	debugImplementation 'com.github.YvesCheung.UInspector:Uinspector-optional-glide:x.y.z'
+        debugImplementation 'com.github.YvesCheung.UInspector:Uinspector-optional-glide:x.y.z'
     }
     ```
 
-    > x.y.z replace with [![Jitpack](https://jitpack.io/v/YvesCheung/UInspector.svg)](https://jitpack.io/#YvesCheung/UInspector)
+    > x.y.z replace with [![Maven Central](https://img.shields.io/maven-central/v/io.github.yvescheung/Uinspector.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.yvescheung%22%20AND%20a:%22Uinspector%22)
 
 #### To see more optional dependencies below:
 
 - [**Fresco**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-fresco.md)
 - [**Lottie**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-lottie.md)
-- [**Inspect your own custom view**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-custom-view.md)
-- **MultiType**
+- [**Inspect your own custom view**](https://github.com/YvesCheung/UInspector/blob/2.x/docs/uinspector-optional-custom-view.md) 
 
 ## Develop
 
@@ -126,8 +118,8 @@ dependencies {
   
 - Development environment
     
-    * Branch 2.x : Require jdk11, enable `Jetpack Compose` feature.
-    * Branch 1.x : Require jdk8, Android Studio 4.x (Stable).
+    * Branch 2.x : Enable `Jetpack Compose` compiler feature.
+    * Branch 1.x : Just Android View.
 
 ## Inspiration
 
