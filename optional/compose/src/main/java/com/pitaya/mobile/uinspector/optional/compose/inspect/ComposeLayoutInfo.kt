@@ -38,14 +38,12 @@ fun parseGroupToLayer(
         // aggregate them somewhat before reporting.
         val subComposition = group.tryParseSubcomposition(parent, name)
         if (subComposition != null) {
-            Log.i("YvesIrr", "parse subComposition $name $codeLocation ${subComposition.toList()}")
             yieldAll(subComposition)
             return@sequence
         }
 
         val androidView = group.tryParseAndroidView(parent)
         if (androidView != null) {
-            Log.i("YvesIrr", "parse androidView $androidView")
             yieldAll(androidView)
             return@sequence
         }
@@ -53,13 +51,6 @@ fun parseGroupToLayer(
         // This is an intermediate group that doesn't represent a LayoutNode, so we flatten by just
         // reporting its children without reporting a new subtree.
         if (group !is NodeGroup) {
-            val currentLocation = group.location
-            Log.i(
-                "YvesCall",
-                "parse flatmapGroup n=$name g=${group.name} p=${parentName} " +
-                    "source=${currentLocation?.sourceFile}:${currentLocation?.lineNumber}"
-            )
-
             val location = codeLocation ?: createCodeLocation(group)
             yieldAll(
                 group.children.asSequence()
@@ -70,7 +61,6 @@ fun parseGroupToLayer(
             return@sequence
         }
 
-        Log.i("YvesThis", "parse $name, location = $codeLocation")
         yield(ComposeView(name, group, codeLocation, parent))
     }
 }
