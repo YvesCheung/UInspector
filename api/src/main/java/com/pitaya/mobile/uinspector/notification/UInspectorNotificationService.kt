@@ -1,11 +1,10 @@
 package com.pitaya.mobile.uinspector.notification
 
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager.IMPORTANCE_HIGH
-import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_ONE_SHOT
-import android.app.PendingIntent.FLAG_UPDATE_CURRENT
+import android.app.PendingIntent.*
 import android.app.Service
 import android.content.Intent
 import android.os.Build
@@ -46,6 +45,7 @@ class UInspectorNotificationService : Service() {
         super.onDestroy()
     }
 
+    @SuppressLint("LaunchActivityFromNotification")
     private fun createNotification(isRunning: Boolean): Notification {
         val notificationBuilder =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -77,6 +77,12 @@ class UInspectorNotificationService : Service() {
             if (isRunning) R.drawable.notification_stop
             else R.drawable.notification_start
         )
+        val flag =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                FLAG_ONE_SHOT or FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
+            } else {
+                FLAG_ONE_SHOT or FLAG_UPDATE_CURRENT
+            }
         return notificationBuilder
             .setSmallIcon(app.icon)
             .setContentTitle(title)
@@ -85,11 +91,11 @@ class UInspectorNotificationService : Service() {
             .setContent(view)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
             .setContentIntent(
-                PendingIntent.getService(
+                getService(
                     this, 0,
                     Intent(this, UInspectorNotificationService::class.java)
                         .putExtra(PENDING_RUNNING, !isRunning),
-                    FLAG_ONE_SHOT or FLAG_UPDATE_CURRENT
+                    flag
                 )
             )
             .setPriority(PRIORITY_HIGH)
