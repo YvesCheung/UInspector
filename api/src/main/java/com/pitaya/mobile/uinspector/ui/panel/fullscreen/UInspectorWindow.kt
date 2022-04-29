@@ -3,10 +3,10 @@ package com.pitaya.mobile.uinspector.ui.panel.fullscreen
 import android.app.Activity
 import android.content.Context
 import android.graphics.PixelFormat.TRANSPARENT
+import android.os.Build
 import android.view.View
 import android.view.WindowManager
-import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
-import android.view.WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+import android.view.WindowManager.LayoutParams.*
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.lifecycle.Disposable
 import com.pitaya.mobile.uinspector.ui.decoration.UInspectorDecoration
@@ -32,13 +32,14 @@ class UInspectorWindow : UInspectorPanel {
         windowManager =
             activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         if (added.compareAndSet(false, true)) {
+            val type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                TYPE_APPLICATION_OVERLAY
+            } else {
+                TYPE_SYSTEM_OVERLAY
+            }
             windowManager?.addView(
                 delegate.onCreateView(activity),
-                WindowManager.LayoutParams(
-                    TYPE_APPLICATION_OVERLAY,
-                    FLAG_LAYOUT_IN_SCREEN,
-                    TRANSPARENT
-                )
+                WindowManager.LayoutParams(type, FLAG_LAYOUT_IN_SCREEN, TRANSPARENT)
             )
         }
     }
