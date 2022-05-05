@@ -24,7 +24,6 @@ import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFr
 import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
 import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorWindow
 import com.pitaya.mobile.uinspector.util.log
-import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
@@ -86,6 +85,7 @@ object UInspector {
     //private impl ---------------------------------------------------------------------------------
 
     internal lateinit var application: Application
+        private set
 
     private val init = AtomicBoolean(false)
 
