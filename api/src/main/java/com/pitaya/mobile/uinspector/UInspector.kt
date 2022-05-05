@@ -85,7 +85,7 @@ object UInspector {
 
     //private impl ---------------------------------------------------------------------------------
 
-    private lateinit var application: Application
+    internal lateinit var application: Application
 
     private val init = AtomicBoolean(false)
 

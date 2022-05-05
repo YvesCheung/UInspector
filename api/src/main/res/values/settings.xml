@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Use dp (true) or px (false) as unit-->
+    <bool name="uinspector_dimension_dp">true</bool>
+    <!--Use sp (true) or px (false) as unit-->
+    <bool name="uinspector_dimension_sp">true</bool>
+</resources>

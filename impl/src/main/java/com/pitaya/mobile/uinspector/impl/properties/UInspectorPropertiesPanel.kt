@@ -57,10 +57,10 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
 
                 val lp =
                     targetView.layoutParams as? ViewGroup.MarginLayoutParams
-                it.view_top.text = lp?.topMargin?.dpStr ?: "0dp"
-                it.view_bottom.text = lp?.bottomMargin?.dpStr ?: "0dp"
-                it.view_left.text = lp?.leftMargin?.dpStr ?: "0dp"
-                it.view_right.text = lp?.rightMargin?.dpStr ?: "0dp"
+                it.view_top.text = lp?.topMargin?.dpStr ?: 0.dpStr
+                it.view_bottom.text = lp?.bottomMargin?.dpStr ?: 0.dpStr
+                it.view_left.text = lp?.leftMargin?.dpStr ?: 0.dpStr
+                it.view_right.text = lp?.rightMargin?.dpStr ?: 0.dpStr
             }
 
             root.uinspector_view_padding.let {

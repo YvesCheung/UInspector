@@ -14,6 +14,8 @@ import androidx.annotation.AnyRes
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
 import com.github.yvescheung.whisper.IntDef
+import com.pitaya.mobile.uinspector.R
+import com.pitaya.mobile.uinspector.UInspector
 import kotlin.math.roundToInt
 
 /**
@@ -33,10 +35,12 @@ val Number.pxToDp: Float
     get() = this.toFloat() / Resources.getSystem().displayMetrics.density
 
 val Int.dpStr: String
-    get() = "${pxToDp}dp"
+    get() = if (UInspector.application.resources.getBoolean(R.bool.uinspector_dimension_dp))
+        "${pxToDp}dp" else "${this}px"
 
 val Number.dpStr: String
-    get() = "${pxToDp.roundToInt()}dp"
+    get() = if (UInspector.application.resources.getBoolean(R.bool.uinspector_dimension_dp))
+        "${pxToDp.roundToInt()}dp" else "${this.toInt()}px"
 
 val Int.pxToSp: Int
     get() = (this.toFloat() / Resources.getSystem().displayMetrics.scaledDensity).toInt()
@@ -45,10 +49,12 @@ val Number.pxToSp: Float
     get() = this.toFloat() / Resources.getSystem().displayMetrics.scaledDensity
 
 val Int.spStr: String
-    get() = "${pxToSp}sp"
+    get() = if (UInspector.application.resources.getBoolean(R.bool.uinspector_dimension_sp))
+        "${pxToSp}sp" else "${this}px"
 
 val Number.spStr: String
-    get() = "${pxToSp.roundToInt()}sp"
+    get() = if (UInspector.application.resources.getBoolean(R.bool.uinspector_dimension_sp))
+        "${pxToSp.roundToInt()}sp" else "${this.toInt()}px"
 
 /**
  * todo: parse the state
