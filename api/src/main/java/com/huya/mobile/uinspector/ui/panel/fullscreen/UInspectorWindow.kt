@@ -34,7 +34,7 @@ class UInspectorWindow : UInspectorPanel {
             val type = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 TYPE_APPLICATION_OVERLAY
             } else {
-                TYPE_SYSTEM_OVERLAY
+                TYPE_PHONE
             }
             windowManager?.addView(
                 delegate.onCreateView(activity),
