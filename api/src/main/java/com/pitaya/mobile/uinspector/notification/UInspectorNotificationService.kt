@@ -8,7 +8,9 @@ import android.app.PendingIntent.*
 import android.app.Service
 import android.content.Intent
 import android.os.Build
+import android.os.Handler
 import android.os.IBinder
+import android.os.Looper
 import android.widget.RemoteViews
 import androidx.annotation.DrawableRes
 import androidx.annotation.RestrictTo
@@ -35,7 +37,14 @@ class UInspectorNotificationService : Service() {
 
         startForeground(notificationId, createNotification(pendingState))
 
-        UInspector.changeStateInner(pendingState)
+        val changeState = Runnable {
+            UInspector.changeStateInner(pendingState)
+        }
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            changeState.run()
+        } else {  //For some unbelievable system hook
+            Handler(Looper.getMainLooper()).post(changeState)
+        }
 
         return super.onStartCommand(intent, flags, startId)
     }
