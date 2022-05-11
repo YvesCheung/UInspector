@@ -83,13 +83,14 @@ class UInspectorNotificationService : Service() {
             } else {
                 FLAG_ONE_SHOT or FLAG_UPDATE_CURRENT
             }
-        return notificationBuilder
+        notificationBuilder
             .setSmallIcon(app.icon)
             .setContentTitle(title)
             .setContentInfo(info)
             .setCustomContentView(view)
             .setContent(view)
             .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            .setPriority(PRIORITY_HIGH)
             .setContentIntent(
                 getService(
                     this, 0,
@@ -98,9 +99,13 @@ class UInspectorNotificationService : Service() {
                     flag
                 )
             )
-            .setPriority(PRIORITY_HIGH)
-            .setNotificationSilent()
-            .build()
+        try {
+            notificationBuilder.setSilent(true)
+        } catch (e: NoSuchMethodError) {
+            //Some application depends on a low version of 'androidx.core:core', in which no such method
+            notificationBuilder.setVibrate(null).setSound(null)
+        }
+        return notificationBuilder.build()
     }
 
     private fun createView(
