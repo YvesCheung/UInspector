@@ -21,13 +21,14 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:background="@android:color/background_light" />
 
-    <androidx.constraintlayout.widget.Barrier
+    <View
         android:id="@+id/uinspector_view_middle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="end"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:contentDescription="相当于Barrier，解决ConstraintLayout1.x没有Barrier的问题"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <include
         android:id="@+id/uinspector_view_margin"
