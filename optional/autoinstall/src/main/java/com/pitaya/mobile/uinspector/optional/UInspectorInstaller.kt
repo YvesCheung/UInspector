@@ -3,12 +3,15 @@ package com.pitaya.mobile.uinspector.optional
 import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.app.Application
+import android.content.ContentProvider
+import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
+import android.net.Uri
 import android.os.Build
 import android.os.Process.myPid
 import androidx.annotation.RestrictTo
 import com.pitaya.mobile.uinspector.UInspector
-import androidx.startup.Initializer
 
 
 /**
@@ -29,17 +32,36 @@ import androidx.startup.Initializer
  * 2020/12/28
  */
 @RestrictTo(RestrictTo.Scope.LIBRARY)
-class UInspectorInstaller : Initializer<UInspector> {
+class UInspectorInstaller : ContentProvider() {
 
-    override fun create(context: Context): UInspector {
-        val processName = getCurrentProcessName(context)
-        if (processName == null /*unknown?*/ || processName == context.packageName /*main process*/) {
-            UInspector.create(context)
+    override fun onCreate(): Boolean {
+        val ctx = requireNotNull(context)
+        val processName = getCurrentProcessName(ctx)
+        if (processName == null /*unknown?*/ || processName == ctx.packageName /*main process*/) {
+            UInspector.create(ctx)
         }
-        return UInspector
+        return true
     }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+    override fun query(uri: Uri, strings: Array<String?>?, s: String?, strings1: Array<String?>?, s1: String?): Cursor? {
+        return null
+    }
+
+    override fun getType(uri: Uri): String? {
+        return null
+    }
+
+    override fun insert(uri: Uri, contentValues: ContentValues?): Uri? {
+        return null
+    }
+
+    override fun delete(uri: Uri, s: String?, strings: Array<String?>?): Int {
+        return 0
+    }
+
+    override fun update(uri: Uri, contentValues: ContentValues?, s: String?, strings: Array<String?>?): Int {
+        return 0
+    }
 
     /**
      * @return 当前进程名
