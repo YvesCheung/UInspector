@@ -12,7 +12,6 @@ android {
 
 dependencies {
     implementation "com.google.android.material:material:1.4.0"
-    implementation "com.github.lzyzsd.randomcolor:library:1.0.0"
     api project(":Uinspector-optional-autoinstall")
     api project(":Uinspector-api")
 }

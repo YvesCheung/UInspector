@@ -2,8 +2,8 @@ package com.pitaya.mobile.uinspector.impl.targets
 
 import android.util.LruCache
 import androidx.annotation.ColorInt
-import com.github.lzyzsd.randomcolor.RandomColor
-import com.github.lzyzsd.randomcolor.RandomColor.Color.*
+import com.pitaya.mobile.uinspector.impl.targets.lzyzsd.RandomColor
+import com.pitaya.mobile.uinspector.impl.targets.lzyzsd.RandomColor.Color.*
 
 /**
  * @author YvesCheung
