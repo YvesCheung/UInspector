@@ -9,28 +9,6 @@ final String developerEmail = '975135274@qq.com'
 final String licenseName = 'The Apache License, Version 2.0'
 final String licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0'
 
-if (project.hasProperty("android")) { // Android libraries
-    task sourcesJar(type: Jar) {
-        getArchiveClassifier().set('sources')
-        getArchiveBaseName().set(libraryName)
-        from android.sourceSets.main.java.srcDirs
-    }
-    task androidNativeJar(type: Jar) {
-        getArchiveClassifier().set('so')
-        from(new File(buildDir, 'libs'))
-        include("**/*.so")
-    }
-    ext.libraryOutputFile = "$buildDir/outputs/aar/${project.getName()}-release.aar"
-} else { // Java libraries
-    task sourcesJar(type: Jar, dependsOn: classes) {
-        getArchiveClassifier().set('sources')
-        getArchiveBaseName().set(libraryName)
-        from sourceSets.main.allSource
-    }
-    ext.libraryOutputFile = "$buildDir/libs/${project.getName()}-${version}.jar"
-}
-println("artifect: $libraryOutputFile")
-
 /**
  * ossrhUsername
  * ossrhPassword
@@ -70,7 +48,6 @@ afterEvaluate {
                 from components.release
                 groupId group
                 artifactId libraryName
-                artifact sourcesJar
                 version libraryVersion
                 pom {
                     name = libraryName
