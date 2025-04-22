@@ -19,7 +19,6 @@ import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.impl.R
 import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
-import kotlinx.android.synthetic.main.uinspector_view_list_item.view.*
 
 /**
  * @author YvesCheung
@@ -63,7 +62,7 @@ class UInspectorAccessibilityPanel(override val priority: Int) : UInspectorChild
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
             val root = LayoutInflater.from(parent.context)
                 .inflate(R.layout.uinspector_view_list_item, parent, false)
-            return VH(root.uinspector_view_access_btn)
+            return VH(root.findViewById(R.id.uinspector_view_access_btn))
         }
 
         override fun getItemCount(): Int = actions.size

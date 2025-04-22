@@ -45,13 +45,13 @@ class UInspectorTargetViews private constructor(
 
     private val attachState = object : View.OnAttachStateChangeListener {
 
-        override fun onViewDetachedFromWindow(v: View?) {
+        override fun onViewDetachedFromWindow(v: View) {
             onDetach.forEach { it.onChange() }
             clear()
             views.clear()
         }
 
-        override fun onViewAttachedToWindow(v: View?) {}
+        override fun onViewAttachedToWindow(v: View) {}
     }
 
     init {

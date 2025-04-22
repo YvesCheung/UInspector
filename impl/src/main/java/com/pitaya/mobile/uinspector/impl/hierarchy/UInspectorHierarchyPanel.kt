@@ -6,6 +6,7 @@ import android.text.SpannableStringBuilder
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import com.pitaya.mobile.uinspector.UInspector
 import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfoPlugin
 import com.pitaya.mobile.uinspector.impl.R
@@ -13,7 +14,6 @@ import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.withBold
 import com.pitaya.mobile.uinspector.util.withColor
-import kotlinx.android.synthetic.main.uinspector_panel_hierarchy.view.*
 
 /**
  * @author YvesCheung
@@ -70,8 +70,9 @@ class UInspectorHierarchyPanel(override val priority: Int) : UInspectorChildPane
                     it.afterHierarchy(index, view, ssb)
                 }
             }
-            root.view_hierarchy.movementMethod = ScrollingMovementMethod()
-            root.view_hierarchy.text = ssb
+            val hierarchyView = root.findViewById<TextView>(R.id.view_hierarchy)
+            hierarchyView.movementMethod = ScrollingMovementMethod()
+            hierarchyView.text = ssb
         }
         return root
     }

@@ -13,14 +13,14 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.github.yvescheung.whisper.IntDef
+import com.google.android.material.tabs.TabLayout
 import com.pitaya.mobile.uinspector.R
 import com.pitaya.mobile.uinspector.UInspector
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.hierarchy.LayerFactoryPlugin
 import com.pitaya.mobile.uinspector.util.dpToPx
 import com.pitaya.mobile.uinspector.util.log
-import com.github.yvescheung.whisper.IntDef
-import kotlinx.android.synthetic.main.uinspector_popup_panel_container.view.*
 
 /**
  * @author YvesCheung
@@ -71,9 +71,9 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
         val inspectorMask: View,
         children: List<UInspectorChildPanel>
     ) {
-        private val popupPanel = inspectorMask.popup_panel
-        private val viewPager = popupPanel.popup_panel_viewpager
-        private val tabLayout = popupPanel.popup_panel_tab
+        private val popupPanel: ViewGroup = inspectorMask.findViewById(R.id.popup_panel)
+        private val viewPager: ViewPager = popupPanel.findViewById(R.id.popup_panel_viewpager)
+        private val tabLayout: TabLayout = popupPanel.findViewById(R.id.popup_panel_tab)
 
         private val adapter = PanelAdapter(children)
 

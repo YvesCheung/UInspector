@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RestrictTo
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.lifecycle.Disposable
 import com.pitaya.mobile.uinspector.ui.decoration.UInspectorDecoration
@@ -17,7 +18,8 @@ import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelContainer
  * @author YvesCheung
  * 2020/12/30
  */
-internal class UInspectorLegacyDialogFragment : DialogFragment(), UInspectorPanel {
+@RestrictTo(RestrictTo.Scope.LIBRARY)
+class UInspectorLegacyDialogFragment : DialogFragment(), UInspectorPanel {
 
     private val delegate = UInspectorPanelDelegate()
 

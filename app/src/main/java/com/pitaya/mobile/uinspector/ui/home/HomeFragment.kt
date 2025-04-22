@@ -11,8 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.pitaya.mobile.uinspector.demo.R
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item_recycler_view.view.*
 
 class HomeFragment : Fragment() {
 
@@ -30,7 +28,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val data = mutableListOf<HomeItem>()
         val adapter = HomeAdapter(data)
-        home_recycler_view.adapter = adapter
+        view.findViewById<RecyclerView>(R.id.home_recycler_view).adapter = adapter
         homeViewModel.data.observe(viewLifecycleOwner, Observer {
             data.clear()
             data.addAll(it)
@@ -58,6 +56,8 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private class HomeVH(itemView: View, val textView: TextView = itemView.recycler_text) :
-        RecyclerView.ViewHolder(itemView)
+    private class HomeVH(
+        itemView: View,
+        val textView: TextView = itemView.findViewById(R.id.recycler_text)
+    ) : RecyclerView.ViewHolder(itemView)
 }

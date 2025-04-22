@@ -5,6 +5,7 @@ import android.content.Context
 import android.text.SpannableStringBuilder
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStoreAccessor
 import androidx.lifecycle.ViewModelStoreOwner
@@ -16,7 +17,6 @@ import com.pitaya.mobile.uinspector.util.canonicalName
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.withBold
 import com.pitaya.mobile.uinspector.util.withColor
-import kotlinx.android.synthetic.main.uinspector_panel_viewmodel.view.*
 
 /**
  * @author YvesCheung
@@ -81,13 +81,14 @@ class UInspectorViewModelPanel(override val priority: Int) : UInspectorChildPane
             }
 
             if (!foundViewModel) {
-                ssb.withColor(context, R.color.uinspector_error_color) {
+                val errorColor = com.pitaya.mobile.uinspector.R.color.uinspector_error_color
+                ssb.withColor(context, errorColor) {
                     newLine(lineNum) {
                         append("Can not found any ViewModel!")
                     }
                 }
             }
-            root.view_viewmodel.text = ssb
+            root.findViewById<TextView>(R.id.view_viewmodel).text = ssb
         }
         return root
     }

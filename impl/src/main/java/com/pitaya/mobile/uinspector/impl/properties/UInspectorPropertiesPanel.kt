@@ -18,12 +18,11 @@ import com.pitaya.mobile.uinspector.UInspector
 import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.impl.R
+import com.pitaya.mobile.uinspector.R as ApiR
 import com.pitaya.mobile.uinspector.properties.ViewProperties
 import com.pitaya.mobile.uinspector.state.UInspectorTargetViews
 import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.pitaya.mobile.uinspector.util.dpStr
-import kotlinx.android.synthetic.main.uinspector_panel_properties.view.*
-import kotlinx.android.synthetic.main.uinspector_view_layout.view.*
 
 /**
  * @author YvesCheung
@@ -46,36 +45,40 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
         val targetView = (targetLayer as? AndroidView)?.view
         if (targetView != null) {
 
-            root.view_props_list.adapter = ViewPropsAdapter(targetView).also {
-                adapter = it
-                targets.addOnDrawListener(it)
-            }
+            root.findViewById<RecyclerView>(R.id.view_props_list).adapter =
+                ViewPropsAdapter(targetView).also {
+                    adapter = it
+                    targets.addOnDrawListener(it)
+                }
 
-            root.uinspector_view_margin.let {
+            root.findViewById<View>(R.id.uinspector_view_margin).let {
                 it.setBackgroundColor(Color.parseColor("#D3FF93"))
-                it.view_prop.text = "margin"
+                it.findViewById<TextView>(R.id.view_prop).text = "margin"
 
-                val lp =
-                    targetView.layoutParams as? ViewGroup.MarginLayoutParams
-                it.view_top.text = lp?.topMargin?.dpStr ?: 0.dpStr
-                it.view_bottom.text = lp?.bottomMargin?.dpStr ?: 0.dpStr
-                it.view_left.text = lp?.leftMargin?.dpStr ?: 0.dpStr
-                it.view_right.text = lp?.rightMargin?.dpStr ?: 0.dpStr
+                val lp = targetView.layoutParams as? ViewGroup.MarginLayoutParams
+                it.findViewById<TextView>(R.id.view_top).text =
+                    lp?.topMargin?.dpStr ?: 0.dpStr
+                it.findViewById<TextView>(R.id.view_bottom).text =
+                    lp?.bottomMargin?.dpStr ?: 0.dpStr
+                it.findViewById<TextView>(R.id.view_left).text =
+                    lp?.leftMargin?.dpStr ?: 0.dpStr
+                it.findViewById<TextView>(R.id.view_right).text =
+                    lp?.rightMargin?.dpStr ?: 0.dpStr
             }
 
-            root.uinspector_view_padding.let {
+            root.findViewById<View>(R.id.uinspector_view_padding).let {
                 it.setBackgroundColor(Color.parseColor("#ACD6FF"))
-                it.view_prop.text = "padding"
+                it.findViewById<TextView>(R.id.view_prop).text = "padding"
 
-                it.view_top.text = targetView.paddingTop.dpStr
-                it.view_bottom.text = targetView.paddingBottom.dpStr
-                it.view_left.text = targetView.paddingLeft.dpStr
-                it.view_right.text = targetView.paddingRight.dpStr
+                it.findViewById<TextView>(R.id.view_top).text = targetView.paddingTop.dpStr
+                it.findViewById<TextView>(R.id.view_bottom).text = targetView.paddingBottom.dpStr
+                it.findViewById<TextView>(R.id.view_left).text = targetView.paddingLeft.dpStr
+                it.findViewById<TextView>(R.id.view_right).text = targetView.paddingRight.dpStr
             }
 
-            root.uinspector_view_bound.let {
+            root.findViewById<View>(R.id.uinspector_view_bound).let {
                 it.setBackgroundColor(Color.parseColor("#FFFFCE"))
-                it.view_top.text =
+                it.findViewById<TextView>(R.id.view_top).text =
                     targetView.width.dpStr + "\nX\n" + targetView.height.dpStr
             }
         }
@@ -131,8 +134,7 @@ class UInspectorPropertiesPanel(override val priority: Int) : UInspectorChildPan
             s.setSpan(
                 ForegroundColorSpan(
                     ContextCompat.getColor(
-                        holder.itemView.context,
-                        R.color.uinspector_primary_color
+                        holder.itemView.context, ApiR.color.uinspector_primary_color
                     )
                 ),
                 0,

@@ -91,6 +91,7 @@ internal object ComposeInspector {
      * Uses reflection to try to pull a `SlotTable` out of [composeView] and render it. If any of the
      * reflection fails, returns false.
      */
+    @OptIn(UiToolingDataApi::class)
     private fun tryGetLayoutInfos(androidCompose: AndroidComposeView): Sequence<Layer>? {
         // Any of this reflection code can fail if running with an unsupported version of Compose.
         // Compose doesn't provide a public API for this (yet) because they don't want it to be used in
@@ -112,7 +113,6 @@ internal object ComposeInspector {
         // public (eg LayoutNode), so we'd need to use even more (brittle) reflection to do that parsing.
         // That said, once Compose is more stable, it might be worth it to read the slot table directly,
         // since then we could drop the requirement for the Tooling library to be on the classpath.
-        @OptIn(InternalComposeApi::class, UiToolingDataApi::class)
         val rootGroup = composer.compositionData.asTree()
         return parseGroupToLayer(rootGroup, androidCompose)
     }

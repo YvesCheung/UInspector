@@ -2,21 +2,25 @@ apply plugin: 'com.android.application'
 apply from: '../gradle/android_extension.gradle'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.pitaya.mobile.uinspector.demo"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
 
         multiDexEnabled true
     }
 
+    namespace 'com.pitaya.mobile.uinspector.demo'
+
     buildFeatures {
         // Enables Jetpack Compose for this module
         compose true
+
+        buildConfig true
     }
 
     buildTypes {

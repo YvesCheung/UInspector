@@ -22,8 +22,9 @@ import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 import com.pitaya.mobile.uinspector.state.UInspectorTargetViews
 import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.pitaya.mobile.uinspector.util.dpStr
-import kotlinx.android.synthetic.main.uinspector_panel_compose_properties.view.*
 import kotlin.math.roundToInt
+import com.pitaya.mobile.uinspector.impl.R as ImplR
+import com.pitaya.mobile.uinspector.R as ApiR
 
 /**
  * @author YvesCheung
@@ -42,25 +43,26 @@ class UInspectorComposePropertiesPanel(override val priority: Int) : UInspectorC
         val root = LayoutInflater.from(context)
             .inflate(R.layout.uinspector_panel_compose_properties, null)
         if (target is ComposeView) {
-            root.compose_props_list.adapter = ComposePropsAdapter(target)
+            root.findViewById<RecyclerView>(R.id.compose_props_list).adapter =
+                ComposePropsAdapter(target)
 
-            root.uinspector_compose_padding.let {
+            root.findViewById<View>(R.id.uinspector_compose_padding).let {
                 it.setBackgroundColor(Color.parseColor("#ACD6FF"))
-                it.findViewById<TextView>(R.id.view_prop).text = "padding"
+                it.findViewById<TextView>(ImplR.id.view_prop).text = "padding"
 
-                it.findViewById<TextView>(R.id.view_top).text =
+                it.findViewById<TextView>(ImplR.id.view_top).text =
                     "${target.padding.top.roundToInt()}dp"
-                it.findViewById<TextView>(R.id.view_bottom).text =
+                it.findViewById<TextView>(ImplR.id.view_bottom).text =
                     "${target.padding.bottom.roundToInt()}dp"
-                it.findViewById<TextView>(R.id.view_left).text =
+                it.findViewById<TextView>(ImplR.id.view_left).text =
                     "${target.padding.left.roundToInt()}dp"
-                it.findViewById<TextView>(R.id.view_right).text =
+                it.findViewById<TextView>(ImplR.id.view_right).text =
                     "${target.padding.right.roundToInt()}dp"
             }
 
-            root.uinspector_compose_bound.let {
+            root.findViewById<View>(R.id.uinspector_compose_bound).let {
                 it.setBackgroundColor(Color.parseColor("#FFFFCE"))
-                it.findViewById<TextView>(R.id.view_top).text =
+                it.findViewById<TextView>(ImplR.id.view_top).text =
                     target.width.dpStr + "\nX\n" + target.height.dpStr
             }
 
@@ -120,7 +122,7 @@ class UInspectorComposePropertiesPanel(override val priority: Int) : UInspectorC
                 ForegroundColorSpan(
                     ContextCompat.getColor(
                         holder.itemView.context,
-                        com.pitaya.mobile.uinspector.impl.R.color.uinspector_primary_color
+                        ApiR.color.uinspector_primary_color
                     )
                 ),
                 0,
@@ -132,4 +134,5 @@ class UInspectorComposePropertiesPanel(override val priority: Int) : UInspectorC
     }
 
     private class ViewPropsHolder(val text: TextView) : RecyclerView.ViewHolder(text)
+
 }

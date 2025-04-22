@@ -21,8 +21,6 @@ import com.pitaya.mobile.uinspector.impl.utils.dpToPx
 import com.pitaya.mobile.uinspector.ui.decoration.UInspectorDecoration
 import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanel
 import com.pitaya.mobile.uinspector.util.visibilityToString
-import kotlinx.android.synthetic.main.uinspector_panel_targets.view.*
-import kotlinx.android.synthetic.main.uinspector_view_list_item.view.*
 
 /**
  * @author YvesCheung
@@ -45,20 +43,32 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
             val parentList: List<ViewInfo> =
                 if (parent != null) listOf(ViewInfo(parent))
                 else emptyList()
-            setupList(root.view_targets_parent_title, root.view_targets_parent, parentList)
+            setupList(
+                root.findViewById(R.id.view_targets_parent_title),
+                root.findViewById(R.id.view_targets_parent),
+                parentList
+            )
 
             val children: List<ViewInfo> =
                 targetView.children.mapIndexedTo(mutableListOf()) { index, view ->
                     ViewInfo(view, index)
                 }
-            setupList(root.view_targets_children_title, root.view_targets_children, children)
+            setupList(
+                root.findViewById(R.id.view_targets_children_title),
+                root.findViewById(R.id.view_targets_children),
+                children
+            )
 
             val brothers: List<ViewInfo> =
                 parent?.children?.mapIndexedNotNullTo(mutableListOf()) { index, view ->
                     if (view != targetView) ViewInfo(view, index)
                     else null
                 } ?: emptyList()
-            setupList(root.view_targets_brother_title, root.view_targets_brother, brothers)
+            setupList(
+                root.findViewById(R.id.view_targets_brother_title),
+                root.findViewById(R.id.view_targets_brother),
+                brothers
+            )
         }
         return root
     }
@@ -107,7 +117,7 @@ class UInspectorTargetsPanel(override val priority: Int) : UInspectorChildPanel 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
             val root = LayoutInflater.from(parent.context)
                 .inflate(R.layout.uinspector_view_list_item, parent, false)
-            return VH(root.uinspector_view_access_btn)
+            return VH(root.findViewById(R.id.uinspector_view_access_btn))
         }
 
         override fun getItemCount(): Int = views.size

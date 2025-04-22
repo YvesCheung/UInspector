@@ -69,12 +69,12 @@ internal class UInspectorMask(
                 return true
             }
 
-            override fun onSingleTapUp(e: MotionEvent?): Boolean {
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
                 isSingleTap = true
                 return super.onSingleTapUp(e)
             }
 
-            override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
                 val event = downEvent
                 val activity = tryGetActivity(context)
                 if (event != null && activity != null) {

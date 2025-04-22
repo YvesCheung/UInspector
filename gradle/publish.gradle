@@ -11,19 +11,19 @@ final String licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0'
 
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
-        classifier = 'sources'
+        getArchiveClassifier().set('sources')
         getArchiveBaseName().set(libraryName)
         from android.sourceSets.main.java.srcDirs
     }
     task androidNativeJar(type: Jar) {
-        classifier = 'so'
+        getArchiveClassifier().set('so')
         from(new File(buildDir, 'libs'))
         include("**/*.so")
     }
     ext.libraryOutputFile = "$buildDir/outputs/aar/${project.getName()}-release.aar"
 } else { // Java libraries
     task sourcesJar(type: Jar, dependsOn: classes) {
-        classifier = 'sources'
+        getArchiveClassifier().set('sources')
         getArchiveBaseName().set(libraryName)
         from sourceSets.main.allSource
     }

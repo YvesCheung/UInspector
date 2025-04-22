@@ -2,7 +2,6 @@
 
 package com.pitaya.mobile.uinspector.optional.compose.inspect
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.compose.runtime.InternalComposeApi
 import androidx.compose.ui.node.Ref
@@ -24,6 +23,7 @@ import com.pitaya.mobile.uinspector.optional.compose.hirarchy.SubComposition
  * to derive the "name" of the [Layer]. The other [Layer] properties come directly off
  * [NodeGroup] values.
  */
+@OptIn(UiToolingDataApi::class)
 fun parseGroupToLayer(
     group: Group,
     parent: Layer,

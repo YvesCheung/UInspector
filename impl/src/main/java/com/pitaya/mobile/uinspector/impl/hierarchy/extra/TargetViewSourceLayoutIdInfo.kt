@@ -7,7 +7,7 @@ import android.view.View
 import androidx.annotation.LayoutRes
 import androidx.annotation.RequiresApi
 import com.pitaya.mobile.uinspector.hierarchy.HierarchyExtraInfo
-import com.pitaya.mobile.uinspector.impl.R
+import com.pitaya.mobile.uinspector.R
 import com.pitaya.mobile.uinspector.util.newLine
 import com.pitaya.mobile.uinspector.util.resToString
 import com.pitaya.mobile.uinspector.util.withColor
