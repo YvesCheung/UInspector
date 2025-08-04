@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply from: '../../gradle/android_extension.gradle'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 
 android {
 
@@ -15,11 +16,6 @@ android {
     buildFeatures {
         // Enables Jetpack Compose for this module
         compose true
-    }
-
-    composeOptions {
-        kotlinCompilerVersion kotlin_version
-        kotlinCompilerExtensionVersion compose_version
     }
 }
 
