@@ -23,8 +23,11 @@ import com.pitaya.mobile.uinspector.ui.panel.popup.UInspectorChildPanelPlugin
 @AutoService(UInspectorPluginService::class)
 class UInspectorComposeService : UInspectorPluginService {
 
-    override fun onCreate(context: Context, plugins: UInspectorPlugins) {
+    init {
         isDebugInspectorInfoEnabled = true
+    }
+
+    override fun onCreate(context: Context, plugins: UInspectorPlugins) {
         plugins.prepend(UInspectorChildPanelPlugin::class.java, UInspectorComposeChildPanelPlugin())
         plugins.append(LayerFactoryPlugin::class.java, ComposeLayerFactoryPlugin())
         plugins.append(HitTestFactoryPlugin::class.java, ComposeHitTestFactoryPlugin())

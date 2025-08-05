@@ -40,9 +40,11 @@ object UInspector {
     @JvmField
     val currentState = UInspectorState()
 
+    private val pluginServices = loadService(UInspectorPluginService::class.java)
+
     @JvmField
     val plugins: UInspectorPlugins = UInspectorPluginsImpl { plugins ->
-        loadService(UInspectorPluginService::class.java).forEach { service ->
+        pluginServices.forEach { service ->
             service.onCreate(application, plugins)
         }
     }
