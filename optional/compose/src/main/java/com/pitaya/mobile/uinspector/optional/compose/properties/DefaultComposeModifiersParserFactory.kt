@@ -12,19 +12,23 @@ class DefaultComposeModifiersParserFactory : ComposePropertiesParserFactory {
     override val uniqueKey: String = "Default"
 
     override fun tryCreate(view: ComposeView): List<ComposePropertiesParser> {
-        return view.modifiers.map { modifier ->
+        return view.modifiers.mapNotNull { modifier ->
             when {
-                modifier is SemanticsModifier ->
-                    SemanticsModifierParser(modifier)
+                modifier is SemanticsModifier -> null
+
+                GraphicsLayerElementParser.accept(modifier) ->
+                    GraphicsLayerElementParser(modifier)
+
                 SimpleGraphicsLayerModifierParser.accept(modifier) ->
                     SimpleGraphicsLayerModifierParser(modifier)
+
                 BlockGraphicsLayerModifierParser.accept(modifier) ->
                     BlockGraphicsLayerModifierParser(modifier)
-                PaddingModifierParser.accept(modifier)->
-                    IgnoreProperty
-                else ->
-                    UnknownModifierParser(modifier)
+
+                PaddingModifierParser.accept(modifier) -> null
+
+                else -> InspectableModifierParser(modifier)
             }
-        } + BasicParser(view)
+        } + listOf(BasicParser(view), SemanticsModifierParser(view))
     }
 }

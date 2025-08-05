@@ -15,14 +15,14 @@ import com.pitaya.mobile.uinspector.util.withColor
  */
 class ComposeSourceLocationExtraInfo(private val activity: Activity) : HierarchyExtraInfo {
 
-    @OptIn(UiToolingDataApi::class)
+    @UiToolingDataApi
     override fun afterHierarchy(index: Int, layer: Layer, s: SpannableStringBuilder) {
         if (layer is ComposeView) {
-            val location = layer.sourceCode
-            if (location != null) {
+            val sourceCode = layer.sourceCode
+            if (sourceCode != null) {
                 s.withColor(activity) {
                     newLine(index) {
-                        append(location.toString())
+                        append(sourceCode.toString())
                     }
                 }
             }

@@ -9,23 +9,21 @@ import androidx.compose.ui.tooling.data.UiToolingDataApi
  */
 data class SourceCodeLocation(val file: String, val line: Int, val offset: Int) {
 
+    @OptIn(UiToolingDataApi::class)
+    constructor(location: SourceLocation) :
+        this(location.sourceFile.orEmpty(), location.lineNumber, location.offset)
+
     override fun toString(): String = "$file:$line"
 }
 
 @OptIn(UiToolingDataApi::class)
-internal fun createCodeLocation(name: CharSequence, sourceLocation: SourceLocation?): SourceCodeLocation? {
-    return if (name.isNotBlank() &&
-        sourceLocation != null &&
-        sourceLocation.sourceFile !in frameworkWhiteList
-    ) {
-        SourceCodeLocation(
-            sourceLocation.sourceFile.orEmpty(),
-            sourceLocation.lineNumber,
-            sourceLocation.offset,
-        )
-    } else {
-        null
+internal fun notInFramework(callChain: List<CallGroupInfo>): SourceCodeLocation? {
+    for (call in callChain) {
+        if (call.location == null) continue
+        if (call.location.sourceFile in frameworkWhiteList) break
+        return SourceCodeLocation(call.location)
     }
+    return null
 }
 
 /**

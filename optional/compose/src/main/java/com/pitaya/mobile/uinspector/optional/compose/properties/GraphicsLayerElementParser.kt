@@ -2,23 +2,26 @@ package com.pitaya.mobile.uinspector.optional.compose.properties
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.GraphicsLayerScope
+import androidx.compose.ui.node.ModifierNodeElement
+import com.pitaya.mobile.uinspector.optional.compose.properties.SimpleGraphicsLayerModifierParser.Companion.layerBlockField
 
 /**
- * @see androidx.compose.ui.graphics.SimpleGraphicsLayerModifier
- *
- * compose < 1.6.0.
- * compose > 1.6.0 use [GraphicsLayerElementParser] instead.
+ * @see androidx.compose.ui.graphics.GraphicsLayerElement
  *
  * @author YvesCheung
- * 2021/12/3
+ * 2025/8/5
  */
-open class SimpleGraphicsLayerModifierParser(val modifier: Modifier) : GraphicsLayerModifier() {
+class GraphicsLayerElementParser(val modifier: Modifier) : GraphicsLayerModifier() {
 
     @Suppress("UNCHECKED_CAST")
     override fun parseConfig(): GraphicsConfig? {
         return try {
+            /**
+             * [androidx.compose.ui.graphics.SimpleGraphicsLayerModifier]
+             */
+            val simpleGraphicsNode = (modifier as ModifierNodeElement<*>).create()
             val layerBlock: GraphicsLayerScope.() -> Unit =
-                layerBlockField.get(modifier) as GraphicsLayerScope.() -> Unit
+                layerBlockField.get(simpleGraphicsNode) as GraphicsLayerScope.() -> Unit
             return GraphicsConfig().also(layerBlock)
         } catch (e: Throwable) {
             null
@@ -27,14 +30,8 @@ open class SimpleGraphicsLayerModifierParser(val modifier: Modifier) : GraphicsL
 
     companion object {
 
-        val modifierClass by lazy(LazyThreadSafetyMode.NONE) {
-            Class.forName("androidx.compose.ui.graphics.SimpleGraphicsLayerModifier")
-        }
-
-        val layerBlockField by lazy(LazyThreadSafetyMode.NONE) {
-            val field = modifierClass.getDeclaredField("layerBlock")
-            field.isAccessible = true
-            field
+        private val elementClass by lazy(LazyThreadSafetyMode.NONE) {
+            Class.forName("androidx.compose.ui.graphics.GraphicsLayerElement")
         }
 
         private var ClassNotFound = false
@@ -42,7 +39,7 @@ open class SimpleGraphicsLayerModifierParser(val modifier: Modifier) : GraphicsL
         fun accept(modifier: Modifier): Boolean {
             return if (!ClassNotFound) {
                 try {
-                    modifierClass.isInstance(modifier)
+                    elementClass.isInstance(modifier)
                 } catch (e: Throwable) {
                     ClassNotFound = true
                     false

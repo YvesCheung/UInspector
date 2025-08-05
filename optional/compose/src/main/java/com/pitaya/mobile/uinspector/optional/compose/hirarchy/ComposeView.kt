@@ -3,6 +3,10 @@ package com.pitaya.mobile.uinspector.optional.compose.hirarchy
 import androidx.annotation.Size
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.LayoutInfo
+import androidx.compose.ui.node.ModifierNodeElement
+import androidx.compose.ui.node.SemanticsModifierNode
+import androidx.compose.ui.semantics.SemanticsConfiguration
+import androidx.compose.ui.semantics.SemanticsModifier
 import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.tooling.data.NodeGroup
 import androidx.compose.ui.tooling.data.UiToolingDataApi
@@ -11,7 +15,7 @@ import androidx.compose.ui.unit.IntRect
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.optional.compose.inspect.CallGroupInfo
 import com.pitaya.mobile.uinspector.optional.compose.inspect.SourceCodeLocation
-import com.pitaya.mobile.uinspector.optional.compose.inspect.createCodeLocation
+import com.pitaya.mobile.uinspector.optional.compose.inspect.notInFramework
 import com.pitaya.mobile.uinspector.optional.compose.inspect.parseGroupToLayer
 import com.pitaya.mobile.uinspector.optional.compose.properties.PaddingModifierParser
 
@@ -45,13 +49,35 @@ class ComposeView(
     override val height = bounds.run { bottom - top }
 
     val sourceCode: SourceCodeLocation?
-        get() = createCodeLocation(name, callChain.firstOrNull()?.location)
+        get() = notInFramework(callChain)
 
     private var androidComposeViewLocation: IntArray? = null
 
     private val semanticsId = (group.node as? LayoutInfo)?.semanticsId
-    val semanticsNodes
-        get() = allSemanticsNodes?.filter { it.id == semanticsId } ?: emptyList()
+    val semanticsConfigurations: List<SemanticsConfiguration>
+        get() {
+            val semanticsNodes = allSemanticsNodes?.filter { it.id == semanticsId }
+            return semanticsNodes?.map { it.config }?.ifEmpty { null }
+            // Before Compose 1.6, semantics could be held in a SemanticsModifier
+                ?: modifiers
+                    .filterIsInstance<SemanticsModifier>()
+                    .map { it.semanticsConfiguration }
+                    .ifEmpty { null }
+                // After Compose 1.6, semantics are held in nodes. While this usually gets represented
+                // by semanticsNodes, sometimes they instead are only found in SemanticsModifierNode,
+                // which we must then extract.
+                ?: modifiers
+                    .filterIsInstance<ModifierNodeElement<*>>()
+                    .map { it.create() }
+                    .filterIsInstance<SemanticsModifierNode>()
+                    .map { semanticsModifierNode ->
+                        semanticsModifierNode.run {
+                            val semanticsConfiguration = SemanticsConfiguration()
+                            semanticsConfiguration.applySemantics()
+                            semanticsConfiguration
+                        }
+                    }
+        }
 
     /**
      * If DecorView is not fullscreen (such as Dialog),

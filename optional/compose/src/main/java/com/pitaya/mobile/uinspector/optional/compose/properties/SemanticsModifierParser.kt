@@ -1,6 +1,5 @@
 package com.pitaya.mobile.uinspector.optional.compose.properties
 
-import androidx.compose.ui.semantics.SemanticsModifier
 import androidx.compose.ui.semantics.SemanticsProperties.CollectionInfo
 import androidx.compose.ui.semantics.SemanticsProperties.CollectionItemInfo
 import androidx.compose.ui.semantics.SemanticsProperties.ContentDescription
@@ -22,24 +21,30 @@ import androidx.compose.ui.semantics.SemanticsProperties.VerticalScrollAxisRange
 import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.semantics.getOrNull
 import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 import com.pitaya.mobile.uinspector.util.quote
 
 /**
  * @author YvesCheung
  * 2021/12/1
  */
-class SemanticsModifierParser(val modifier: SemanticsModifier) : ComposePropertiesParser {
+class SemanticsModifierParser(val view: ComposeView) : ComposePropertiesParser {
 
     override val priority: Int = 10000
 
     override fun parse(@Output props: MutableMap<String, Any?>) {
-        val config = modifier.semanticsConfiguration
+        val configs = view.semanticsConfigurations
 
         fun <T : Any> parseSemanticsProperty(
             property: SemanticsPropertyKey<T>,
             inspect: (T?) -> CharSequence? = { if (it is CharSequence) it.quote() else it?.toString() }
         ) {
-            val inspectCharSequence = inspect(config.getOrNull(property))
+            var value: T? = null
+            for (config in configs) {
+                value = config.getOrNull(property)
+                if (value != null) break
+            }
+            val inspectCharSequence = inspect(value)
             if (!inspectCharSequence.isNullOrBlank()) {
                 props[property.name] = inspectCharSequence
             }

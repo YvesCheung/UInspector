@@ -9,7 +9,7 @@ import com.pitaya.mobile.uinspector.util.simpleName
  * @author YvesCheung
  * 2021/2/2
  */
-class UnknownModifierParser(val modifier: Modifier) : ComposePropertiesParser {
+class InspectableModifierParser(val modifier: Modifier) : ComposePropertiesParser {
 
     override val priority: Int = -10
 
