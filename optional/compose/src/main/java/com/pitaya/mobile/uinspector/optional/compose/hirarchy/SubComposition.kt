@@ -1,11 +1,12 @@
 package com.pitaya.mobile.uinspector.optional.compose.hirarchy
 
 import androidx.compose.runtime.Composer
-import androidx.compose.runtime.InternalComposeApi
+import androidx.compose.ui.semantics.SemanticsNode
 import androidx.compose.ui.tooling.data.UiToolingDataApi
 import androidx.compose.ui.tooling.data.asTree
 import androidx.compose.ui.unit.IntRect
 import com.pitaya.mobile.uinspector.hierarchy.Layer
+import com.pitaya.mobile.uinspector.optional.compose.inspect.CallGroupInfo
 import com.pitaya.mobile.uinspector.optional.compose.inspect.parseGroupToLayer
 
 /**
@@ -15,14 +16,14 @@ import com.pitaya.mobile.uinspector.optional.compose.inspect.parseGroupToLayer
 @OptIn(UiToolingDataApi::class)
 class SubComposition(
     override val id: CharSequence?,
+    override var name: CharSequence,
+    val callChain: List<CallGroupInfo>,
     val bounds: IntRect,
-    private val composer: Composer
+    private val subComposer: Composer,
+    private val semanticsNodes: List<SemanticsNode>?
 ) : Layer {
 
     override var parent: Layer? = null
-        internal set
-
-    override var name: CharSequence = "SubComposition"
         internal set
 
     override val width = bounds.run { right - left }
@@ -31,9 +32,9 @@ class SubComposition(
 
     override fun getLocation(): IntArray = intArrayOf(bounds.left, bounds.top)
 
-    @OptIn(InternalComposeApi::class)
     override val children: Sequence<Layer>
-        get() = parseGroupToLayer(composer.compositionData.asTree(), this)
+        get() = subComposer.compositionData.asTree()
+            .parseGroupToLayer(this, semanticsNodes = semanticsNodes)
 
     override fun toString(): String = "SubComposition($name)"
 

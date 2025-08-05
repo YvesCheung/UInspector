@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.compose.runtime.Composer
 import androidx.compose.runtime.Composition
 import androidx.compose.runtime.InternalComposeApi
+import androidx.compose.ui.node.RootForTest
+import androidx.compose.ui.semantics.getAllSemanticsNodes
 import androidx.compose.ui.tooling.data.UiToolingDataApi
 import androidx.compose.ui.tooling.data.asTree
 import com.pitaya.mobile.uinspector.hierarchy.AndroidView
@@ -68,7 +70,7 @@ internal object ComposeInspector {
         return scannableViews?.let { it to true }
         // Display a warning but then continue rendering Android views, since the composition may emit
         // view children and so it's better than nothing.
-            ?: listOf(composeRenderingError(linkageError)) to false
+            ?: (listOf(composeRenderingError(linkageError)) to false)
     }
 
     private const val COMPOSE_UNSUPPORTED_MESSAGE =
@@ -114,7 +116,10 @@ internal object ComposeInspector {
         // That said, once Compose is more stable, it might be worth it to read the slot table directly,
         // since then we could drop the requirement for the Tooling library to be on the classpath.
         val rootGroup = composer.compositionData.asTree()
-        return parseGroupToLayer(rootGroup, androidCompose)
+
+        val semanticsNodes = (androidCompose.view as? RootForTest)?.semanticsOwner
+            ?.getAllSemanticsNodes(mergingEnabled = false)
+        return rootGroup.parseGroupToLayer(androidCompose, semanticsNodes)
     }
 
     private val viewKeyedTagsField: Field? by lazy(LazyThreadSafetyMode.PUBLICATION) {

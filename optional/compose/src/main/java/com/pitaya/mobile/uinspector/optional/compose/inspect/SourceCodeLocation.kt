@@ -1,6 +1,6 @@
 package com.pitaya.mobile.uinspector.optional.compose.inspect
 
-import androidx.compose.ui.tooling.data.Group
+import androidx.compose.ui.tooling.data.SourceLocation
 import androidx.compose.ui.tooling.data.UiToolingDataApi
 
 /**
@@ -13,16 +13,15 @@ data class SourceCodeLocation(val file: String, val line: Int, val offset: Int) 
 }
 
 @OptIn(UiToolingDataApi::class)
-internal fun createCodeLocation(group: Group): SourceCodeLocation? {
-    val currentLocation = group.location
-    return if (!group.name.isNullOrBlank() &&
-        currentLocation != null &&
-        currentLocation.sourceFile !in frameworkWhiteList
+internal fun createCodeLocation(name: CharSequence, sourceLocation: SourceLocation?): SourceCodeLocation? {
+    return if (name.isNotBlank() &&
+        sourceLocation != null &&
+        sourceLocation.sourceFile !in frameworkWhiteList
     ) {
         SourceCodeLocation(
-            currentLocation.sourceFile.orEmpty(),
-            currentLocation.lineNumber,
-            currentLocation.offset,
+            sourceLocation.sourceFile.orEmpty(),
+            sourceLocation.lineNumber,
+            sourceLocation.offset,
         )
     } else {
         null
