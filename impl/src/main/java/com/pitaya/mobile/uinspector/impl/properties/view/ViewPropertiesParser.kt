@@ -5,7 +5,6 @@ import android.os.Build
 import android.view.View
 import com.pitaya.mobile.uinspector.properties.PropertiesParser
 import com.pitaya.mobile.uinspector.util.*
-import com.github.yvescheung.whisper.Output
 
 /**
  * Extract all properties we concerned from [view]

@@ -12,18 +12,16 @@ import androidx.lifecycle.ProcessLifecycleOwner
 import com.pitaya.mobile.uinspector.UInspector
 import com.pitaya.mobile.uinspector.state.UInspectorLifecycleState
 import com.pitaya.mobile.uinspector.util.log
-import com.github.yvescheung.whisper.NotThreadSafe
-import com.github.yvescheung.whisper.UseWith
 
-
+/**
+ * Not thread safe
+ */
 @Suppress("MemberVisibilityCanBePrivate")
-@NotThreadSafe
 internal class UInspectorLifecycle {
 
     var currentActivity: Activity? = null
         private set
 
-    @UseWith("unRegister")
     fun register(application: Application) {
         ProcessLifecycleOwner.get().lifecycle.addObserver(appLifecycle)
         application.registerActivityLifecycleCallbacks(activityLifecycle)

@@ -20,7 +20,7 @@ import androidx.compose.ui.semantics.SemanticsProperties.ToggleableState
 import androidx.compose.ui.semantics.SemanticsProperties.VerticalScrollAxisRange
 import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.semantics.getOrNull
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
 import com.pitaya.mobile.uinspector.util.quote
 

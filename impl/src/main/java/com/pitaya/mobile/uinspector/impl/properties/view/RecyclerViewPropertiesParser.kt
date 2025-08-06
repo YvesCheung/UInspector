@@ -3,7 +3,7 @@ package com.pitaya.mobile.uinspector.impl.properties.view
 import androidx.recyclerview.widget.RecyclerView
 import com.pitaya.mobile.uinspector.util.canonicalName
 import com.pitaya.mobile.uinspector.util.simpleName
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 
 /**
  * @author YvesCheung

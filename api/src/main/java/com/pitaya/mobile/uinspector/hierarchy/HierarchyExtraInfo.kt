@@ -2,9 +2,7 @@ package com.pitaya.mobile.uinspector.hierarchy
 
 import android.text.SpannableStringBuilder
 import android.view.View
-import com.pitaya.mobile.uinspector.hierarchy.AndroidView
-import com.pitaya.mobile.uinspector.hierarchy.Layer
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 
 /**
  * @see HierarchyExtraInfoPlugin

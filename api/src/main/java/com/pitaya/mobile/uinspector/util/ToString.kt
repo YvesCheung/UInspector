@@ -13,7 +13,6 @@ import android.view.View
 import androidx.annotation.AnyRes
 import androidx.annotation.ColorInt
 import androidx.annotation.IdRes
-import com.github.yvescheung.whisper.IntDef
 import com.pitaya.mobile.uinspector.R
 import com.pitaya.mobile.uinspector.UInspector
 import kotlin.math.roundToInt
@@ -99,7 +98,7 @@ fun idToString(context: Context, @IdRes id: Int): String {
     }
 }
 
-fun visibilityToString(@IntDef(View.VISIBLE, View.INVISIBLE, View.GONE) visibility: Int): String {
+fun visibilityToString(visibility: Int): String {
     return when (visibility) {
         View.VISIBLE -> "VISIBLE"
         View.INVISIBLE -> "INVISIBLE"

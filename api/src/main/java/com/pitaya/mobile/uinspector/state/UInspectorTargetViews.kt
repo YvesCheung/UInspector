@@ -2,7 +2,6 @@ package com.pitaya.mobile.uinspector.state
 
 import android.view.View
 import android.view.ViewTreeObserver
-import com.github.yvescheung.whisper.UseWith
 import com.pitaya.mobile.uinspector.hierarchy.AndroidView
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import java.util.concurrent.CopyOnWriteArrayList
@@ -17,7 +16,6 @@ class UInspectorTargetViews private constructor(
     private val views: MutableList<Layer> = ArrayList(origin) //copy
 ) : List<Layer> by views {
 
-    @UseWith("clear")
     constructor(views: List<Layer>) : this(origin = views)
 
     private val onDraw = CopyOnWriteArrayList<Listener>()
@@ -70,7 +68,6 @@ class UInspectorTargetViews private constructor(
         }
     }
 
-    @UseWith("removeOnDrawListener")
     fun addOnDrawListener(listener: Listener): UInspectorTargetViews {
         onDraw.add(listener)
         return this
@@ -81,7 +78,6 @@ class UInspectorTargetViews private constructor(
         return this
     }
 
-    @UseWith("removeOnDetachListener")
     fun addOnDetachListener(listener: Listener): UInspectorTargetViews {
         onDetach.add(listener)
         return this
@@ -92,7 +88,6 @@ class UInspectorTargetViews private constructor(
         return this
     }
 
-    @UseWith("removeOnScrollListener")
     fun addOnScrollListener(listener: Listener): UInspectorTargetViews {
         onScroll.add(listener)
         return this

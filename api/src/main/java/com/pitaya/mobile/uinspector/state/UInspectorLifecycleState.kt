@@ -12,17 +12,15 @@ import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorDialogFragment
 import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorLegacyDialogFragment
 import com.pitaya.mobile.uinspector.ui.panel.fullscreen.UInspectorPanel
 import com.pitaya.mobile.uinspector.util.log
-import com.github.yvescheung.whisper.NotThreadSafe
-import com.github.yvescheung.whisper.UseWith
 
 /**
- * Store the information which is bound to the lifecycle of [activity]
+ * Store the information which is bound to the lifecycle of [activity].
+ * Not thread safe.
  *
  * @author YvesCheung
  * 2020/12/30
  */
-@NotThreadSafe
-class UInspectorLifecycleState @UseWith("clear") constructor(val activity: Activity) {
+class UInspectorLifecycleState(val activity: Activity) {
 
     var panel: UInspectorPanel? = null
         internal set

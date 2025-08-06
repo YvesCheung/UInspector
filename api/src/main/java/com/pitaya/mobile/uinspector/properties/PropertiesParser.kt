@@ -1,6 +1,6 @@
 package com.pitaya.mobile.uinspector.properties
 
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 
 /**
  * @author YvesCheung

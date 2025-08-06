@@ -6,7 +6,7 @@ import android.view.View
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 
 /**
  * @author YvesCheung

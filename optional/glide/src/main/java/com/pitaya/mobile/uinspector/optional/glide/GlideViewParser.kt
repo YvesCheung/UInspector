@@ -3,7 +3,7 @@ package com.pitaya.mobile.uinspector.optional.glide
 import android.view.View
 import com.bumptech.glide.request.Request
 import com.pitaya.mobile.uinspector.impl.properties.view.ViewPropertiesParser
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 
 /**
  * @author YvesCheung

@@ -4,11 +4,11 @@ import android.view.Gravity.NO_GRAVITY
 import android.view.View
 import android.view.View.NO_ID
 import androidx.coordinatorlayout.widget.CoordinatorLayout.LayoutParams
+import com.pitaya.mobile.uinspector.util.Output
 import com.pitaya.mobile.uinspector.util.gravityToString
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.linkToView
 import com.pitaya.mobile.uinspector.util.canonicalName
-import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

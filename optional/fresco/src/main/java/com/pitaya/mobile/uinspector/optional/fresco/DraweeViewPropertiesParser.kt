@@ -7,9 +7,9 @@ import com.facebook.drawee.view.DraweeView
 import com.facebook.imagepipeline.common.SourceUriType
 import com.facebook.imagepipeline.request.ImageRequest
 import com.pitaya.mobile.uinspector.impl.properties.view.ImageViewPropertiesParser
+import com.pitaya.mobile.uinspector.util.Output
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.link
-import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

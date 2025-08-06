@@ -5,7 +5,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import com.pitaya.mobile.uinspector.properties.PropertiesParser
 import com.pitaya.mobile.uinspector.util.dpStr
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 
 /**
  * @author YvesCheung

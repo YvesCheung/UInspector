@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.github.yvescheung.whisper.IntDef
 import com.google.android.material.tabs.TabLayout
 import com.pitaya.mobile.uinspector.R
 import com.pitaya.mobile.uinspector.UInspector
@@ -87,7 +86,10 @@ internal class UInspectorPopupPanelContainerImpl(val parent: ViewGroup) :
             }
         }
 
-        fun showAt(@IntDef(TOP, BOTTOM) gravity: Int) {
+        /**
+         * @param gravity one of the [TOP] or [BOTTOM]
+         */
+        fun showAt(gravity: Int) {
             log("show UInspectorPopupPanel at ${if (gravity == TOP) "TOP" else "BOTTOM"}")
             initView()
 

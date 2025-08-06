@@ -2,7 +2,6 @@ package com.pitaya.mobile.uinspector.ui.panel.popup
 
 import android.view.View
 import androidx.annotation.MainThread
-import com.github.yvescheung.whisper.DeprecatedBy
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 
 /**
@@ -14,7 +13,7 @@ import com.pitaya.mobile.uinspector.hierarchy.Layer
 @MainThread
 interface UInspectorChildPanelContainer {
 
-    @DeprecatedBy(replaceWith = "show(LayerFactory.create(%s))")
+    @Deprecated("Use show(LayerFactory.create()) instead")
     fun show(anchorView: View)
 
     fun show(anchorView: Layer)

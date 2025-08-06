@@ -3,7 +3,6 @@ package com.pitaya.mobile.uinspector.hierarchy
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
-import com.github.yvescheung.whisper.NeedError
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.simpleName
 
@@ -13,9 +12,7 @@ import com.pitaya.mobile.uinspector.util.simpleName
  * @author YvesCheung
  * 2021/1/29
  */
-open class AndroidView
-@NeedError("Use LayerFactory.create(view) instead!")
-constructor(val view: View) : Layer {
+open class AndroidView(val view: View) : Layer {
 
     override val name: CharSequence
         get() = view.simpleName

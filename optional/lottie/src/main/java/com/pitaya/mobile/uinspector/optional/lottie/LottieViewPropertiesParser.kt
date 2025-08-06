@@ -5,9 +5,9 @@ import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable.INFINITE
 import com.airbnb.lottie.LottieDrawable.RESTART
 import com.pitaya.mobile.uinspector.impl.properties.view.ImageViewPropertiesParser
+import com.pitaya.mobile.uinspector.util.Output
 import com.pitaya.mobile.uinspector.util.idToString
 import com.pitaya.mobile.uinspector.util.quote
-import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

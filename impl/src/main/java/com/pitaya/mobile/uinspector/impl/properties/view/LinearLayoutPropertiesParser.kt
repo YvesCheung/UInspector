@@ -4,8 +4,8 @@ import android.os.Build
 import android.view.Gravity
 import android.widget.LinearLayout
 import android.widget.LinearLayout.HORIZONTAL
+import com.pitaya.mobile.uinspector.util.Output
 import com.pitaya.mobile.uinspector.util.gravityToString
-import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

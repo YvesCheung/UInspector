@@ -3,8 +3,8 @@ package com.pitaya.mobile.uinspector.impl.properties.view
 import android.os.Build
 import android.view.Gravity
 import android.widget.RelativeLayout
+import com.pitaya.mobile.uinspector.util.Output
 import com.pitaya.mobile.uinspector.util.gravityToString
-import com.github.yvescheung.whisper.Output
 
 /**
  * @author YvesCheung

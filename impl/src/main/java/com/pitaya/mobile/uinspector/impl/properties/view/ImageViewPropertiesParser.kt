@@ -4,7 +4,7 @@ import android.os.Build
 import android.widget.ImageView
 import com.pitaya.mobile.uinspector.util.colorToString
 import com.pitaya.mobile.uinspector.util.drawableToString
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 
 /**
  * @author YvesCheung

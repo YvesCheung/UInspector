@@ -2,7 +2,7 @@ package com.pitaya.mobile.uinspector.optional.compose.properties
 
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.unit.Density
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 
 /**
  * @author YvesCheung

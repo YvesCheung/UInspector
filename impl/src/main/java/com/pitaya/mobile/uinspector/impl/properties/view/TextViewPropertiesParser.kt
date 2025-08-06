@@ -7,7 +7,7 @@ import com.pitaya.mobile.uinspector.util.colorToString
 import com.pitaya.mobile.uinspector.util.gravityToString
 import com.pitaya.mobile.uinspector.util.quote
 import com.pitaya.mobile.uinspector.util.spStr
-import com.github.yvescheung.whisper.Output
+import com.pitaya.mobile.uinspector.util.Output
 
 /**
  * @author YvesCheung
