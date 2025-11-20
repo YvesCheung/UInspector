@@ -1,5 +1,9 @@
 package com.pitaya.mobile.uinspector.optional.compose.properties
 
+import android.content.Context
+import androidx.compose.ui.graphics.isSpecified
+import androidx.compose.ui.semantics.SemanticsActions.GetTextLayoutResult
+import androidx.compose.ui.semantics.SemanticsConfiguration
 import androidx.compose.ui.semantics.SemanticsProperties.CollectionInfo
 import androidx.compose.ui.semantics.SemanticsProperties.CollectionItemInfo
 import androidx.compose.ui.semantics.SemanticsProperties.ContentDescription
@@ -20,15 +24,21 @@ import androidx.compose.ui.semantics.SemanticsProperties.ToggleableState
 import androidx.compose.ui.semantics.SemanticsProperties.VerticalScrollAxisRange
 import androidx.compose.ui.semantics.SemanticsPropertyKey
 import androidx.compose.ui.semantics.getOrNull
-import com.pitaya.mobile.uinspector.util.Output
+import androidx.compose.ui.unit.isSpecified
 import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
+import com.pitaya.mobile.uinspector.optional.compose.util.colorToString
+import com.pitaya.mobile.uinspector.optional.compose.util.tryGetField
+import com.pitaya.mobile.uinspector.util.Output
 import com.pitaya.mobile.uinspector.util.quote
 
 /**
- * @author YvesCheung
+ * @author YvesCheung & hautc11
  * 2021/12/1
  */
-class SemanticsModifierParser(val view: ComposeView) : ComposePropertiesParser {
+class SemanticsModifierParser(
+    private val context: Context,
+    val view: ComposeView
+) : ComposePropertiesParser {
 
     override val priority: Int = 10000
 
@@ -52,9 +62,14 @@ class SemanticsModifierParser(val view: ComposeView) : ComposePropertiesParser {
 
         parseSemanticsProperty(Role)
 
-        parseSemanticsProperty(Text) { stringList ->
-            stringList?.joinToString { annotatedString -> "\"${annotatedString}\"" }
+        parseSemanticsProperty(Text) {
+            it?.firstOrNull()?.let { annotatedString ->
+                props["text"] = annotatedString.text.quote()
+            }
+            null
         }
+
+        parseTextLayoutResult(props, configs)
 
         parseSemanticsProperty(EditableText)
 
@@ -98,5 +113,61 @@ class SemanticsModifierParser(val view: ComposeView) : ComposePropertiesParser {
         parseSemanticsProperty(ToggleableState)
 
         parseSemanticsProperty(Error)
+    }
+
+    private fun parseTextLayoutResult(
+        props: MutableMap<String, Any?>,
+        configs: List<SemanticsConfiguration>
+    ) {
+        val getTextLayoutResult = configs.firstNotNullOfOrNull { it.getOrNull(GetTextLayoutResult) }
+        if (getTextLayoutResult?.action != null) {
+            val layoutResults = mutableListOf<androidx.compose.ui.text.TextLayoutResult>()
+            try {
+                val success = getTextLayoutResult.action?.invoke(layoutResults)
+                if (success == true && layoutResults.isNotEmpty()) {
+                    val textLayoutResult = layoutResults.first()
+                    val style = textLayoutResult.layoutInput.style
+
+                    if (style.fontSize.isSpecified) {
+                        props["fontSize"] = style.fontSize.toString()
+                    }
+                    style.fontWeight?.let { props["fontWeight"] = it.weight }
+                    style.fontFamily?.let {
+                        if (it.javaClass.simpleName == "FontListFontFamily") {
+                            val fonts = it.tryGetField<List<Any>>("fonts")
+                            if (fonts != null) {
+                                val fontNames = fonts.map { font ->
+                                    if (font.javaClass.simpleName == "ResourceFont") {
+                                        val resId = font.tryGetField<Int>("resId")
+                                        if (resId != null) {
+                                            try {
+                                                "R.font.${context.resources.getResourceEntryName(resId)}"
+                                            } catch (_: Exception) {
+                                                "resId=$resId"
+                                            }
+                                        } else {
+                                            "ResourceFont"
+                                        }
+                                    } else {
+                                        font.javaClass.simpleName
+                                    }
+                                }
+                                props["fontFamily"] = fontNames.joinToString(",\n")
+                            } else {
+                                props["fontFamily"] = it.toString()
+                            }
+                        } else {
+                            props["fontFamily"] = it.toString()
+                        }
+                    }
+                    style.fontStyle?.let { props["fontStyle"] = it.toString() }
+                    if (style.color.isSpecified) {
+                        props["textColor"] = colorToString(style.color)
+                    }
+                }
+            } catch (e: Exception) {
+                props["GetTextLayoutResult_Error"] = e.message ?: "Unknown error"
+            }
+        }
     }
 }
