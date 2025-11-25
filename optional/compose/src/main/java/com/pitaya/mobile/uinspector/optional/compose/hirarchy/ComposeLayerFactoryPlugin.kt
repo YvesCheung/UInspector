@@ -3,7 +3,7 @@ package com.pitaya.mobile.uinspector.optional.compose.hirarchy
 import android.view.View
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.hierarchy.LayerFactoryPlugin
-import com.pitaya.mobile.uinspector.optional.compose.UInspectorComposeService.Companion.PluginKey
+import com.pitaya.mobile.uinspector.optional.compose.UInspectorComposeService.Companion.PLUGIN_KEY
 import com.pitaya.mobile.uinspector.optional.compose.inspect.mightBeComposeView
 
 /**
@@ -12,7 +12,7 @@ import com.pitaya.mobile.uinspector.optional.compose.inspect.mightBeComposeView
  */
 class ComposeLayerFactoryPlugin : LayerFactoryPlugin {
 
-    override val uniqueKey: String = PluginKey
+    override val uniqueKey: String = PLUGIN_KEY
 
     override fun create(view: View): Layer? {
         if (view.mightBeComposeView) {

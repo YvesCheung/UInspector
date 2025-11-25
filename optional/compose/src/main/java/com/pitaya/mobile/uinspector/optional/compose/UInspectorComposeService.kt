@@ -31,12 +31,12 @@ class UInspectorComposeService : UInspectorPluginService {
         plugins.prepend(UInspectorChildPanelPlugin::class.java, UInspectorComposeChildPanelPlugin())
         plugins.append(LayerFactoryPlugin::class.java, ComposeLayerFactoryPlugin())
         plugins.append(HitTestFactoryPlugin::class.java, ComposeHitTestFactoryPlugin())
-        plugins.append(ComposePropertiesParserFactory::class.java, DefaultComposeModifiersParserFactory())
+        plugins.append(ComposePropertiesParserFactory::class.java, DefaultComposeModifiersParserFactory(context))
         plugins.append(HierarchyExtraInfoPlugin::class.java, ComposeHierarchyExtraInfoPlugin())
     }
 
     companion object {
 
-        const val PluginKey = "JetpackCompose"
+        const val PLUGIN_KEY = "JetpackCompose"
     }
 }
