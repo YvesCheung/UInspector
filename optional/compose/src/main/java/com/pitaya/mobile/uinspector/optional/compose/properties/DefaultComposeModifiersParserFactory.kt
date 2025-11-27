@@ -7,7 +7,9 @@ import com.pitaya.mobile.uinspector.optional.compose.hirarchy.ComposeView
  * @author YvesCheung
  * 2021/2/2
  */
-class DefaultComposeModifiersParserFactory : ComposePropertiesParserFactory {
+class DefaultComposeModifiersParserFactory(
+    private val context: android.content.Context
+) : ComposePropertiesParserFactory {
 
     override val uniqueKey: String = "Default"
 
@@ -27,8 +29,18 @@ class DefaultComposeModifiersParserFactory : ComposePropertiesParserFactory {
 
                 PaddingModifierParser.accept(modifier) -> null
 
+                BorderModifierParser.accept(modifier) -> {
+                    BorderModifierParser(modifier)
+                }
+
+                BackgroundModifierParser.accept(modifier) ->
+                    BackgroundModifierParser(modifier)
+
+                TextStringSimpleElementParser.accept(modifier) ->
+                    TextStringSimpleElementParser(modifier)
+
                 else -> InspectableModifierParser(modifier)
             }
-        } + listOf(BasicParser(view), SemanticsModifierParser(view))
+        } + listOf(BasicParser(view), SemanticsModifierParser(context, view))
     }
 }
