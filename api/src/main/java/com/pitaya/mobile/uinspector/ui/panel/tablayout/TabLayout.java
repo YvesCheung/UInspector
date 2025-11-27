@@ -593,6 +593,8 @@ public class TabLayout extends HorizontalScrollView {
 
     // TODO add attr for these
     final Resources res = getResources();
+    tabPaddingStart = tabPaddingEnd =
+        res.getDimensionPixelSize(R.dimen.uinspector_design_tab_horizontal_padding);
     setSelectedTabIndicatorColor(res.getColor(R.color.uinspector_primary_color));
     setSelectedTabIndicatorGravity(INDICATOR_GRAVITY_BOTTOM);
     setTabIndicatorFullWidth(true);
@@ -608,7 +610,7 @@ public class TabLayout extends HorizontalScrollView {
     requestedTabMinWidth = INVALID_WIDTH;
     requestedTabMaxWidth = INVALID_WIDTH;
     tabBackgroundResId = 0;
-    mode = MODE_FIXED;
+    mode = MODE_SCROLLABLE;
     tabGravity = GRAVITY_FILL;
     inlineLabel = false;
     unboundedRipple = false;
