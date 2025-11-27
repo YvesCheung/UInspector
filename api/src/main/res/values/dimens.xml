@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="popup_panel_container_height">250dp</dimen>
+
+    <!-- TabLayout-->
+    <dimen name="uinspector_design_tab_text_size">13sp</dimen>
+    <dimen name="uinspector_design_tab_text_size_2line">12sp</dimen>
+    <dimen name="uinspector_design_tab_scrollable_min_width">72dp</dimen>
 </resources>

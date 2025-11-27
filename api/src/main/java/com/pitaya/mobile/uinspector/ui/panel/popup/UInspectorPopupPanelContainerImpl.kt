@@ -13,11 +13,11 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
 import com.pitaya.mobile.uinspector.R
 import com.pitaya.mobile.uinspector.UInspector
 import com.pitaya.mobile.uinspector.hierarchy.Layer
 import com.pitaya.mobile.uinspector.hierarchy.LayerFactoryPlugin
+import com.pitaya.mobile.uinspector.ui.panel.tablayout.TabLayout
 import com.pitaya.mobile.uinspector.util.dpToPx
 import com.pitaya.mobile.uinspector.util.log
 
